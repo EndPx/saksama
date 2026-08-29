@@ -8,9 +8,11 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/EndPx/saksama/internal/agent"
 	"github.com/EndPx/saksama/internal/scoring"
+	"github.com/EndPx/saksama/internal/statutes"
 )
 
 func main() {
@@ -39,6 +41,47 @@ func main() {
 	fmt.Print(table)
 	must(os.WriteFile(*out, []byte(table), 0o644))
 	fmt.Fprintf(os.Stderr, "\nwrote %s\n", *out)
+
+	// Audit artifacts: cell-level confusion matrix + citation grounding.
+	contracts, err := agent.LoadContracts(*contractsDir)
+	must(err)
+	textByID := map[string]string{}
+	for _, c := range contracts {
+		textByID[c.ID] = c.Text
+	}
+	audit := renderAudit(corpus, truths, textByID, baseRes, solRes)
+	must(os.WriteFile("results/audit.md", []byte(audit), 0o644))
+	fmt.Fprintln(os.Stderr, "wrote results/audit.md")
+}
+
+func renderAudit(corpus *statutes.Corpus, truths map[string]scoring.Truth, text map[string]string, base, sol scoring.StageResult) string {
+	cmBase := scoring.ConfusionMatrix(corpus, truths, base)
+	cmSol := scoring.ConfusionMatrix(corpus, truths, sol)
+	ctBase := scoring.Citation(text, base)
+	ctSol := scoring.Citation(text, sol)
+	pct := func(f float64) string { return fmt.Sprintf("%.1f%%", f*100) }
+	matrix := func(name string, c scoring.Confusion) string {
+		return fmt.Sprintf(
+			"### %s\n\n```\n                 Ground Truth\n              Positive   Negative\nPred Positive   %4d       %4d\nPred Negative   %4d       %4d\n```\n\nCell-level precision %s, recall %s (over %d contract x statute cells).\n\n",
+			name, c.TP, c.FP, c.FN, c.TN, pct(c.Precision()), pct(c.Recall()), c.TP+c.FP+c.FN+c.TN)
+	}
+	var b strings.Builder
+	b.WriteString("# Evaluation audit\n\n")
+	b.WriteString("Cell-level confusion matrix over (contract x statute) decisions. This exposes\n")
+	b.WriteString("true negatives; it is a coarser granularity than the finding-level headline\n")
+	b.WriteString("metrics (the nine PP35-13 sub-checks collapse to one cell here).\n\n")
+	b.WriteString("## Confusion matrix\n\n")
+	b.WriteString(matrix("Baseline (S0)", cmBase))
+	b.WriteString(matrix("Solution (S5)", cmSol))
+	b.WriteString("## Citation grounding\n\n")
+	b.WriteString("Deterministic and syntactic/location-based, NOT semantic (see internal/scoring/audit.go).\n\n")
+	b.WriteString("| Metric | Baseline (S0) | Solution (S5) |\n|---|---|---|\n")
+	fmt.Fprintf(&b, "| Clause-based findings | %d | %d |\n", ctBase.ClauseFindings, ctSol.ClauseFindings)
+	fmt.Fprintf(&b, "| With a non-empty quote | %d | %d |\n", ctBase.WithQuote, ctSol.WithQuote)
+	fmt.Fprintf(&b, "| Quote present in contract (presence accuracy) | %s | %s |\n", pct(ctBase.PresenceAccuracy()), pct(ctSol.PresenceAccuracy()))
+	fmt.Fprintf(&b, "| Quote within cited article (location accuracy) | %s | %s |\n", pct(ctBase.LocationAccuracy()), pct(ctSol.LocationAccuracy()))
+	b.WriteString("\nSemantic support of the quote for the finding is not verified deterministically; see `docs/FAILURE_MODES.md`.\n")
+	return b.String()
 }
 
 func loadTruths(dir string) (map[string]scoring.Truth, error) {
