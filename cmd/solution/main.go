@@ -34,6 +34,8 @@ func main() {
 	demo := flag.Bool("demo", false, "keyless demo: summarise committed S5 results for a few contracts")
 	flag.Parse()
 
+	_ = llm.LoadEnvFile(".env") // auto-load .env if present (shell env still wins)
+
 	corpus, err := agent.LoadCorpus(*statutesPath)
 	must(err)
 

@@ -87,7 +87,8 @@ go run ./cmd/solution -demo      # or, with Make:  make demo
 ```
 
 Live — review any plain-text contract with the engine (this is *generation*, so it
-needs an API key; it is not the keyless evaluation):
+needs an API key; it is not the keyless evaluation). Put your key in `.env` (copied from
+`.env.example`) — the binary auto-loads it, no manual export needed:
 
 ```bash
 go run ./cmd/solution -contract examples/pkwt-problematic.txt
@@ -296,8 +297,8 @@ Any OpenAI-compatible provider works — OpenRouter is just the one used for the
 run. Then:
 
 ```bash
-cp .env.example .env      # set SAKSAMA_MODEL / SAKSAMA_API_BASE / SAKSAMA_API_KEY
-set -a; . ./.env; set +a  # load env (bash/zsh; on Windows set the vars your shell's way)
+cp .env.example .env      # then edit .env and fill SAKSAMA_MODEL / API_BASE / API_KEY
+# .env is auto-loaded by the binaries — no manual export needed, on any OS.
 go run ./cmd/baseline
 go run ./cmd/solution -stage all
 go run ./cmd/solution -memos -from results/s5_gated.json

@@ -5,6 +5,7 @@
 package llm
 
 import (
+	"bufio"
 	"bytes"
 	"context"
 	"encoding/json"
@@ -17,6 +18,42 @@ import (
 	"strings"
 	"time"
 )
+
+// LoadEnvFile reads KEY=VALUE lines from a .env-style file and sets any variable
+// that is not already present in the process environment. A missing file is not
+// an error (returns nil). Stdlib only — no dotenv dependency. Real shell
+// environment variables always win over the file.
+func LoadEnvFile(path string) error {
+	f, err := os.Open(path)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return nil
+		}
+		return err
+	}
+	defer f.Close()
+	sc := bufio.NewScanner(f)
+	for sc.Scan() {
+		line := strings.TrimSpace(sc.Text())
+		if line == "" || strings.HasPrefix(line, "#") {
+			continue
+		}
+		line = strings.TrimPrefix(line, "export ")
+		k, v, ok := strings.Cut(line, "=")
+		if !ok {
+			continue
+		}
+		k = strings.TrimSpace(k)
+		v = strings.Trim(strings.TrimSpace(v), `"'`)
+		if k == "" {
+			continue
+		}
+		if _, exists := os.LookupEnv(k); !exists {
+			os.Setenv(k, v)
+		}
+	}
+	return sc.Err()
+}
 
 // Usage is the token usage and derived cost of one call.
 type Usage struct {

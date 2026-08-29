@@ -22,6 +22,7 @@ func main() {
 	must(err)
 	contracts, err := agent.LoadContracts(*contractsDir)
 	must(err)
+	_ = llm.LoadEnvFile(".env") // auto-load .env if present (shell env still wins)
 	client, err := llm.New()
 	must(err)
 
