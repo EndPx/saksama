@@ -29,12 +29,24 @@ before signing, and a marker for when the stakes warrant real legal help. The me
 plainly that it is an automated triage aid, not legal advice, and that the final decision
 rests with the reader.
 
-## Status
+## Results
 
-Scaffold stage. The specification, legal corpus, staged architecture (baseline then S1–S5),
-and deterministic scoring plan are fixed in [CLAUDE.md](CLAUDE.md). Implementation follows the
-eight-step order of work in that file. Metrics land in [CHANGELOG.md](CHANGELOG.md) as each
-stage is measured.
+Measured over 12 synthetic contracts (13 ground-truth findings), model
+`minimax/minimax-m3:free` via OpenRouter, full run ~29 min at \$0:
+
+| Metric | Baseline (S0) | Solution (S5) |
+|---|---|---|
+| Recall | 15.4% | **92.3%** |
+| Absence detection | 16.7% | **83.3%** |
+| Cross-section recall | 0% | **100%** |
+| Tier accuracy | 50% | **100%** |
+| False positives on clean | 14 | 6 |
+
+Absence detection stays flat (~17%) through structured output, per-section reading, and a
+clause-by-clause checklist — and only rises once an explicit pass forces the agent to ask
+what is *missing* (S4/S5). The full staged progression, including one experiment (per-section
+S2) that made recall worse, is in [CHANGELOG.md](CHANGELOG.md); the specification is in
+[CLAUDE.md](CLAUDE.md); how to run and verify keyless is in [REPRODUCTION.md](REPRODUCTION.md).
 
 ## Architecture (planned)
 
