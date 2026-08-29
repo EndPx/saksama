@@ -1,0 +1,202 @@
+# Saksama legal corpus — snapshot 2026-08
+#
+# Fourteen provisions of Indonesian employment law, each verified as recorded in
+# CLAUDE.md. Field names and all statutory text are in Indonesian on purpose: these
+# are quotations of Indonesian law and the memo is written for Indonesian readers.
+#
+# Fields per entry:
+#   id          - stable identifier, referenced by ground truth truth.yaml files
+#   dasar_hukum - the legal instrument (regulation / law / ruling / circular)
+#   pasal       - the article(s) within that instrument
+#   tier        - severity: batal_demi_hukum | sanksi_administratif |
+#                 melanggar_tanpa_sanksi | pedoman_kebijakan
+#   confidence  - A = verified against primary text; B = consistent secondary sources
+#   judul       - short Indonesian title
+#   ringkasan   - Indonesian summary of the rule
+#   deteksi     - ada_klausa | tidak_ada_klausa | konteks
+
+- id: PP35-12
+  dasar_hukum: PP 35/2021
+  pasal: Pasal 12
+  tier: batal_demi_hukum
+  confidence: A
+  deteksi: ada_klausa
+  judul: PKWT dilarang mensyaratkan masa percobaan
+  ringkasan: >-
+    PKWT tidak dapat mensyaratkan adanya masa percobaan kerja. Apabila masa
+    percobaan tetap disyaratkan dalam PKWT, masa percobaan tersebut batal demi
+    hukum dan masa kerja pekerja tetap dihitung sejak awal.
+
+- id: UU13-60-1
+  dasar_hukum: UU 13/2003
+  pasal: Pasal 60 ayat (1)
+  tier: batal_demi_hukum
+  confidence: B
+  deteksi: ada_klausa
+  judul: PKWTT masa percobaan paling lama 3 bulan
+  ringkasan: >-
+    PKWTT dapat mensyaratkan masa percobaan kerja paling lama 3 bulan. Ketentuan
+    yang menetapkan masa percobaan lebih dari 3 bulan tidak berkekuatan hukum
+    untuk kelebihannya, dan kelebihan waktu itu dihitung sebagai masa kerja.
+
+- id: UU13-60-2
+  dasar_hukum: UU 13/2003
+  pasal: Pasal 60 ayat (2)
+  tier: batal_demi_hukum
+  confidence: B
+  deteksi: ada_klausa
+  judul: Upah masa percobaan tidak boleh di bawah upah minimum
+  ringkasan: >-
+    Selama masa percobaan kerja, pengusaha dilarang membayar upah di bawah upah
+    minimum yang berlaku di wilayah tempat pekerja bekerja.
+
+- id: PP35-4-2
+  dasar_hukum: PP 35/2021
+  pasal: Pasal 4 ayat (2)
+  tier: melanggar_tanpa_sanksi
+  confidence: A
+  deteksi: konteks
+  judul: PKWT tidak untuk pekerjaan bersifat tetap
+  ringkasan: >-
+    PKWT didasarkan pada jangka waktu atau selesainya suatu pekerjaan tertentu,
+    dan tidak dapat diadakan untuk pekerjaan yang bersifat tetap. Penilaian ini
+    bergantung pada sifat pekerjaan, bukan semata-mata bunyi klausa.
+
+- id: PP35-8
+  dasar_hukum: PP 35/2021
+  pasal: Pasal 8
+  tier: melanggar_tanpa_sanksi
+  confidence: A
+  deteksi: ada_klausa
+  judul: PKWT jangka waktu paling lama 5 tahun termasuk perpanjangan
+  ringkasan: >-
+    PKWT berdasarkan jangka waktu dibuat paling lama 5 tahun, dan jangka waktu
+    keseluruhan termasuk perpanjangan tidak boleh lebih dari 5 tahun. Batas ini
+    hanya berlaku untuk PKWT berdasarkan jangka waktu (Pasal 5 ayat 1); PKWT
+    berdasarkan selesainya suatu pekerjaan diatur Pasal 9 dan tidak memiliki
+    plafon 5 tahun. Ditegaskan pula dalam Putusan MK 168/PUU-XXI/2023.
+
+- id: PP35-13
+  dasar_hukum: PP 35/2021
+  pasal: Pasal 13
+  tier: melanggar_tanpa_sanksi
+  confidence: A
+  deteksi: tidak_ada_klausa
+  judul: Sembilan hal minimum yang wajib dimuat PKWT
+  ringkasan: >-
+    PKWT paling sedikit memuat sembilan hal, yang diperlakukan sebagai sembilan
+    sub-pemeriksaan terpisah dalam ground truth, yaitu: (1) nama, alamat
+    perusahaan, dan jenis usaha; (2) nama, jenis kelamin, umur, dan alamat
+    pekerja; (3) jabatan atau jenis pekerjaan; (4) tempat pekerjaan; (5) besaran
+    dan cara pembayaran upah; (6) hak dan kewajiban pengusaha dan pekerja; (7)
+    mulai dan jangka waktu berlakunya PKWT; (8) tempat dan tanggal PKWT dibuat;
+    (9) tanda tangan para pihak.
+
+- id: PP35-14
+  dasar_hukum: PP 35/2021
+  pasal: Pasal 14
+  tier: melanggar_tanpa_sanksi
+  confidence: A
+  deteksi: tidak_ada_klausa
+  judul: PKWT wajib dicatatkan daring paling lama 3 hari kerja
+  ringkasan: >-
+    PKWT wajib dicatatkan oleh pengusaha secara daring paling lama 3 hari kerja
+    terhitung sejak PKWT ditandatangani.
+
+- id: PP35-15
+  dasar_hukum: PP 35/2021
+  pasal: Pasal 15
+  tier: sanksi_administratif
+  confidence: A
+  deteksi: tidak_ada_klausa
+  judul: Uang kompensasi wajib pada berakhirnya PKWT
+  ringkasan: >-
+    Pengusaha wajib memberikan uang kompensasi kepada pekerja pada saat
+    berakhirnya PKWT, bagi pekerja yang telah mempunyai masa kerja paling sedikit
+    1 bulan secara terus-menerus. Kewajiban ini tidak berlaku bagi tenaga kerja
+    asing.
+
+- id: PP35-16
+  dasar_hukum: PP 35/2021
+  pasal: Pasal 16
+  tier: melanggar_tanpa_sanksi
+  confidence: A
+  deteksi: ada_klausa
+  judul: Besaran uang kompensasi PKWT
+  ringkasan: >-
+    Besaran uang kompensasi: PKWT selama 12 bulan terus-menerus sebesar 1 bulan
+    upah; PKWT 1 bulan atau lebih tetapi kurang dari 12 bulan dihitung secara
+    proporsional dengan rumus masa kerja dibagi 12 dikali 1 bulan upah; PKWT
+    lebih dari 12 bulan juga dihitung proporsional. Pada usaha mikro dan usaha
+    kecil, besaran uang kompensasi ditentukan berdasarkan kesepakatan pengusaha
+    dan pekerja.
+
+- id: PP35-17
+  dasar_hukum: PP 35/2021
+  pasal: Pasal 17
+  tier: sanksi_administratif
+  confidence: A
+  deteksi: ada_klausa
+  judul: Kompensasi tetap wajib bila hubungan kerja diakhiri lebih awal
+  ringkasan: >-
+    Apabila salah satu pihak mengakhiri hubungan kerja sebelum berakhirnya jangka
+    waktu PKWT, pengusaha tetap wajib memberikan uang kompensasi yang besarannya
+    dihitung berdasarkan jangka waktu PKWT yang telah dijalani oleh pekerja.
+
+- id: PP35-26-31
+  dasar_hukum: PP 35/2021
+  pasal: Pasal 26 dan Pasal 31
+  tier: sanksi_administratif
+  confidence: A
+  deteksi: ada_klausa
+  judul: Batas dan upah kerja lembur
+  ringkasan: >-
+    Waktu kerja lembur paling lama 4 jam dalam 1 hari dan 18 jam dalam 1 minggu.
+    Upah kerja lembur untuk jam pertama sebesar 1,5 kali upah sejam, dan untuk
+    setiap jam berikutnya sebesar 2 kali upah sejam. Upah sejam dihitung sebesar
+    1/173 dari upah sebulan.
+
+- id: PP35-27-5
+  dasar_hukum: PP 35/2021
+  pasal: Pasal 27 ayat (5)
+  tier: batal_demi_hukum
+  confidence: A
+  deteksi: tidak_ada_klausa
+  judul: Pengecualian lembur batal bila golongan jabatan tidak diatur
+  ringkasan: >-
+    Pengecualian dari kewajiban membayar upah kerja lembur hanya berlaku bagi
+    golongan jabatan tertentu. Apabila golongan jabatan tertentu tersebut tidak
+    diatur dalam perjanjian kerja, peraturan perusahaan, atau perjanjian kerja
+    bersama, pengusaha tetap wajib membayar upah kerja lembur.
+
+- id: MK168-79-2b
+  dasar_hukum: Putusan MK 168/PUU-XXI/2023
+  pasal: atas Pasal 79 ayat (2) huruf b UU 13/2003 dalam Pasal 81 angka 25 UU 6/2023
+  tier: melanggar_tanpa_sanksi
+  confidence: A
+  deteksi: ada_klausa
+  judul: Lima hari kerja wajib memberi 2 hari istirahat mingguan
+  ringkasan: >-
+    Mahkamah Konstitusi menyatakan norma tersebut inkonstitusional sepanjang
+    tidak dimaknai mencakup frasa istirahat mingguan 2 hari untuk 5 hari kerja
+    dalam 1 minggu. Konsekuensinya, kontrak dengan pola 5 hari kerja dalam 1
+    minggu wajib memberikan 2 hari istirahat mingguan.
+
+- id: SE-M5-2025
+  dasar_hukum: Surat Edaran Menaker M/5/HK.04.00/V/2025
+  pasal: tertanggal 20 Mei 2025
+  tier: pedoman_kebijakan
+  confidence: A
+  deteksi: ada_klausa
+  judul: Larangan menahan ijazah dan dokumen pribadi sebagai jaminan
+  ringkasan: >-
+    Pemberi kerja dilarang mensyaratkan atau menahan ijazah dan dokumen pribadi
+    pekerja sebagai jaminan untuk bekerja, mencakup antara lain sertifikat
+    kompetensi, paspor, akta kelahiran, buku nikah, dan BPKB. Pengecualian hanya
+    berlaku jika ijazah atau sertifikat kompetensi diperoleh melalui pendidikan
+    dan pelatihan yang dibiayai pemberi kerja berdasarkan perjanjian kerja
+    tertulis, dengan kewajiban pemberi kerja menjamin keamanan dokumen dan
+    memberi ganti rugi bila dokumen rusak atau hilang. Surat Edaran bukan
+    peraturan perundang-undangan yang mengikat dan tidak memiliki sanksi,
+    sehingga daya paksanya terbatas; memo harus menyatakan hal ini secara
+    eksplisit dan tidak menyebut klausa penahanan ijazah sebagai ilegal.
