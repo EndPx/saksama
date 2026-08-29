@@ -26,7 +26,7 @@ var tierOrder = []struct {
 
 var (
 	companyRe  = regexp.MustCompile(`\*\*((?:PT|CV)\s[^*]+?)\*\*`)
-	positionRe = regexp.MustCompile(`(?i)jabatan\s+([A-Z][^.,\n(]+?)(?:\s+dan ditempatkan|\.|,|\n)`)
+	positionRe = regexp.MustCompile(`jabatan\s+([A-Z][^.,\n(]+?)(?:\s+dan ditempatkan|\.|,|\n)`)
 )
 
 func firstMatch(re *regexp.Regexp, s, fallback string) string {

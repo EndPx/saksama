@@ -1,0 +1,342 @@
+{
+  "stage": "s2_sections",
+  "model": "minimax/minimax-m3:free",
+  "contracts": [
+    {
+      "contract_id": "c01",
+      "findings": [
+        {
+          "statute_id": "SE-M5-2025",
+          "section": "Pasal 7",
+          "deskripsi": "Pasal ini mengatur hak cuti tahunan dan tidak terkait dengan penahanan ijazah atau dokumen pribadi, sehingga tidak ada pelanggaran terhadap SE Menaker M/5/HK.04.00/V/2025 pada pasal ini. Perlu dicatat bahwa SE ini bersifat pedoman kebijakan, bukan peraturan perundang-undangan yang mengikat.",
+          "tier": "pedoman_kebijakan",
+          "deteksi": "ada_klausa",
+          "kutipan": "PIHAK KEDUA berhak atas cuti tahunan sesuai ketentuan peraturan perusahaan setelah bekerja sekurang-kurangnya 12 bulan."
+        },
+        {
+          "statute_id": "PP35-15",
+          "section": "Pasal 8",
+          "deskripsi": "Klausa mensyaratkan kompensasi hanya bila PKWT diperpanjang, padahal PP 35/2021 Pasal 15 mewajibkan pengusaha memberikan uang kompensasi kepada pekerja pada saat berakhirnya PKWT (bagi pekerja dengan masa kerja paling sedikit 1 bulan terus-menerus), tanpa syarat perpanjangan.",
+          "tier": "sanksi_administratif",
+          "deteksi": "ada_klausa",
+          "kutipan": "Uang kompensasi sebagaimana diatur dalam peraturan perundang-undangan hanya akan diberikan kepada PIHAK KEDUA apabila Perjanjian ini diperpanjang untuk periode berikutnya. Apabila Perjanjian berakhir tanpa perpanjangan, PIHAK KEDUA tidak berhak atas uang kompensasi."
+        },
+        {
+          "statute_id": "PP35-17",
+          "section": "Pasal 8",
+          "deskripsi": "Pengaturan kompensasi yang digantungkan pada perpanjangan berpotensi mengecualikan kewajiban kompensasi pada pengakhiran lebih awal, padahal PP 35/2021 Pasal 17 menegaskan pengusaha tetap wajib membayar uang kompensasi apabila salah satu pihak mengakhiri hubungan kerja sebelum berakhirnya jangka waktu PKWT, dihitung berdasarkan jangka waktu PKWT yang telah dijalani.",
+          "tier": "sanksi_administratif",
+          "deteksi": "ada_klausa",
+          "kutipan": "Uang kompensasi sebagaimana diatur dalam peraturan perundang-undangan hanya akan diberikan kepada PIHAK KEDUA apabila Perjanjian ini diperpanjang untuk periode berikutnya. Apabila Perjanjian berakhir tanpa perpanjangan, PIHAK KEDUA tidak berhak atas uang kompensasi."
+        },
+        {
+          "statute_id": "PP35-16",
+          "section": "Pasal 8",
+          "deskripsi": "Klausa tidak menyebut besaran uang kompensasi sesuai rumus proporsional PP 35/2021 Pasal 16 (masa kerja/12 × 1 bulan upah) dan tidak mengatur perlakuan bagi usaha mikro/kecil berdasarkan kesepakatan, sehingga berpotensi menghilangkan atau mengaburkan hak pekerja atas kompensasi dengan nilai yang seharusnya.",
+          "tier": "melanggar_tanpa_sanksi",
+          "deteksi": "ada_klausa",
+          "kutipan": "Uang kompensasi sebagaimana diatur dalam peraturan perundang-undangan hanya akan diberikan kepada PIHAK KEDUA apabila Perjanjian ini diperpanjang untuk periode berikutnya."
+        }
+      ],
+      "usage": {
+        "input_tokens": 26521,
+        "output_tokens": 631,
+        "cost_usd": 0
+      },
+      "duration_ms": 19560
+    },
+    {
+      "contract_id": "c02",
+      "findings": [
+        {
+          "statute_id": "PP35-26-31",
+          "section": "Pasal 5",
+          "deskripsi": "Pasal 5 hanya menyebut batas waktu lembur (4 jam/hari, 18 jam/minggu) dan upah lembur sesuai peraturan, namun tidak merinci besaran upah lembur (1,5x jam pertama dan 2x jam berikutnya) maupun dasar perhitungan upah sejam (1/173 x upah sebulan). Meskipun menyebut 'sesuai peraturan perundang-undangan', klausanya tidak secara eksplisit menyatakan perhitungan sebagaimana disyaratkan PP 35/2021 Pasal 31, sehingga berpotensi tidak memenuhi ketentuan. Namun karena klausanya merujuk pada kepatutan peraturan, pelanggaran bersifat potensi, bukan pasti. Tetap dilaporkan sebagai catatan.",
+          "tier": "sanksi_administratif",
+          "deteksi": "ada_klausa",
+          "kutipan": "pelaksanaannya paling lama 4 jam dalam 1 hari dan 18 jam dalam 1 minggu, dan PIHAK KEDUA berhak atas upah lembur sesuai ketentuan peraturan perundang-undangan."
+        }
+      ],
+      "usage": {
+        "input_tokens": 24378,
+        "output_tokens": 228,
+        "cost_usd": 0
+      },
+      "duration_ms": 16284
+    },
+    {
+      "contract_id": "c03",
+      "findings": null,
+      "usage": {
+        "input_tokens": 24514,
+        "output_tokens": 11,
+        "cost_usd": 0
+      },
+      "duration_ms": 18599
+    },
+    {
+      "contract_id": "c04",
+      "findings": null,
+      "usage": {
+        "input_tokens": 17646,
+        "output_tokens": 8,
+        "cost_usd": 0
+      },
+      "duration_ms": 13314
+    },
+    {
+      "contract_id": "c05",
+      "findings": [
+        {
+          "statute_id": "PP35-15",
+          "section": "Pasal 6",
+          "deskripsi": "Klausa kompensasi hanya merujuk 'sesuai ketentuan peraturan perundang-undangan' tanpa menyebutkan besaran (1 bulan upah untuk 12 bulan masa kerja atau proporsional untuk masa kerja kurang/lebih dari 12 bulan) sebagaimana wajib diatur dalam Pasal 16 PP 35/2021. Pasal 6 hanya mengatur kewajiban kompensasi tanpa memenuhi unsur PP35-16.",
+          "tier": "sanksi_administratif",
+          "deteksi": "ada_klausa",
+          "kutipan": "Pada saat berakhirnya PKWT ini, PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan peraturan perundang-undangan."
+        },
+        {
+          "statute_id": "PP35-16",
+          "section": "Pasal 6",
+          "deskripsi": "Klausul tidak merinci besaran uang kompensasi (1 bulan upah untuk 12 bulan atau perhitungan proporsional) sebagaimana diwajibkan Pasal 16 PP 35/2021, melainkan hanya mendelegasikan ke peraturan perundang-undangan.",
+          "tier": "melanggar_tanpa_sanksi",
+          "deteksi": "ada_klausa",
+          "kutipan": "Pada saat berakhirnya PKWT ini, PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan peraturan perundang-undangan."
+        }
+      ],
+      "usage": {
+        "input_tokens": 17322,
+        "output_tokens": 293,
+        "cost_usd": 0
+      },
+      "duration_ms": 12730
+    },
+    {
+      "contract_id": "c06",
+      "findings": [
+        {
+          "statute_id": "UU13-60-2",
+          "section": "Pasal 3",
+          "deskripsi": "Upah pokok yang tercantum (Rp5.800.000) berada di bawah Upah Minimum Provinsi (UMP) DKI Jakarta 2026 yang berlaku di wilayah tempat kerja (Jakarta Pusat). Jika Pasal 3 mensyaratkan upah di bawah UMP, upah minimum wajib berlaku selama masa kerja, termasuk masa percobaan.",
+          "tier": "batal_demi_hukum",
+          "deteksi": "konteks",
+          "kutipan": "PIHAK KEDUA berhak atas upah sebesar Rp5.800.000,00 (lima juta delapan ratus ribu rupiah) per bulan"
+        },
+        {
+          "statute_id": "PP35-13",
+          "section": "Pasal 6",
+          "deskripsi": "Pasal 6 hanya memuat hak dan kewajiban secara umum, tidak mencantumkan keseluruhan sembilan hal minimum yang wajib dimuat dalam PKWT secara lengkap dan terperinci dalam pasal ini.",
+          "tier": "melanggar_tanpa_sanksi",
+          "deteksi": "tidak_ada_klausa"
+        }
+      ],
+      "usage": {
+        "input_tokens": 19805,
+        "output_tokens": 236,
+        "cost_usd": 0
+      },
+      "duration_ms": 13625
+    },
+    {
+      "contract_id": "c07",
+      "findings": [
+        {
+          "statute_id": "PP35-15",
+          "section": "Pasal 6",
+          "deskripsi": "Klausul hanya menyebut 'sesuai ketentuan peraturan perundang-undangan' tanpa merinci besaran dan tata cara kompensasi sesuai PP 35/2021 Pasal 15 jo. Pasal 16. Meskipun implementasi dapat sesuai regulasi, perumusan klausul yang terlalu generik berpotensi menyesatkan dan tidak mencerminkan kewajiban pengusaha secara eksplisit.",
+          "tier": "sanksi_administratif",
+          "deteksi": "ada_klausa",
+          "kutipan": "Pada saat berakhirnya PKWT ini, PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan peraturan perundang-undangan."
+        },
+        {
+          "statute_id": "PP35-17",
+          "section": "Pasal 6",
+          "deskripsi": "Klausul tidak mengatur kewajiban pemberian kompensasi apabila salah satu pihak mengakhiri hubungan kerja sebelum berakhirnya jangka waktu PKWT, sehingga tidak mencerminkan ketentuan Pasal 17 PP 35/2021.",
+          "tier": "sanksi_administratif",
+          "deteksi": "ada_klausa",
+          "kutipan": "Pada saat berakhirnya PKWT ini, PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan peraturan perundang-undangan."
+        },
+        {
+          "statute_id": "PP35-16",
+          "section": "Pasal 6",
+          "deskripsi": "Besaran uang kompensasi tidak dirinci dalam klausul (proporsional 1 bulan upah untuk 12 bulan kerja, perhitungan proporsional untuk masa kerja kurang/lebih dari 12 bulan).",
+          "tier": "melanggar_tanpa_sanksi",
+          "deteksi": "ada_klausa",
+          "kutipan": "Pada saat berakhirnya PKWT ini, PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan peraturan perundang-undangan."
+        }
+      ],
+      "usage": {
+        "input_tokens": 17644,
+        "output_tokens": 397,
+        "cost_usd": 0
+      },
+      "duration_ms": 13377
+    },
+    {
+      "contract_id": "c08",
+      "findings": [
+        {
+          "statute_id": "UU13-60-2",
+          "section": "Pasal 3",
+          "deskripsi": "Pasal 3 menetapkan upah pokok pekerja sebesar Rp5.400.000 per bulan. Tanpa informasi lokasi spesifik dan upah minimum yang berlaku di Bekasi tahun 2026, klausa upah ini belum tentu memenuhi standar upah minimum (apabila berlaku UMK Bekasi \u003e Rp5.400.000). Namun karena kontrak tidak menyebutkan klausul masa percobaan secara eksplisit (hanya mengatur upah), klausa ini sendiri tidak secara langsung melanggar Pasal 60 ayat (2) UU 13/2003 kecuali upah tersebut di bawah upah minimum yang berlaku.",
+          "tier": "batal_demi_hukum",
+          "deteksi": "ada_klausa",
+          "kutipan": "PIHAK KEDUA berhak atas upah sebesar Rp5.400.000,00 (lima juta empat ratus ribu rupiah) per bulan"
+        },
+        {
+          "statute_id": "SE-M5-2025",
+          "section": "Pasal 4",
+          "deskripsi": "Klausul penyerahan ijazah asli sebagai jaminan kerja bertentangan dengan Surat Edaran Menaker M/5/HK.04.00/V/2025 yang melarang pemberi kerja menahan ijazah dan dokumen pribadi pekerja sebagai jaminan. Pengecualian tidak berlaku karena kontrak menyatakan penyerahan tidak berkaitan dengan program pendidikan/pelatihan yang dibiayai pemberi kerja. Namun perlu dicatat bahwa SE ini bukan peraturan perundang-undangan yang mengikat dan tidak memiliki daya paksa sanksi; pelanggaran ini bersifat pedoman kebijakan.",
+          "tier": "pedoman_kebijakan",
+          "deteksi": "ada_klausa",
+          "kutipan": "PIHAK KEDUA menyerahkan ijazah asli pendidikan terakhir kepada PIHAK PERTAMA untuk disimpan selama masa berlakunya Perjanjian ini."
+        }
+      ],
+      "usage": {
+        "input_tokens": 19833,
+        "output_tokens": 378,
+        "cost_usd": 0
+      },
+      "duration_ms": 15758
+    },
+    {
+      "contract_id": "c09",
+      "findings": null,
+      "usage": {
+        "input_tokens": 19828,
+        "output_tokens": 9,
+        "cost_usd": 0
+      },
+      "duration_ms": 11038
+    },
+    {
+      "contract_id": "c10",
+      "findings": [
+        {
+          "statute_id": "UU13-60-1",
+          "section": "ABSENT",
+          "deskripsi": "Kontrak PKWTT tidak memuat klausa masa percobaan. Pasal 60 ayat (1) UU 13/2003 memperbolehkan masa percobaan paling lama 3 bulan untuk PKWTT, sehingga ketiadaan klausa ini bukan pelanggaran, namun tidak terdeteksi ketentuannya dalam kontrak.",
+          "tier": "batal_demi_hukum",
+          "deteksi": "tidak_ada_klausa"
+        }
+      ],
+      "usage": {
+        "input_tokens": 17599,
+        "output_tokens": 121,
+        "cost_usd": 0
+      },
+      "duration_ms": 11662
+    },
+    {
+      "contract_id": "c11",
+      "findings": [
+        {
+          "statute_id": "PP35-12",
+          "section": "ABSENT",
+          "deskripsi": "Pasal 3 hanya mengatur besaran dan cara pembayaran upah; tidak memuat klausa masa percobaan, sehingga tidak melanggar larangan masa percobaan pada PKWT.",
+          "tier": "batal_demi_hukum",
+          "deteksi": "tidak_ada_klausa"
+        },
+        {
+          "statute_id": "MK168-79-2b",
+          "section": "Pasal 5",
+          "deskripsi": "Pasal 5 sesuai dengan Putusan MK 168/PUU-XXI/2023 karena pola 5 hari kerja telah disertai 2 hari istirahat mingguan. Tidak ada pelanggaran.",
+          "tier": "melanggar_tanpa_sanksi",
+          "deteksi": "ada_klausa",
+          "kutipan": "Waktu kerja adalah 5 (lima) hari kerja dalam seminggu dengan 2 (dua) hari istirahat mingguan."
+        },
+        {
+          "statute_id": "MK168-79-2b",
+          "section": "Pasal 8",
+          "deskripsi": "Pasal ini hanya mengatur kerahasiaan dan tidak mengatur hari kerja serta istirahat mingguan, sehingga tidak dapat dinilai melanggar norma MK 168/2023 dari bunyi klausa ini. Namun karena tidak adanya klausa pola 5 hari kerja dengan 2 hari istirahat mingguan dalam kontrak secara keseluruhan, terdapat risiko pelanggaran normatif.",
+          "tier": "melanggar_tanpa_sanksi",
+          "deteksi": "ada_klausa",
+          "kutipan": "PIHAK KEDUA wajib menjaga kerahasiaan informasi perusahaan."
+        },
+        {
+          "statute_id": "PP35-15",
+          "section": "Pasal 9",
+          "deskripsi": "Pasal 9 hanya menyebut kewajiban kompensasi secara umum sesuai peraturan perundang-undangan, tanpa secara eksplisit menyatakan kewajiban uang kompensasi bagi pekerja dengan masa kerja paling sedikit 1 bulan secara terus-menerus. Namun demikian, klausa ini tidak melanggar karena mengacu pada ketentuan peraturan perundang-undangan yang berlaku, dan PP35-15 mensyaratkan adanya klausa eksplisit tentang kompensasi.",
+          "tier": "sanksi_administratif",
+          "deteksi": "tidak_ada_klausa"
+        },
+        {
+          "statute_id": "PP35-16",
+          "section": "Pasal 9",
+          "deskripsi": "Pasal 9 tidak mengatur besaran uang kompensasi sesuai rumus proporsional yang diatur dalam PP 35/2021 Pasal 16. Tidak ada perhitungan atau acuan rumus masa kerja/12 x 1 bulan upah dalam kontrak.",
+          "tier": "melanggar_tanpa_sanksi",
+          "deteksi": "tidak_ada_klausa"
+        },
+        {
+          "statute_id": "PP35-17",
+          "section": "Pasal 9",
+          "deskripsi": "Pasal 9 tidak mengatur kewajiban pengusaha untuk tetap memberikan uang kompensasi apabila salah satu pihak mengakhiri hubungan kerja sebelum berakhirnya jangka waktu PKWT.",
+          "tier": "sanksi_administratif",
+          "deteksi": "tidak_ada_klausa"
+        }
+      ],
+      "usage": {
+        "input_tokens": 35107,
+        "output_tokens": 647,
+        "cost_usd": 0
+      },
+      "duration_ms": 24782
+    },
+    {
+      "contract_id": "c12",
+      "findings": [
+        {
+          "statute_id": "PP35-12",
+          "section": "Pasal 3",
+          "deskripsi": "Kontrak ini adalah PKWT sehingga masa percobaan dilarang sama sekali. Klausa masa percobaan 3 bulan dalam PKWT batal demi hukum dan masa kerja tetap dihitung sejak awal.",
+          "tier": "batal_demi_hukum",
+          "deteksi": "ada_klausa",
+          "kutipan": "PIHAK KEDUA wajib menjalani masa percobaan kerja selama 3 (tiga) bulan terhitung sejak tanggal mulai bekerja."
+        },
+        {
+          "statute_id": "UU13-60-2",
+          "section": "Pasal 3",
+          "deskripsi": "Selama masa percobaan, upah tidak boleh di bawah upah minimum. Pasal 3 tidak menyebutkan besaran upah masa percobaan, sehingga berisiko upah ditetapkan di bawah UMK Makassar.",
+          "tier": "batal_demi_hukum",
+          "deteksi": "ada_klausa",
+          "kutipan": "PIHAK KEDUA wajib menjalani masa percobaan kerja selama 3 (tiga) bulan terhitung sejak tanggal mulai bekerja."
+        },
+        {
+          "statute_id": "MK168-79-2b",
+          "section": "Pasal 5",
+          "deskripsi": "Pasal 5 telah sesuai dengan Putusan MK 168/PUU-XXI/2023 karena memberikan 2 hari istirahat mingguan untuk 5 hari kerja dalam seminggu. Tidak ditemukan pelanggaran.",
+          "tier": "melanggar_tanpa_sanksi",
+          "deteksi": "ada_klausa",
+          "kutipan": "Waktu kerja adalah 5 (lima) hari kerja dalam seminggu dengan 2 (dua) hari istirahat mingguan."
+        },
+        {
+          "statute_id": "PP35-15",
+          "section": "Pasal 7",
+          "deskripsi": "Pasal hanya merujuk 'sesuai ketentuan peraturan perundang-undangan' tanpa merinci besaran, rumus proporsional, maupun jangka waktu masa kerja minimal 1 bulan yang menjadi syarat kewajiban kompensasi, sehingga tidak memenuhi unsur kejelasan substansi kompensasi sebagaimana diatur PP 35/2021.",
+          "tier": "sanksi_administratif",
+          "deteksi": "ada_klausa"
+        },
+        {
+          "statute_id": "PP35-16",
+          "section": "Pasal 7",
+          "deskripsi": "Pasal tidak menyebutkan besaran uang kompensasi (1 bulan upah untuk 12 bulan masa kerja, atau perhitungan proporsional untuk masa kerja kurang/lebih dari 12 bulan), sehingga ketentuan substantif PP 35/2021 Pasal 16 tidak tercermin dalam klausa kontrak.",
+          "tier": "melanggar_tanpa_sanksi",
+          "deteksi": "ada_klausa"
+        },
+        {
+          "statute_id": "PP35-17",
+          "section": "Pasal 7",
+          "deskripsi": "Pasal hanya mengatur kompensasi pada berakhirnya jangka waktu PKWT, tetapi tidak mengatur kewajiban pengusaha tetap memberikan uang kompensasi apabila salah satu pihak mengakhiri hubungan kerja sebelum berakhirnya jangka waktu PKWT, sebagaimana diwajibkan PP 35/2021 Pasal 17.",
+          "tier": "sanksi_administratif",
+          "deteksi": "ada_klausa"
+        }
+      ],
+      "usage": {
+        "input_tokens": 19825,
+        "output_tokens": 746,
+        "cost_usd": 0
+      },
+      "duration_ms": 16802
+    }
+  ]
+}
