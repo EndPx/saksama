@@ -4,7 +4,7 @@
 
 GO ?= go
 
-.PHONY: build test baseline solution eval memos trajectories all clean
+.PHONY: build test baseline solution eval memos trajectories demo all clean
 
 build:
 	$(GO) build ./...
@@ -27,6 +27,10 @@ eval:
 # Render the triage memos from the committed S5 result. No API key.
 memos:
 	$(GO) run ./cmd/solution -memos -from results/s5_gated.json
+
+# Keyless demo: compact review summary for a few contracts from committed results.
+demo:
+	$(GO) run ./cmd/solution -demo
 
 # Export Claude Code session trajectories to trajectories/.
 trajectories:

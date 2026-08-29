@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/EndPx/saksama/internal/agent"
 	"github.com/EndPx/saksama/internal/llm"
@@ -29,10 +30,22 @@ func main() {
 	memos := flag.Bool("memos", false, "render memos from -from result file (no API key needed)")
 	from := flag.String("from", "results/s5_gated.json", "stage-result file to render memos from")
 	memosDir := flag.String("memos-out", "memos", "memo output directory")
+	reviewFile := flag.String("contract", "", "review ONE plain-text contract file (live; needs SAKSAMA_* env)")
+	demo := flag.Bool("demo", false, "keyless demo: summarise committed S5 results for a few contracts")
 	flag.Parse()
 
 	corpus, err := agent.LoadCorpus(*statutesPath)
 	must(err)
+
+	if *demo {
+		runDemo(corpus, *from, *contractsDir)
+		return
+	}
+	if *reviewFile != "" {
+		reviewOne(corpus, *reviewFile)
+		return
+	}
+
 	contracts, err := agent.LoadContracts(*contractsDir)
 	must(err)
 
@@ -105,6 +118,70 @@ func renderMemos(from string, contracts []agent.Contract, outDir string, corpus 
 		must(os.WriteFile(out, []byte(md), 0o644))
 		fmt.Fprintf(os.Stderr, "wrote %s\n", out)
 	}
+}
+
+// reviewOne runs the live S5 engine on a single plain-text contract and prints
+// the triage memo to stdout. This is generation, so it needs the SAKSAMA_* env.
+func reviewOne(corpus *statutes.Corpus, path string) {
+	b, err := os.ReadFile(path)
+	must(err)
+	text := string(b)
+	client, err := llm.New()
+	must(err)
+	a := agent.New(client, corpus)
+	res, err := a.RunPipeline(context.Background(), []agent.Contract{{ID: filepath.Base(path), Text: text}}, "s5", "")
+	must(err)
+	fmt.Print(memo.Render(filepath.Base(path), text, "", res.Contracts[0].Findings, corpus))
+}
+
+// runDemo prints a compact, KEYLESS summary of a few contracts from the committed
+// S5 results — no LLM call, so a judge sees the product output with no API key.
+func runDemo(corpus *statutes.Corpus, resultsFile, contractsDir string) {
+	res, err := agent.ReadStageResult(resultsFile)
+	must(err)
+	byID := map[string]scoring.ContractResult{}
+	for _, c := range res.Contracts {
+		byID[c.ContractID] = c
+	}
+	demos := []struct{ ID, Label string }{
+		{"c01", "PKWT — probation clause + compensation denied"},
+		{"c02", "PKWT — clean"},
+		{"c04", "PKWTT — 6-month probation"},
+		{"c11", "PKWT — cross-section forfeiture trap"},
+	}
+	fmt.Println("==================================================")
+	fmt.Println(" SAKSAMA DEMO  (keyless, from committed S5 results)")
+	fmt.Println("==================================================")
+	for _, d := range demos {
+		cr, ok := byID[d.ID]
+		if !ok {
+			continue
+		}
+		b, _ := os.ReadFile(filepath.Join(contractsDir, d.ID, "contract.md"))
+		typ := "PKWT"
+		if strings.Contains(strings.ToUpper(string(b)), "PKWTT") {
+			typ = "PKWTT"
+		}
+		counts := map[statutes.Tier]int{}
+		for _, f := range cr.Findings {
+			counts[f.Tier]++
+		}
+		fmt.Printf("\n[%s] %s\n", d.ID, d.Label)
+		fmt.Printf("    Type: %s\n", typ)
+		fmt.Printf("    Findings: %d  (void=%d, admin-sanction=%d, breach=%d, policy=%d)\n",
+			len(cr.Findings), counts[statutes.TierBatalDemiHukum], counts[statutes.TierSanksiAdministratif],
+			counts[statutes.TierMelanggarTanpaSanksi], counts[statutes.TierPedomanKebijakan])
+		for _, f := range cr.Findings {
+			if f.Tier == statutes.TierBatalDemiHukum {
+				if p, ok := corpus.Get(f.StatuteID); ok {
+					fmt.Printf("    Critical: %s (%s %s)\n", p.Judul, p.DasarHukum, p.Pasal)
+				}
+				break
+			}
+		}
+	}
+	fmt.Println("\nDemo complete. To review a NEW contract live (needs SAKSAMA_* env):")
+	fmt.Println("  go run ./cmd/solution -contract examples/pkwt-problematic.txt")
 }
 
 func must(err error) {
