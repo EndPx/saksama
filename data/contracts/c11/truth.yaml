@@ -1,0 +1,11 @@
+contract_id: c11
+jenis: PKWT
+skala_usaha: umum
+findings:
+  - finding_id: c11-f1
+    statute_id: PP35-17
+    section: "Pasal 14"
+    tier: sanksi_administratif
+    deteksi: ada_klausa
+    cross_section: true
+    catatan: Pasal 14 menggugurkan seluruh kompensasi bila mengundurkan diri lebih awal; padahal kompensasi tetap wajib atas masa kerja yang dijalani (terlihat hanya bila Pasal 4, 9, dan 14 dibaca bersama).
