@@ -280,7 +280,19 @@ implementation. Full instructions, runtime, and cost: [`REPRODUCTION.md`](REPROD
 ## Optional: model-backed generation
 
 To *generate a new review* instead of reproducing the frozen evaluation, configure an
-OpenAI-compatible provider (e.g. OpenRouter) and run the LLM stages:
+OpenAI-compatible provider and run the LLM stages.
+
+**Getting a key (free):** [OpenRouter](https://openrouter.ai) offers free models and an
+OpenAI-compatible endpoint. Create a key at <https://openrouter.ai/keys>, then in `.env`:
+
+```env
+SAKSAMA_MODEL=minimax/minimax-m3:free
+SAKSAMA_API_BASE=https://openrouter.ai/api/v1
+SAKSAMA_API_KEY=<your-openrouter-key>   # never commit it (.env is gitignored)
+```
+
+Any OpenAI-compatible provider works — OpenRouter is just the one used for the committed
+run. Then:
 
 ```bash
 cp .env.example .env      # set SAKSAMA_MODEL / SAKSAMA_API_BASE / SAKSAMA_API_KEY
