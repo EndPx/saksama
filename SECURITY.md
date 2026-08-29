@@ -7,8 +7,8 @@
   tracked.
 - API keys are supplied through the environment at run time (`SAKSAMA_API_KEY`) and
   are never written to any tracked file.
-- Verified: `git grep sk-or-v1` over the working tree and full history returns
-  nothing (see below).
+- Verified: scanning the working tree and full git history for the key prefix
+  returns nothing (no `sk-or-...` OpenRouter key in any commit).
 
 ## Compromised key notice
 
