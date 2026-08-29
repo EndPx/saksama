@@ -18,6 +18,8 @@ func Compare(base, sol Metrics) string {
 
 	row("Recall (primary)", pct(base.Recall), pct(sol.Recall))
 	row("Precision", pct(base.Precision), pct(sol.Precision))
+	row("F1", pct(base.F1), pct(sol.F1))
+	row("False-positive rate", pct(base.FalsePositiveRate), pct(sol.FalsePositiveRate))
 	row("Absence detection rate", pct(base.AbsenceRate), pct(sol.AbsenceRate))
 	row("Tier accuracy", pct(base.TierAccuracy), pct(sol.TierAccuracy))
 	row("Cross-section recall", pct(base.CrossRecall), pct(sol.CrossRecall))

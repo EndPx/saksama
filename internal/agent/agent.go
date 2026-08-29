@@ -67,6 +67,21 @@ func (a *Agent) validIDs() map[string]bool {
 	return m
 }
 
+// pkwtOnly lists provisions that apply only to a fixed-term (PKWT) contract and
+// must not be raised against a permanent (PKWTT) contract. Skipping these on a
+// PKWTT removes a class of false positives (e.g. "missing PKWT compensation" on
+// a permanent contract, which is a category error).
+var pkwtOnly = map[string]bool{
+	"PP35-4-2": true, "PP35-8": true, "PP35-12": true, "PP35-13": true,
+	"PP35-14": true, "PP35-15": true, "PP35-16": true, "PP35-17": true,
+}
+
+// contractIsPKWTT reports whether the contract text is a PKWTT (permanent).
+func contractIsPKWTT(text string) bool {
+	u := strings.ToUpper(text)
+	return strings.Contains(u, "PKWTT") || strings.Contains(u, "WAKTU TIDAK TERTENTU")
+}
+
 // balancedJSON returns the LAST top-level balanced open..close block in s,
 // respecting string literals and escapes, or "" if none. Reasoning models often
 // print example JSON while thinking and then emit the real answer last, so the

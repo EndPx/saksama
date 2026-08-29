@@ -51,12 +51,18 @@ func (a *Agent) Checklist(ctx context.Context, contractText string) ([]scoring.F
 	var findings []scoring.Finding
 	var usage llm.Usage
 	var traj []TrajStep
+	isPKWTT := contractIsPKWTT(contractText)
 	for _, p := range a.Corpus.Provisions {
 		if p.Deteksi != statutes.DeteksiAdaKlausa && p.Deteksi != statutes.DeteksiKonteks {
 			continue
 		}
+		if isPKWTT && pkwtOnly[p.ID] {
+			continue // provision does not apply to a permanent (PKWTT) contract
+		}
 		prompt := fmt.Sprintf(
 			"Ketentuan hukum:\n%s %s — %s: %s\n\nApakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? "+
+				"Jawab melanggar:true HANYA bila ada klausa spesifik dalam kontrak yang jelas melanggar ketentuan ini. "+
+				"Bila kontrak patuh, tidak menyinggung hal ini, atau ambigu, jawab melanggar:false. "+
 				"Balas HANYA JSON: {\"melanggar\":true|false,\"section\":\"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)\",\"kutipan\":\"kutipan harfiah maks 200 karakter\",\"deskripsi\":\"penjelasan singkat\"}.\n\nKONTRAK:\n%s",
 			p.DasarHukum, p.Pasal, p.Judul, p.Ringkasan, contractText)
 		resp, err := a.Client.Complete(ctx, llm.Request{
@@ -88,6 +94,7 @@ func (a *Agent) Absence(ctx context.Context, contractText string) ([]scoring.Fin
 	var findings []scoring.Finding
 	var usage llm.Usage
 	var traj []TrajStep
+	isPKWTT := contractIsPKWTT(contractText)
 	for _, p := range a.Corpus.Provisions {
 		if p.Deteksi != statutes.DeteksiTidakAdaKlausa {
 			continue
@@ -95,11 +102,23 @@ func (a *Agent) Absence(ctx context.Context, contractText string) ([]scoring.Fin
 		if p.ID == "PP35-14" {
 			continue // administrative act, not a contract clause
 		}
+		if isPKWTT && pkwtOnly[p.ID] {
+			continue // provision does not apply to a permanent (PKWTT) contract
+		}
 		if p.ID == "PP35-13" {
 			f, u, step := a.checkPasal13(ctx, contractText)
 			addUsage(&usage, u)
 			traj = append(traj, step)
 			findings = append(findings, f...)
+			continue
+		}
+		if p.ID == "PP35-27-5" {
+			f, u, step := a.checkOvertimeExemption(ctx, contractText)
+			addUsage(&usage, u)
+			traj = append(traj, step)
+			if f != nil {
+				findings = append(findings, *f)
+			}
 			continue
 		}
 		prompt := fmt.Sprintf(
@@ -169,6 +188,44 @@ func (a *Agent) checkPasal13(ctx context.Context, contractText string) ([]scorin
 	}
 	outcome := fmt.Sprintf("%d dari 9 item wajib tidak ada", len(findings))
 	return findings, resp.Usage, TrajStep{Label: "absence:PP35-13", Prompt: prompt, Response: resp.Text, Outcome: outcome}
+}
+
+// checkOvertimeExemption handles PP35-27-5, which is a violation ONLY when the
+// contract actually waives overtime pay without defining the exempt senior job
+// category. A contract that never mentions an overtime exemption is compliant,
+// so the generic absence check (which flags every contract) is wrong here.
+func (a *Agent) checkOvertimeExemption(ctx context.Context, contractText string) (*scoring.Finding, llm.Usage, TrajStep) {
+	prompt := "Periksa ketentuan lembur dalam kontrak berikut. " +
+		"Apakah kontrak MEMUAT klausa yang menyatakan suatu jabatan dikecualikan atau TIDAK BERHAK atas upah lembur? " +
+		"Jika kontrak TIDAK memuat pernyataan pengecualian lembur seperti itu, jawab {\"melanggar\":false}. " +
+		"Jika kontrak MEMUAT pernyataan bahwa jabatan tidak berhak lembur TETAPI tidak mendefinisikan golongan jabatan tertentu " +
+		"(pemikir, perencana, pelaksana, atau pengendali jalannya perusahaan), jawab {\"melanggar\":true,\"section\":\"Pasal N\",\"kutipan\":\"kutipan harfiah\"}." +
+		"\n\nKONTRAK:\n" + contractText
+	resp, _ := a.Client.Complete(ctx, llm.Request{
+		System:      "Anda pemeriksa ketentuan lembur PKWT. Jawab hanya JSON.",
+		Messages:    []llm.Message{{Role: "user", Content: prompt}},
+		MaxTokens:   12000,
+		Temperature: 0,
+	})
+	var r struct {
+		Melanggar bool   `json:"melanggar"`
+		Section   string `json:"section"`
+		Kutipan   string `json:"kutipan"`
+	}
+	_ = json.Unmarshal([]byte(extractJSONObject(resp.Text)), &r)
+	if !r.Melanggar {
+		return nil, resp.Usage, TrajStep{Label: "absence:PP35-27-5", Prompt: prompt, Response: resp.Text, Outcome: "tidak ada pengecualian lembur / tidak ada temuan"}
+	}
+	section := r.Section
+	if section == "" {
+		section = "ABSENT"
+	}
+	return &scoring.Finding{
+		StatuteID: "PP35-27-5", Section: section, Tier: statutes.TierBatalDemiHukum,
+		Deteksi: statutes.DeteksiTidakAdaKlausa, Kutipan: r.Kutipan,
+		Deskripsi: "Klausa mengecualikan lembur tanpa mendefinisikan golongan jabatan tertentu.",
+	}, resp.Usage, TrajStep{Label: "absence:PP35-27-5", Prompt: prompt, Response: resp.Text,
+		Outcome: "TEMUAN: pengecualian lembur tanpa definisi golongan jabatan"}
 }
 
 // CitationGate (S5) drops any ada_klausa finding whose kutipan is not found

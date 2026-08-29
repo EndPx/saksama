@@ -125,8 +125,10 @@ type Metrics struct {
 	ReportedTotal int `json:"reported_total"`
 	Correct       int `json:"correct"`
 
-	Recall    float64 `json:"recall"`
-	Precision float64 `json:"precision"`
+	Recall            float64 `json:"recall"`
+	Precision         float64 `json:"precision"`
+	F1                float64 `json:"f1"`
+	FalsePositiveRate float64 `json:"false_positive_rate"`
 
 	AbsenceTruth int     `json:"absence_truth"`
 	AbsenceHit   int     `json:"absence_hit"`
@@ -230,6 +232,10 @@ func Evaluate(corpus *statutes.Corpus, truths map[string]Truth, res StageResult)
 
 	m.Recall = safeDiv(m.Correct, m.TruthTotal)
 	m.Precision = safeDiv(m.Correct, m.ReportedTotal)
+	if m.Precision+m.Recall > 0 {
+		m.F1 = 2 * m.Precision * m.Recall / (m.Precision + m.Recall)
+	}
+	m.FalsePositiveRate = safeDiv(m.ReportedTotal-m.Correct, m.ReportedTotal)
 	m.AbsenceRate = safeDiv(m.AbsenceHit, m.AbsenceTruth)
 	m.TierAccuracy = safeDiv(m.TierCorrect, m.Correct)
 	m.CrossRecall = safeDiv(m.CrossHit, m.CrossTruth)
