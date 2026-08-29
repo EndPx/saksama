@@ -1,0 +1,17 @@
+# Secrets — never commit
+.env
+
+# Go build output
+/saksama
+/saksama.exe
+/bin/
+*.exe
+*.test
+*.out
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# NOTE: results/ and memos/ are intentionally committed so judges can
+# verify the numbers without running anything or holding an API key.
