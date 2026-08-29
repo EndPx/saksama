@@ -95,7 +95,8 @@ go run ./cmd/solution -contract examples/pkwt-problematic.txt
 
 The engine is **format-agnostic — it reviews contract text.** PDF/DOCX ingestion is a
 separate input adapter (roadmap), intentionally outside the frozen evaluation engine.
-Sample contracts live in [`examples/`](examples/).
+Sample contracts live in [`examples/`](examples/). All contracts under `examples/` are
+synthetic and contain no real employment or personal data.
 
 ### Run with Docker
 
