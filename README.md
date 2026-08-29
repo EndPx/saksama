@@ -44,17 +44,18 @@ matters: on the committed evaluation, **zero false positives occur on clean cont
 
 ## Quick Start
 
-**Requirements:** Go 1.22+ and (optionally) Make. **No API key is required** to
-reproduce the committed evaluation.
+**Requirements:** Go 1.22+ only. **No API key** is required to reproduce the committed
+evaluation. **Make is optional** — every `make` target below is a one-line wrapper, so
+on Windows (or anywhere without Make) just use the `go run` form.
 
 ```bash
 git clone https://github.com/EndPx/saksama.git
 cd saksama
 
-make eval          # or: go run ./cmd/eval
+go run ./cmd/eval      # or, if you have Make:  make eval
 ```
 
-`make eval` runs the **frozen, keyless, network-free** evaluation over the committed
+This runs the **frozen, keyless, network-free** evaluation over the committed
 `results/*.json`. Expected output:
 
 ```
@@ -82,7 +83,7 @@ Keyless — a compact review summary for a few contracts, straight from the comm
 results (no API key, no network):
 
 ```bash
-make demo
+go run ./cmd/solution -demo      # or, with Make:  make demo
 ```
 
 Live — review any plain-text contract with the engine (this is *generation*, so it
@@ -283,8 +284,10 @@ OpenAI-compatible provider (e.g. OpenRouter) and run the LLM stages:
 
 ```bash
 cp .env.example .env      # set SAKSAMA_MODEL / SAKSAMA_API_BASE / SAKSAMA_API_KEY
-set -a; . ./.env; set +a
-make baseline solution memos
+set -a; . ./.env; set +a  # load env (bash/zsh; on Windows set the vars your shell's way)
+go run ./cmd/baseline
+go run ./cmd/solution -stage all
+go run ./cmd/solution -memos -from results/s5_gated.json
 ```
 
 Note: generation is **non-deterministic** (the free `minimax-m3` path varies even at
