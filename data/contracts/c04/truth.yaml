@@ -1,0 +1,11 @@
+contract_id: c04
+jenis: PKWTT
+skala_usaha: umum
+findings:
+  - finding_id: c04-f1
+    statute_id: UU13-60-1
+    section: "Pasal 4"
+    tier: batal_demi_hukum
+    deteksi: ada_klausa
+    cross_section: false
+    catatan: PKWTT mensyaratkan masa percobaan 6 bulan; melebihi batas maksimum 3 bulan.
