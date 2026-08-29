@@ -1,0 +1,32 @@
+contract_id: c05
+jenis: PKWT
+skala_usaha: umum
+findings:
+  - finding_id: c05-f1
+    statute_id: PP35-13
+    section: ABSENT
+    tier: melanggar_tanpa_sanksi
+    deteksi: tidak_ada_klausa
+    cross_section: false
+    catatan: Jenis usaha perusahaan tidak dicantumkan (item wajib Pasal 13).
+  - finding_id: c05-f2
+    statute_id: PP35-13
+    section: ABSENT
+    tier: melanggar_tanpa_sanksi
+    deteksi: tidak_ada_klausa
+    cross_section: false
+    catatan: Tempat pekerjaan tidak dicantumkan (item wajib Pasal 13).
+  - finding_id: c05-f3
+    statute_id: PP35-13
+    section: ABSENT
+    tier: melanggar_tanpa_sanksi
+    deteksi: tidak_ada_klausa
+    cross_section: false
+    catatan: Cara pembayaran upah tidak dicantumkan (item wajib Pasal 13).
+  - finding_id: c05-f4
+    statute_id: PP35-13
+    section: ABSENT
+    tier: melanggar_tanpa_sanksi
+    deteksi: tidak_ada_klausa
+    cross_section: false
+    catatan: Tempat dan tanggal PKWT dibuat tidak dicantumkan (item wajib Pasal 13).
