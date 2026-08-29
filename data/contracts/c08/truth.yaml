@@ -1,0 +1,11 @@
+contract_id: c08
+jenis: PKWT
+skala_usaha: umum
+findings:
+  - finding_id: c08-f1
+    statute_id: SE-M5-2025
+    section: "Pasal 4"
+    tier: pedoman_kebijakan
+    deteksi: ada_klausa
+    cross_section: false
+    catatan: Ijazah asli ditahan sebagai jaminan tanpa kaitan pelatihan; melanggar pedoman SE, bukan peraturan bersanksi.
