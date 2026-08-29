@@ -1,0 +1,11 @@
+contract_id: c07
+jenis: PKWT
+skala_usaha: umum
+findings:
+  - finding_id: c07-f1
+    statute_id: MK168-79-2b
+    section: "Pasal 4"
+    tier: melanggar_tanpa_sanksi
+    deteksi: ada_klausa
+    cross_section: false
+    catatan: Pola 5 hari kerja seminggu hanya memberi 1 hari istirahat mingguan; seharusnya 2 hari.
