@@ -1,0 +1,11 @@
+contract_id: c06
+jenis: PKWT
+skala_usaha: umum
+findings:
+  - finding_id: c06-f1
+    statute_id: PP35-27-5
+    section: "Pasal 5"
+    tier: batal_demi_hukum
+    deteksi: tidak_ada_klausa
+    cross_section: false
+    catatan: Jabatan dinyatakan tidak berhak lembur tanpa mendefinisikan golongan jabatan tertentu di mana pun; pengecualian lembur tidak berlaku.
