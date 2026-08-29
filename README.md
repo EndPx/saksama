@@ -96,6 +96,27 @@ The engine is **format-agnostic — it reviews contract text.** PDF/DOCX ingesti
 separate input adapter (roadmap), intentionally outside the frozen evaluation engine.
 Sample contracts live in [`examples/`](examples/).
 
+### Run with Docker
+
+The image carries **no API key** and its default entrypoint is the keyless evaluation:
+
+```bash
+docker build -t saksama .
+
+# Keyless: reproduce the committed evaluation (default entrypoint)
+docker run --rm saksama
+
+# Keyless: the compact demo summary
+docker run --rm --entrypoint /app/bin/solution saksama -demo
+
+# Live review of a contract (needs a key; --env-file supplies SAKSAMA_*)
+docker run --rm --env-file .env --entrypoint /app/bin/solution \
+  saksama -contract examples/pkwt-problematic.txt
+```
+
+The build is multi-stage (Go 1.22 → distroless static), so the runtime image ships only
+the binaries and the committed data/results — no toolchain, no key.
+
 ## Example (excerpt from a generated memo)
 
 From [`memos/c01.md`](memos/c01.md):

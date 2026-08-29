@@ -14,9 +14,10 @@ RUN CGO_ENABLED=0 go build -o /out/eval        ./cmd/eval && \
 FROM gcr.io/distroless/static-debian12
 WORKDIR /app
 COPY --from=build /out/ /app/bin/
-COPY data/    /app/data/
-COPY results/ /app/results/
-COPY memos/   /app/memos/
+COPY data/     /app/data/
+COPY results/  /app/results/
+COPY memos/    /app/memos/
+COPY examples/ /app/examples/
 # Verify the committed scores with no API key:
 #   docker run --rm saksama
 ENTRYPOINT ["/app/bin/eval"]
