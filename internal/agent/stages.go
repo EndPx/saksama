@@ -57,7 +57,7 @@ func (a *Agent) Checklist(ctx context.Context, contractText string) ([]scoring.F
 		}
 		prompt := fmt.Sprintf(
 			"Ketentuan hukum:\n%s %s — %s: %s\n\nApakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? "+
-				"Balas HANYA JSON: {\"melanggar\":true|false,\"section\":\"Pasal N\",\"kutipan\":\"kutipan harfiah maks 200 karakter\",\"deskripsi\":\"penjelasan singkat\"}.\n\nKONTRAK:\n%s",
+				"Balas HANYA JSON: {\"melanggar\":true|false,\"section\":\"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)\",\"kutipan\":\"kutipan harfiah maks 200 karakter\",\"deskripsi\":\"penjelasan singkat\"}.\n\nKONTRAK:\n%s",
 			p.DasarHukum, p.Pasal, p.Judul, p.Ringkasan, contractText)
 		resp, err := a.Client.Complete(ctx, llm.Request{
 			System:      "Anda pemeriksa kepatuhan kontrak kerja Indonesia. Jawab presisi, hanya JSON.",
@@ -67,7 +67,8 @@ func (a *Agent) Checklist(ctx context.Context, contractText string) ([]scoring.F
 		})
 		addUsage(&usage, resp.Usage)
 		if err != nil {
-			return findings, usage, traj, err
+			traj = append(traj, TrajStep{Label: "checklist:" + p.ID, Prompt: prompt, Outcome: "ERROR (skipped): " + err.Error()})
+			continue // a single failed call must not kill the stage
 		}
 		f, outcome := a.parseSingle(resp.Text, p)
 		traj = append(traj, TrajStep{Label: "checklist:" + p.ID, Prompt: prompt, Response: resp.Text, Outcome: outcome})
@@ -114,7 +115,8 @@ func (a *Agent) Absence(ctx context.Context, contractText string) ([]scoring.Fin
 		})
 		addUsage(&usage, resp.Usage)
 		if err != nil {
-			return findings, usage, traj, err
+			traj = append(traj, TrajStep{Label: "absence:" + p.ID, Prompt: prompt, Outcome: "ERROR (skipped): " + err.Error()})
+			continue // a single failed call must not kill the stage
 		}
 		var r struct {
 			Memenuhi  bool   `json:"memenuhi"`
@@ -214,14 +216,12 @@ func (a *Agent) parseSingle(text string, p statutes.Provision) (*scoring.Finding
 	}, "TEMUAN: melanggar"
 }
 
-// extractJSONObject returns the outermost {...} block in s, or "{}" if none.
+// extractJSONObject returns the first balanced, sanitized {...} block, or "{}".
 func extractJSONObject(s string) string {
-	start := strings.Index(s, "{")
-	end := strings.LastIndex(s, "}")
-	if start < 0 || end < 0 || end < start {
-		return "{}"
+	if o := balancedJSON(s, '{', '}'); o != "" {
+		return sanitizeJSON(o)
 	}
-	return s[start : end+1]
+	return "{}"
 }
 
 // RenderTrajectory produces the markdown trajectory for a stage run on one

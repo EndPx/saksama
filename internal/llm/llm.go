@@ -185,6 +185,11 @@ func (c *Client) Complete(ctx context.Context, req Request) (Response, error) {
 			return Response{}, fmt.Errorf("llm: decode: %w (body: %s)", err, truncate(respBody))
 		}
 		if ar.Error != nil {
+			// Free models often return a rate-limit inside a 200 body; retry those.
+			if isRateLimit(ar.Error.Code, ar.Error.Message) {
+				lastErr = fmt.Errorf("llm: rate limited: %s", ar.Error.Message)
+				continue
+			}
 			return Response{}, fmt.Errorf("llm: api error: %s", ar.Error.Message)
 		}
 		if len(ar.Choices) == 0 {
@@ -208,4 +213,21 @@ func truncate(b []byte) string {
 		return string(b[:max]) + "..."
 	}
 	return string(b)
+}
+
+// isRateLimit reports whether an in-body error looks like a rate limit (HTTP
+// 429), so the caller can retry instead of failing hard.
+func isRateLimit(code any, msg string) bool {
+	switch v := code.(type) {
+	case float64:
+		if int(v) == 429 {
+			return true
+		}
+	case string:
+		if v == "429" || strings.Contains(v, "429") {
+			return true
+		}
+	}
+	m := strings.ToLower(msg)
+	return strings.Contains(m, "rate-limit") || strings.Contains(m, "rate limit")
 }

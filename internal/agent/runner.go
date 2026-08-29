@@ -65,7 +65,10 @@ func (a *Agent) RunBaseline(ctx context.Context, contracts []Contract) (scoring.
 		}
 		findings, u2, err := a.Normalize(ctx, free)
 		if err != nil {
-			return res, fmt.Errorf("normalize %s: %w", c.ID, err)
+			// A weak baseline that cannot emit structured output scores as
+			// "no findings" rather than aborting the whole run.
+			fmt.Fprintf(os.Stderr, "warn: normalize %s: %v (treating as no findings)\n", c.ID, err)
+			findings = nil
 		}
 		normUsage.Add(toScoringUsage(u2))
 		res.Contracts = append(res.Contracts, scoring.ContractResult{
@@ -99,7 +102,8 @@ func (a *Agent) RunStructured(ctx context.Context, contracts []Contract, perSect
 			findings, u, err = a.Structured(ctx, c.Text)
 		}
 		if err != nil {
-			return res, fmt.Errorf("%s %s: %w", stage, c.ID, err)
+			fmt.Fprintf(os.Stderr, "warn: %s %s: %v (treating as no findings)\n", stage, c.ID, err)
+			findings = nil
 		}
 		res.Contracts = append(res.Contracts, scoring.ContractResult{
 			ContractID: c.ID, Findings: findings, Usage: toScoringUsage(u), DurationMs: durMs(start),

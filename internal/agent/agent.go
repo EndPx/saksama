@@ -7,6 +7,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/EndPx/saksama/internal/contract"
@@ -14,6 +15,27 @@ import (
 	"github.com/EndPx/saksama/internal/scoring"
 	"github.com/EndPx/saksama/internal/statutes"
 )
+
+var (
+	reLineComment   = regexp.MustCompile(`(?m)//[^\n]*$`)
+	reTrailingComma = regexp.MustCompile(`,(\s*[}\]])`)
+)
+
+// sanitizeJSON removes the two most common things models add to otherwise-valid
+// JSON: // line comments and trailing commas before a closing bracket.
+func sanitizeJSON(s string) string {
+	s = reLineComment.ReplaceAllString(s, "")
+	s = reTrailingComma.ReplaceAllString(s, "$1")
+	return strings.TrimSpace(s)
+}
+
+func snippet(s string) string {
+	s = strings.TrimSpace(s)
+	if len(s) > 400 {
+		return s[:400] + "..."
+	}
+	return s
+}
 
 // Agent runs reviews against a fixed legal corpus using an LLM client.
 type Agent struct {
@@ -45,15 +67,50 @@ func (a *Agent) validIDs() map[string]bool {
 	return m
 }
 
-// extractJSONArray returns the outermost [...] block in s, or "" if none.
-func extractJSONArray(s string) string {
-	start := strings.Index(s, "[")
-	end := strings.LastIndex(s, "]")
-	if start < 0 || end < 0 || end < start {
-		return ""
+// balancedJSON returns the LAST top-level balanced open..close block in s,
+// respecting string literals and escapes, or "" if none. Reasoning models often
+// print example JSON while thinking and then emit the real answer last, so the
+// last complete top-level block is the one to trust. Tolerates code fences and
+// surrounding prose.
+func balancedJSON(s string, open, close byte) string {
+	depth, inStr, esc := 0, false, false
+	start := -1
+	last := ""
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		if inStr {
+			switch {
+			case esc:
+				esc = false
+			case c == '\\':
+				esc = true
+			case c == '"':
+				inStr = false
+			}
+			continue
+		}
+		switch c {
+		case '"':
+			inStr = true
+		case open:
+			if depth == 0 {
+				start = i
+			}
+			depth++
+		case close:
+			if depth > 0 {
+				depth--
+				if depth == 0 && start >= 0 {
+					last = s[start : i+1]
+				}
+			}
+		}
 	}
-	return s[start : end+1]
+	return last
 }
+
+// extractJSONArray returns the first balanced, sanitized [...] block, or "".
+func extractJSONArray(s string) string { return sanitizeJSON(balancedJSON(s, '[', ']')) }
 
 // rawFinding is the JSON shape the model is asked to emit.
 type rawFinding struct {
@@ -74,7 +131,7 @@ func (a *Agent) parseFindings(text string) ([]scoring.Finding, error) {
 	}
 	var raw []rawFinding
 	if err := json.Unmarshal([]byte(arr), &raw); err != nil {
-		return nil, fmt.Errorf("decode findings: %w", err)
+		return nil, fmt.Errorf("decode findings: %w; raw: %s", err, snippet(arr))
 	}
 	valid := a.validIDs()
 	var out []scoring.Finding
@@ -95,8 +152,18 @@ func (a *Agent) parseFindings(text string) ([]scoring.Finding, error) {
 }
 
 const jsonSchemaHint = `Balas HANYA dengan array JSON valid, tanpa teks lain, dengan bentuk:
-[{"statute_id":"<salah satu id yang valid>","section":"Pasal N atau ABSENT","tier":"<tier>","deteksi":"<ada_klausa|tidak_ada_klausa|konteks>","kutipan":"kutipan harfiah dari kontrak, maks 200 karakter, kosong bila deteksi tidak_ada_klausa","deskripsi":"penjelasan singkat"}]
-Jika tidak ada temuan, balas dengan array kosong: []`
+[{"statute_id":"PP35-12","section":"Pasal N atau ABSENT","tier":"batal_demi_hukum","deteksi":"ada_klausa","kutipan":"kutipan harfiah dari kontrak, maks 200 karakter, kosong bila deteksi tidak_ada_klausa","deskripsi":"penjelasan singkat"}]
+"section" adalah nomor pasal DI DALAM KONTRAK yang ditinjau tempat masalah berada (mis. "Pasal 4"), BUKAN nomor pasal peraturan hukum. Gunakan "ABSENT" bila deteksi bernilai tidak_ada_klausa.
+Tulis nilai konkret. JANGAN menulis teks placeholder seperti "[list of ...]" atau "<...>". Jika tidak ada temuan, balas persis: []`
+
+// idList returns the valid statute ids as a compact comma-separated string.
+func (a *Agent) idList() string {
+	ids := make([]string, len(a.Corpus.Provisions))
+	for i, p := range a.Corpus.Provisions {
+		ids[i] = p.ID
+	}
+	return strings.Join(ids, ", ")
+}
 
 // Baseline runs the single free-form review call (no statutes, no schema).
 func (a *Agent) Baseline(ctx context.Context, contractText string) (string, llm.Usage, error) {
@@ -115,7 +182,8 @@ func (a *Agent) Baseline(ctx context.Context, contractText string) (string, llm.
 // Normalize converts free-form baseline text into structured findings. This
 // call is tracked separately and never counted as part of the solution cost.
 func (a *Agent) Normalize(ctx context.Context, freeform string) ([]scoring.Finding, llm.Usage, error) {
-	sys := "Ubah teks tinjauan bebas menjadi array JSON temuan. Gunakan hanya id statute valid berikut:\n" + a.catalog() + "\n" + jsonSchemaHint
+	sys := "Anda mengubah catatan tinjauan bebas menjadi array JSON temuan pelanggaran kontrak kerja. " +
+		"Gunakan HANYA id statute berikut, abaikan hal lain: " + a.idList() + ".\n" + jsonSchemaHint
 	resp, err := a.Client.Complete(ctx, llm.Request{
 		System:      sys,
 		Messages:    []llm.Message{{Role: "user", Content: freeform}},
