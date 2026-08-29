@@ -1,0 +1,9 @@
+contract_id: c03
+jenis: PKWT
+skala_usaha: umum
+findings: []
+# Challenging case. The 6-year term looks like a breach of the 5-year cap
+# (PP35-8), but that cap applies only to term-based PKWT (Pasal 5 ayat 1).
+# This PKWT is based on completion of specific work (Pasal 9), which has no
+# 5-year ceiling, so there is no duration violation. A reactive baseline is
+# expected to flag PP35-8 here as a false positive.
