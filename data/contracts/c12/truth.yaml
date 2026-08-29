@@ -1,0 +1,18 @@
+contract_id: c12
+jenis: PKWT
+skala_usaha: umum
+findings:
+  - finding_id: c12-f1
+    statute_id: PP35-12
+    section: "Pasal 3"
+    tier: batal_demi_hukum
+    deteksi: ada_klausa
+    cross_section: false
+    catatan: PKWT mensyaratkan masa percobaan 3 bulan, yang batal demi hukum.
+  - finding_id: c12-f2
+    statute_id: UU13-60-2
+    section: "Pasal 4"
+    tier: batal_demi_hukum
+    deteksi: ada_klausa
+    cross_section: false
+    catatan: Upah masa percobaan 70 persen dan berada di bawah upah minimum yang berlaku.
