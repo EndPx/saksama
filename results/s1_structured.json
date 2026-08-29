@@ -10,7 +10,7 @@
         "output_tokens": 1,
         "cost_usd": 0
       },
-      "duration_ms": 3086
+      "duration_ms": 2563
     },
     {
       "contract_id": "c02",
@@ -20,120 +20,17 @@
         "output_tokens": 1,
         "cost_usd": 0
       },
-      "duration_ms": 2803
+      "duration_ms": 1441
     },
     {
       "contract_id": "c03",
-      "findings": [
-        {
-          "statute_id": "PP35-12",
-          "section": "Pasal 5",
-          "deskripsi": "Klausul menyatakan tidak ada masa percobaan, sehingga tidak melanggar Pasal 12 PP 35/2021.",
-          "tier": "batal_demi_hukum",
-          "deteksi": "ada_klausa",
-          "kutipan": "Perjanjian ini tidak mensyaratkan masa percobaan."
-        },
-        {
-          "statute_id": "UU13-60-1",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak PKWT ini tidak mengatur masa percobaan sehingga tidak ada pelanggaran batas 3 bulan untuk PKWTT.",
-          "tier": "batal_demi_hukum",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "UU13-60-2",
-          "section": "ABSENT",
-          "deskripsi": "Tidak diatur masa percobaan, sehingga ketentuan upah minimum selama masa percobaan tidak relevan.",
-          "tier": "batal_demi_hukum",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-4-2",
-          "section": "Pasal 1",
-          "deskripsi": "Pekerjaan Site Engineer untuk proyek jembatan memiliki sifat pekerjaan yang bersifat tetap dan berlangsung terus-menerus di perusahaan konstruksi, sehingga penggunaan PKWT berdasarkan selesainya pekerjaan patut diragukan kesesuaiannya dengan sifat pekerjaan.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "konteks",
-          "kutipan": "Perjanjian ini merupakan PKWT yang didasarkan pada selesainya suatu pekerjaan tertentu"
-        },
-        {
-          "statute_id": "PP35-8",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak PKWT berdasarkan selesainya pekerjaan (Pasal 9 PP 35/2021), bukan berdasarkan jangka waktu, sehingga batas 5 tahun tidak berlaku.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-13",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak telah memuat seluruh 9 unsur minimum PKWT: nama/alamat perusahaan dan jenis usaha (pembukaan), identitas pekerja (pembukaan), jabatan dan tempat pekerjaan (Pasal 4), besaran dan cara pembayaran upah (Pasal 5), hak dan kewajiban (Pasal 7), mulai dan jangka waktu berlakunya PKWT (Pasal 1, 2, 3), tempat dan tanggal dibuat (Pasal 11), serta tanda tangan para pihak (Pasal 11).",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-14",
-          "section": "Pasal 9",
-          "deskripsi": "Klausul pencatatan daring dalam waktu 3 hari kerja telah ada, sehingga tidak ada pelanggaran.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-15",
-          "section": "Pasal 8",
-          "deskripsi": "Klausul uang kompensasi telah diatur dengan merujuk pada PP 35/2021, sehingga kewajiban pemberian kompensasi telah diakomodasi.",
-          "tier": "sanksi_administratif",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-16",
-          "section": "Pasal 8",
-          "deskripsi": "Klausul kompensasi merujuk pada PP 35/2021 secara umum, namun tidak merinci rumus proporsional dan tidak menyatakan bahwa pekerja dengan masa kerja kurang dari 1 bulan tidak berhak atas kompensasi. Perlu perincian eksplisit untuk memenuhi Pasal 16.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "ada_klausa",
-          "kutipan": "PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan Peraturan Pemerintah Nomor 35 Tahun 2021."
-        },
-        {
-          "statute_id": "PP35-17",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak tidak mengatur kewajiban pengusaha memberikan uang kompensasi bila hubungan kerja diakhiri lebih awal oleh salah satu pihak, padahal Pasal 17 PP 35/2021 menetapkan kewajiban tersebut tetap berlaku.",
-          "tier": "sanksi_administratif",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-26-31",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak tidak mengatur ketentuan kerja lembur (batas 4 jam/hari dan 18 jam/minggu serta perhitungan 1,5x dan 2x upah sejam). Meskipun Pasal 6 mengatur waktu kerja, pengaturan lembur tidak diatur secara eksplisit.",
-          "tier": "sanksi_administratif",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-27-5",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak tidak mengatur golongan jabatan yang dikecualikan dari upah lembur, sehingga pengecualian tidak berlaku dan pengusaha tetap wajib membayar upah lembur sesuai PP 35/2021.",
-          "tier": "batal_demi_hukum",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "MK168-79-2b",
-          "section": "Pasal 6",
-          "deskripsi": "Klausul telah memenuhi Putusan MK 168/PUU-XXI/2023 dengan memberikan 2 hari istirahat mingguan untuk pola 5 hari kerja, sehingga tidak ada pelanggaran.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "ada_klausa",
-          "kutipan": "Waktu kerja adalah 5 (lima) hari kerja dalam seminggu dengan 2 (dua) hari istirahat mingguan"
-        },
-        {
-          "statute_id": "SE-M5-2025",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak tidak memuat klausul penahanan ijazah atau dokumen pribadi sebagai jaminan bekerja. Perlu dicatat bahwa Surat Edaran ini bersifat kebijakan dan tidak memiliki daya ikat serta sanksi hukum.",
-          "tier": "pedoman_kebijakan",
-          "deteksi": "tidak_ada_klausa"
-        }
-      ],
+      "findings": null,
       "usage": {
         "input_tokens": 2774,
-        "output_tokens": 1572,
+        "output_tokens": 1,
         "cost_usd": 0
       },
-      "duration_ms": 11214
+      "duration_ms": 2231
     },
     {
       "contract_id": "c04",
@@ -141,7 +38,7 @@
         {
           "statute_id": "UU13-60-1",
           "section": "Pasal 4",
-          "deskripsi": "Masa percobaan 6 bulan dalam PKWTT melebihi batas maksimal 3 bulan. Kelebihan 3 bulan dihitung sebagai masa kerja dan tidak berkekuatan hukum.",
+          "deskripsi": "Masa percobaan PKWTT melebihi batas maksimum 3 bulan; kelebihan 3 bulan dihitung sebagai masa kerja.",
           "tier": "batal_demi_hukum",
           "deteksi": "ada_klausa",
           "kutipan": "PIHAK KEDUA wajib menjalani masa percobaan kerja selama 6 (enam) bulan terhitung sejak tanggal mulai bekerja. Pengangkatan sebagai pekerja tetap dilakukan setelah masa percobaan tersebut dinilai berhasil."
@@ -149,275 +46,107 @@
         {
           "statute_id": "MK168-79-2b",
           "section": "Pasal 5",
-          "deskripsi": "Klausul sudah menyatakan 5 hari kerja dengan 2 hari istirahat mingguan, sehingga telah memenuhi Putusan MK 168/PUU-XXI/2023. Tidak ditemukan pelanggaran.",
+          "deskripsi": "Pola 5 hari kerja wajib memberikan 2 hari istirahat mingguan. Kontrak telah menyebut 2 hari istirahat, sehingga klausul ini telah sesuai dengan Putusan MK 168/PUU-XXI/2023 — tidak ada pelanggaran.",
           "tier": "melanggar_tanpa_sanksi",
           "deteksi": "ada_klausa",
           "kutipan": "Waktu kerja adalah 5 (lima) hari kerja dalam seminggu dengan 2 (dua) hari istirahat mingguan."
-        },
-        {
-          "statute_id": "PP35-13",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak PKWTT tidak wajib tunduk pada 9 hal minimum Pasal 13 PP 35/2021 (yang hanya mengatur PKWT). Namun, kontrak juga tidak memuat hak dan kewajiban pekerja selama hubungan kerja (misalnya hak cuti, perlindungan, dll.) yang seharusnya diatur dalam perjanjian kerja PKWTT.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-14",
-          "section": "ABSENT",
-          "deskripsi": "Kewajiban pencatatan daring berlaku untuk PKWT, bukan PKWTT. Pasal ini tidak berlaku untuk kontrak PKWTT ini.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-15",
-          "section": "ABSENT",
-          "deskripsi": "Kewajiban uang kompensasi berlaku untuk PKWT, bukan PKWTT. Pasal ini tidak berlaku untuk kontrak PKWTT ini.",
-          "tier": "sanksi_administratif",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-16",
-          "section": "ABSENT",
-          "deskripsi": "Ketentuan besaran uang kompensasi hanya berlaku untuk PKWT. Kontrak ini merupakan PKWTT sehingga tidak tunduk pada Pasal 16 PP 35/2021.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-17",
-          "section": "ABSENT",
-          "deskripsi": "Kompensasi atas pengakhiran hubungan kerja sebelum jangka waktu berlaku untuk PKWT, tidak relevan dengan PKWTT.",
-          "tier": "sanksi_administratif",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-26-31",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak tidak mengatur ketentuan kerja lembur (batas waktu dan perhitungan upah lembur). Tidak ada klausa spesifik yang melanggar, namun ketiadaan pengaturan lembur perlu dilengkapi.",
-          "tier": "sanksi_administratif",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-27-5",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak tidak mengatur golongan jabatan yang dikecualikan dari upah lembur, sehingga pengecualian lembur tidak berlaku dan pengusaha wajib membayar upah lembur sesuai Pasal 26.",
-          "tier": "batal_demi_hukum",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "SE-M5-2025",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak tidak memuat klausa penahanan ijazah atau dokumen pribadi pekerja sebagai jaminan. Tidak ditemukan pelanggaran. Catatan: SE Menaker M/5/2025 bukan peraturan perundang-undangan yang mengikat dan tidak memiliki kekuatan sanksi.",
-          "tier": "pedoman_kebijakan",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-4-2",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak ini merupakan PKWTT, sehingga ketentuan PKWT untuk pekerjaan bersifat tetap tidak berlaku. Status hubungan kerja tetap (PKWTT) justru merupakan bentuk yang tepat untuk pekerjaan Staf Operasional Gudang yang bersifat tetap.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "konteks"
-        },
-        {
-          "statute_id": "PP35-8",
-          "section": "ABSENT",
-          "deskripsi": "Ketentuan batas jangka waktu PKWT maksimal 5 tahun tidak berlaku untuk PKWTT karena PKWTT tidak memiliki batas waktu tertentu.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-12",
-          "section": "ABSENT",
-          "deskripsi": "Larangan masa percobaan dalam PKWT tidak berlaku di sini karena kontrak ini adalah PKWTT. Namun, masa percobaan 6 bulan tetap melanggar Pasal 60 ayat (1) UU 13/2003 (sudah dilaporkan di UU13-60-1).",
-          "tier": "batal_demi_hukum",
-          "deteksi": "tidak_ada_klausa"
         }
       ],
       "usage": {
         "input_tokens": 2513,
-        "output_tokens": 1170,
+        "output_tokens": 236,
         "cost_usd": 0
       },
-      "duration_ms": 8976
+      "duration_ms": 2743
     },
     {
       "contract_id": "c05",
-      "findings": null,
-      "usage": {
-        "input_tokens": 2413,
-        "output_tokens": 1,
-        "cost_usd": 0
-      },
-      "duration_ms": 1238
-    },
-    {
-      "contract_id": "c06",
       "findings": [
-        {
-          "statute_id": "PP35-26-31",
-          "section": "Pasal 5",
-          "deskripsi": "Pasal 5 mengecualikan pekerja dari upah lembur tanpa dasar golongan jabatan yang diatur dalam perjanjian. Pengecualian lembur hanya sah bagi golongan jabatan tertentu; tanpa pengaturan demikian, pengusaha tetap wajib membayar upah lembur sesuai Pasal 31.",
-          "tier": "sanksi_administratif",
-          "deteksi": "ada_klausa",
-          "kutipan": "jabatan PIHAK KEDUA tidak berhak atas upah kerja lembur. Segala pekerjaan yang dilakukan di luar jam kerja dianggap bagian dari tanggung jawab jabatan dan telah termasuk dalam upah bulanan."
-        },
-        {
-          "statute_id": "PP35-27-5",
-          "section": "Pasal 5",
-          "deskripsi": "Kontrak tidak mengatur golongan jabatan yang dikecualikan dari upah lembur dalam perjanjian kerja, peraturan perusahaan, atau PKB. Akibatnya, klausul pengecualian lembur batal demi hukum dan pengusaha wajib membayar upah lembur.",
-          "tier": "batal_demi_hukum",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-4-2",
-          "section": "Pasal 1",
-          "deskripsi": "Jabatan Staf Merchandising pada perusahaan perdagangan ritel yang bersifat tetap (perusahaan memiliki kantor tetap di Jakarta Pusat dan usaha ritel berjalan terus-menerus) tidak memenuhi kriteria pekerjaan yang bersifat sementara atau pekerjaan tertentu. PKWT atas pekerjaan tetap melanggar Pasal 4 ayat (2) PP 35/2021.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "konteks",
-          "kutipan": "PIHAK KEDUA diterima bekerja pada jabatan Staf Merchandising dan ditempatkan di kantor PIHAK PERTAMA di Jakarta Pusat."
-        },
-        {
-          "statute_id": "PP35-15",
-          "section": "Pasal 7",
-          "deskripsi": "Klausul kompensasi tidak menyebut secara eksplisit kewajiban kompensasi bagi pekerja dengan masa kerja paling sedikit 1 bulan, dan tidak memuat rumus besaran sehingga membuka ruang tidak dipenuhinya kewajiban kompensasi sesuai Pasal 15 PP 35/2021.",
-          "tier": "sanksi_administratif",
-          "deteksi": "ada_klausa",
-          "kutipan": "Pada saat berakhirnya PKWT ini, PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan peraturan perundang-undangan."
-        }
-      ],
-      "usage": {
-        "input_tokens": 2545,
-        "output_tokens": 591,
-        "cost_usd": 0
-      },
-      "duration_ms": 5348
-    },
-    {
-      "contract_id": "c07",
-      "findings": [
-        {
-          "statute_id": "MK168-79-2b",
-          "section": "Pasal 4",
-          "deskripsi": "Pola 5 hari kerja dalam seminggu wajib memberikan 2 hari istirahat mingguan, namun kontrak hanya memberikan 1 hari istirahat (Minggu).",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "ada_klausa",
-          "kutipan": "Waktu kerja adalah 5 (lima) hari kerja dalam seminggu, Senin sampai Jumat, pukul 08.00 sampai 17.00, dengan 1 (satu) hari istirahat mingguan yaitu hari Minggu."
-        },
         {
           "statute_id": "PP35-13",
           "section": "ABSENT",
-          "deskripsi": "Kontrak tidak memuat secara eksplisit ketentuan Pasal 13 PP 35/2021 secara lengkap; namun beberapa unsur tercakup sebagian di Pasal 1, 2, 3, dan 5 (jangka waktu, jabatan, tempat, upah, hak-kewajiban, tanggal/tempat penandatanganan, tanda tangan). Unsur 'jenis usaha' perusahaan tidak dicantumkan secara eksplisit dalam klausul kontrak.",
+          "deskripsi": "PKWT tidak memuat beberapa unsur wajib secara eksplisit: alamat perusahaan lengkap dan jenis usaha (Pasal 1 hanya menyebut nama CV dan jalan), jabatan/jenis pekerjaan (Pasal 2 ada), tempat pekerjaan (tidak ada), besaran dan cara pembayaran upah (cara pembayaran tidak diatur), mulai dan jangka waktu (Pasal 1 ada), tempat dan tanggal PKWT dibuat (tidak ada). Beberapa unsur sudah ada tetapi tidak lengkap.",
           "tier": "melanggar_tanpa_sanksi",
           "deteksi": "tidak_ada_klausa"
         },
         {
           "statute_id": "PP35-14",
           "section": "ABSENT",
-          "deskripsi": "Kontrak tidak memuat klausul kewajiban pencatatan PKWT secara daring paling lama 3 hari kerja setelah penandatanganan.",
+          "deskripsi": "Tidak ada klausa mengenai kewajiban pencatatan PKWT secara daring paling lama 3 hari kerja sejak penandatanganan.",
           "tier": "melanggar_tanpa_sanksi",
           "deteksi": "tidak_ada_klausa"
         },
         {
           "statute_id": "PP35-15",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak tidak memuat klausul eksplisit mengenai kewajiban pengusaha memberikan uang kompensasi kepada pekerja pada berakhirnya PKWT bagi pekerja dengan masa kerja paling sedikit 1 bulan. Pasal 6 hanya menyebut 'sesuai ketentuan peraturan perundang-undangan' tanpa menegaskan hak pekerja.",
-          "tier": "sanksi_administratif",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-16",
           "section": "Pasal 6",
-          "deskripsi": "Pasal 6 menyebut kompensasi 'sesuai peraturan perundang-undangan' tanpa merinci besaran (1 bulan upah untuk PKWT \u003e= 12 bulan atau proporsional). Tidak ada kepastian besaran hak kompensasi pekerja dalam kontrak.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "ada_klausa",
-          "kutipan": "Pada saat berakhirnya PKWT ini, PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan peraturan perundang-undangan."
-        },
-        {
-          "statute_id": "PP35-17",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak tidak mengatur kewajiban pengusaha tetap memberikan uang kompensasi apabila salah satu pihak mengakhiri hubungan kerja sebelum berakhirnya jangka waktu PKWT.",
+          "deskripsi": "Klausa kompensasi bersifat kabur dan tidak menegaskan kewajiban pengusaha memberikan uang kompensasi bagi pekerja dengan masa kerja paling sedikit 1 bulan secara terus-menerus; rujukan ke 'ketentuan peraturan perundang-undangan' tidak memenuhi syarat eksplisit sebagaimana diatur PP 35/2021.",
           "tier": "sanksi_administratif",
-          "deteksi": "tidak_ada_klausa"
+          "deteksi": "ada_klausa",
+          "kutipan": "PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan peraturan perundang-undangan."
         },
         {
           "statute_id": "PP35-26-31",
           "section": "ABSENT",
-          "deskripsi": "Kontrak tidak mengatur ketentuan kerja lembur (batas waktu lembur 4 jam/hari dan 18 jam/minggu, serta perhitungan upah lembur 1,5x jam pertama dan 2x jam berikutnya, dengan upah sejam = 1/173 upah sebulan).",
+          "deskripsi": "Tidak ada klausa mengenai batas waktu kerja lembur (maks 4 jam/hari dan 18 jam/minggu) dan perhitungan upah lembur (1,5x jam pertama, 2x jam berikutnya; upah sejam = 1/173 upah sebulan).",
           "tier": "sanksi_administratif",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-27-5",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak tidak mengatur golongan jabatan yang dikecualikan dari upah lembur, sehingga pengecualian lembur tidak berlaku dan pengusaha tetap wajib membayar upah lembur bila ada kerja lembur.",
-          "tier": "batal_demi_hukum",
           "deteksi": "tidak_ada_klausa"
         }
       ],
       "usage": {
-        "input_tokens": 2525,
-        "output_tokens": 980,
+        "input_tokens": 2413,
+        "output_tokens": 441,
         "cost_usd": 0
       },
-      "duration_ms": 7798
+      "duration_ms": 4578
+    },
+    {
+      "contract_id": "c06",
+      "findings": null,
+      "usage": {
+        "input_tokens": 2545,
+        "output_tokens": 1,
+        "cost_usd": 0
+      },
+      "duration_ms": 1894
+    },
+    {
+      "contract_id": "c07",
+      "findings": null,
+      "usage": {
+        "input_tokens": 2525,
+        "output_tokens": 1,
+        "cost_usd": 0
+      },
+      "duration_ms": 1402
     },
     {
       "contract_id": "c08",
       "findings": [
         {
-          "statute_id": "PP35-12",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak tidak mencantumkan klausul masa percobaan. Tidak ada pelanggaran terhadap Pasal 12 PP 35/2021 karena PKWT memang dilarang mensyaratkan masa percobaan dan kontrak tidak memuatnya.",
-          "tier": "batal_demi_hukum",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-13",
-          "section": "Pasal 6",
-          "deskripsi": "Kontrak tidak memuat secara lengkap sembilan hal minimum yang wajib dimuat dalam PKWT. Pasal 6 hanya menyebut kewajiban membayar upah dan mengikutsertakan jaminan sosial, tetapi tidak memuat secara eksplisit dan terperinci hak dan kewajiban masing-masing pihak, serta tidak memuat klausul tempat dan tanggal pembuatan PKWT (hanya tercantum di bagian penutup), dan informasi tempat pekerjaan (Pasal 2 menyebut Bekasi tetapi tidak dijadikan klausa dalam Pasal 6). Sub-unsur seperti nama, alamat perusahaan, jenis usaha (tercantum di preamble), nama/jenis kelamin/umur/alamat pekerja (tercantum di preamble), jabatan (Pasal 2), besaran dan cara pembayaran upah (Pasal 3), mulai dan jangka waktu PKWT (Pasal 1), tanda tangan para pihak (tercantum), dan tempat/tanggal dibuat (Pasal 9) sebagian besar terpenuhi walaupun penempatannya tidak sistematis.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-14",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak tidak memuat klausul mengenai kewajiban pencatatan PKWT secara daring paling lama 3 hari kerja sejak ditandatangani, sehingga tidak ada jaminan kepatuhan terhadap Pasal 14 PP 35/2021.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
           "statute_id": "SE-M5-2025",
           "section": "Pasal 4",
-          "deskripsi": "Pasal 4 mensyaratkan penyerahan ijazah asli sebagai jaminan kerja. SE Menaker M/5/HK.04.00/V/2025 melarang pemberi kerja menahan ijazah dan dokumen pribadi pekerja sebagai jaminan, kecuali diperoleh melalui pendidikan/pelatihan yang dibiayai pemberi kerja. Kontrak secara eksplisit menyatakan penyerahan tidak terkait program pendidikan/pelatihan, sehingga masuk kategori yang dilarang. Catatan: SE ini bukan peraturan perundang-undangan yang mengikat dan tidak memiliki sanksi, sehingga daya paksanya terbatas; klausa ini tidak serta-merta dinyatakan ilegal oleh peraturan.",
+          "deskripsi": "Kontrak mensyaratkan penyerahan ijazah asli sebagai jaminan kerja, yang dilarang oleh SE Menaker M/5/HK.04.00/V/2025. Namun perlu dicatat bahwa SE ini hanya bersifat pedoman kebijakan, bukan peraturan perundang-undangan yang mengikat, sehingga tidak memiliki daya paksa/sanksi hukum.",
           "tier": "pedoman_kebijakan",
           "deteksi": "ada_klausa",
-          "kutipan": "PIHAK KEDUA menyerahkan ijazah asli pendidikan terakhir kepada PIHAK PERTAMA untuk disimpan selama masa berlakunya Perjanjian ini. ... Penyerahan ijazah ini tidak berkaitan dengan program pendidikan atau pelatihan apa pun."
+          "kutipan": "PIHAK KEDUA menyerahkan ijazah asli pendidikan terakhir kepada PIHAK PERTAMA untuk disimpan selama masa berlakunya Perjanjian ini."
         }
       ],
       "usage": {
         "input_tokens": 2565,
-        "output_tokens": 723,
+        "output_tokens": 166,
         "cost_usd": 0
       },
-      "duration_ms": 7104
+      "duration_ms": 4431
     },
     {
       "contract_id": "c09",
-      "findings": [
-        {
-          "statute_id": "SE-M5-2025",
-          "section": "Pasal 4",
-          "deskripsi": "Klausul penahanan sertifikat kompetensi dari pelatihan berbiaya perusahaan termasuk pengecualian yang diatur dalam SE Menaker M/5/HK.04.00/V/2025, yaitu sah bila perjanjian kerja tertulis, pemberi kerja menjamin keamanan dokumen dan memberi ganti rugi bila rusak/hilang. Kontrak ini memenuhi syarat pengecualian (ada perjanjian pelatihan tertulis, jaminan keamanan, ganti rugi, dan pengembalian). Namun perlu dicatat bahwa SE ini bukan peraturan perundang-undangan dan tidak memiliki daya paksa/sanksi mengikat.",
-          "tier": "pedoman_kebijakan",
-          "deteksi": "ada_klausa",
-          "kutipan": "Sertifikat kompetensi yang diperoleh dari pelatihan tersebut disimpan oleh PIHAK PERTAMA selama masa berlakunya Perjanjian."
-        }
-      ],
+      "findings": null,
       "usage": {
         "input_tokens": 2584,
-        "output_tokens": 205,
+        "output_tokens": 1,
         "cost_usd": 0
       },
-      "duration_ms": 2889
+      "duration_ms": 1136
     },
     {
       "contract_id": "c10",
@@ -427,17 +156,33 @@
         "output_tokens": 1,
         "cost_usd": 0
       },
-      "duration_ms": 1434
+      "duration_ms": 2063
     },
     {
       "contract_id": "c11",
-      "findings": null,
+      "findings": [
+        {
+          "statute_id": "PP35-17",
+          "section": "Pasal 14",
+          "deskripsi": "Klausul ini menghilangkan kewajiban pengusaha membayar uang kompensasi apabila pekerja mengakhiri PKWT lebih awal, padahal Pasal 17 PP 35/2021 mewajibkan pengusaha tetap membayar uang kompensasi dihitung berdasarkan jangka waktu PKWT yang telah dijalani, siapa pun yang mengakhiri hubungan kerja.",
+          "tier": "sanksi_administratif",
+          "deteksi": "ada_klausa",
+          "kutipan": "Apabila PIHAK KEDUA mengundurkan diri sebelum jangka waktu Perjanjian berakhir, maka seluruh hak atas uang kompensasi sebagaimana dimaksud dalam Pasal 9 menjadi gugur dan tidak dapat dituntut dalam bentuk apa pun."
+        },
+        {
+          "statute_id": "PP35-13",
+          "section": "ABSENT",
+          "deskripsi": "Kontrak tidak memuat secara eksplisit besaran dan cara pembayaran upah rinci (hanya nominal bulanan, tidak mengatur komponen/rumus perhitungan), hak dan kewajiban pengusaha dan pekerja secara lengkap, serta tempat dan tanggal PKWT dibuat sebagai klausul tersendiri. Beberapa unsur Pasal 13 PP 35/2021 tidak tercakup.",
+          "tier": "melanggar_tanpa_sanksi",
+          "deteksi": "tidak_ada_klausa"
+        }
+      ],
       "usage": {
         "input_tokens": 2717,
-        "output_tokens": 1,
+        "output_tokens": 262,
         "cost_usd": 0
       },
-      "duration_ms": 1260
+      "duration_ms": 3599
     },
     {
       "contract_id": "c12",
@@ -445,7 +190,7 @@
         {
           "statute_id": "PP35-12",
           "section": "Pasal 3",
-          "deskripsi": "PKWT dilarang mensyaratkan masa percobaan. Masa percobaan yang tercantum dalam PKWT ini batal demi hukum dan masa kerja tetap dihitung sejak 1 September 2026.",
+          "deskripsi": "PKWT dilarang mensyaratkan masa percobaan. Masa percobaan dalam PKWT batal demi hukum dan masa kerja dihitung sejak awal.",
           "tier": "batal_demi_hukum",
           "deteksi": "ada_klausa",
           "kutipan": "PIHAK KEDUA wajib menjalani masa percobaan kerja selama 3 (tiga) bulan terhitung sejak tanggal mulai bekerja."
@@ -453,85 +198,26 @@
         {
           "statute_id": "UU13-60-2",
           "section": "Pasal 4",
-          "deskripsi": "Upah masa percobaan (Rp3.150.000) di bawah upah minimum kota Makassar sehingga upah dimaksud harus dinaikkan paling sedikit setingkat upah minimum yang berlaku.",
+          "deskripsi": "Upah selama masa percobaan di bawah upah minimum melanggar Pasal 60 ayat (2) UU 13/2003; namun karena masa percobaan sendiri sudah batal demi hukum berdasarkan PP 35/2021 Pasal 12, klausul ini menjadi tidak relevan diterapkan.",
           "tier": "batal_demi_hukum",
           "deteksi": "ada_klausa",
           "kutipan": "Selama masa percobaan, PIHAK KEDUA menerima upah sebesar 70 persen dari upah pokok tersebut, yaitu Rp3.150.000,00, yang berada di bawah upah minimum kota yang berlaku."
         },
         {
-          "statute_id": "MK168-79-2b",
-          "section": "Pasal 5",
-          "deskripsi": "Pasal 5 telah mencantumkan 5 hari kerja dengan 2 hari istirahat mingguan sehingga telah memenuhi putusan MK 168/PUU-XXI/2023; tidak ditemukan pelanggaran.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "ada_klausa",
-          "kutipan": "Waktu kerja adalah 5 (lima) hari kerja dalam seminggu dengan 2 (dua) hari istirahat mingguan."
-        },
-        {
-          "statute_id": "PP35-4-2",
-          "section": "Pasal 1",
-          "deskripsi": "Jabatan Staf Penjualan pada perusahaan distribusi barang konsumen bersifat pekerjaan tetap dan berkelanjutan, sehingga penggunaan PKWT berdasarkan jangka waktu patut dinilai tidak sesuai dengan sifat pekerjaan sebagaimana dimaksud Pasal 4 ayat (2) PP 35/2021.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "konteks",
-          "kutipan": "Perjanjian ini merupakan PKWT berdasarkan jangka waktu, berlaku selama 12 (dua belas) bulan sejak 1 September 2026 sampai dengan 31 Agustus 2027. ... Jabatan: Staf Penjualan ... distribusi barang konsumen."
-        },
-        {
-          "statute_id": "PP35-13",
-          "section": "ABSENT",
-          "deskripsi": "Kontrak tidak memuat secara eksplisit: (1) tempat dan tanggal perjanjian dibuat, (2) tanda tangan para pihak, (3) jenis usaha, (4) jenis kelamin, umur, dan alamat pekerja, (5) tempat pekerjaan, (6) cara pembayaran upah, (7) mulai dan jangka waktu berlakunya PKWT, (8) hak dan kewajiban pengusaha dan pekerja, (9) nama, alamat perusahaan, dan jenis usaha. Banyak di antaranya sebenarnya tercantum di bagian pembuka dan Pasal 1, 2, 4, 5, 6, dan 9, namun penempatannya tidak terstruktur sebagai 'muatan perjanjian'.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-14",
-          "section": "ABSENT",
-          "deskripsi": "Tidak terdapat klausul atau pernyataan mengenai kewajiban pencatatan PKWT secara daring paling lama 3 hari kerja sejak penandatanganan.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
           "statute_id": "PP35-15",
           "section": "Pasal 7",
-          "deskripsi": "Klausul hanya mengacu pada 'ketentuan peraturan perundang-undangan' tanpa menyatakan hak kompensasi secara eksplisit dan tanpa memenuhi kewajiban pemberian kompensasi bagi pekerja dengan masa kerja ≥ 1 bulan.",
+          "deskripsi": "Klausul hanya mengacu 'sesuai ketentuan peraturan perundang-undangan' tanpa merinci besaran dan proporsi uang kompensasi sebagaimana diatur PP 35/2021 Pasal 16, sehingga kurang memenuhi kepastian hukum.",
           "tier": "sanksi_administratif",
           "deteksi": "ada_klausa",
           "kutipan": "Pada saat berakhirnya PKWT ini, PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan peraturan perundang-undangan."
-        },
-        {
-          "statute_id": "PP35-16",
-          "section": "Pasal 7",
-          "deskripsi": "Kontrak PKWT 12 bulan mensyaratkan kompensasi 1 bulan upah, namun tidak dicantumkan besaran secara tegas (1 bulan upah) maupun rumus proporsional untuk masa kerja kurang/lebih dari 12 bulan.",
-          "tier": "melanggar_tanpa_sanksi",
-          "deteksi": "ada_klausa",
-          "kutipan": "Pada saat berakhirnya PKWT ini, PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan peraturan perundang-undangan."
-        },
-        {
-          "statute_id": "PP35-17",
-          "section": "ABSENT",
-          "deskripsi": "Tidak ada klausul mengenai kewajiban pemberian uang kompensasi apabila salah satu pihak mengakhiri hubungan kerja sebelum berakhirnya jangka waktu PKWT.",
-          "tier": "sanksi_administratif",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-26-31",
-          "section": "ABSENT",
-          "deskripsi": "Tidak diatur mengenai batas waktu kerja lembur (maks 4 jam/hari dan 18 jam/minggu) maupun perhitungan upah lembur (1,5x untuk jam pertama dan 2x untuk jam berikutnya, dengan upah sejam = 1/173 upah sebulan).",
-          "tier": "sanksi_administratif",
-          "deteksi": "tidak_ada_klausa"
-        },
-        {
-          "statute_id": "PP35-27-5",
-          "section": "ABSENT",
-          "deskripsi": "Tidak terdapat pengaturan mengenai golongan jabatan yang dikecualikan dari upah kerja lembur, sehingga pengusaha tetap wajib membayar upah lembur sesuai Pasal 26 dan Pasal 31 PP 35/2021.",
-          "tier": "batal_demi_hukum",
-          "deteksi": "tidak_ada_klausa"
         }
       ],
       "usage": {
         "input_tokens": 2573,
-        "output_tokens": 1470,
+        "output_tokens": 368,
         "cost_usd": 0
       },
-      "duration_ms": 11035
+      "duration_ms": 3551
     }
   ]
 }

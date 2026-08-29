@@ -10,7 +10,7 @@ _Prompt:_
 Ketentuan hukum:
 PP 35/2021 Pasal 12 — PKWT dilarang mensyaratkan masa percobaan: PKWT tidak dapat mensyaratkan adanya masa percobaan kerja. Apabila masa percobaan tetap disyaratkan dalam PKWT, masa percobaan tersebut batal demi hukum dan masa kerja pekerja tetap dihitung sejak awal.
 
-Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
+Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Jawab melanggar:true HANYA bila ada klausa spesifik dalam kontrak yang jelas melanggar ketentuan ini. Bila kontrak patuh, tidak menyinggung hal ini, atau ambigu, jawab melanggar:false. Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
 
 KONTRAK:
 # PERJANJIAN KERJA WAKTU TERTENTU (PKWT)
@@ -60,7 +60,7 @@ Andi Baso                             Nurul Aisyah
 _Response:_
 
 ```
-{"melanggar":true,"section":"Pasal 3","kutipan":"PIHAK KEDUA wajib menjalani masa percobaan kerja selama 3 (tiga) bulan terhitung sejak tanggal mulai bekerja.","deskripsi":"Pasal 3 mensyaratkan masa percobaan selama 3 bulan dalam PKWT, yang dilarang oleh PP 35/2021 Pasal 12. Klausa ini batal demi hukum dan masa kerja dihitung sejak awal."}
+{"melanggar":true,"section":"Pasal 3","kutipan":"PIHAK KEDUA wajib menjalani masa percobaan kerja selama 3 (tiga) bulan terhitung sejak tanggal mulai bekerja.","deskripsi":"Pasal 3 mensyaratkan masa percobaan selama 3 bulan dalam PKWT, yang dilarang oleh PP 35/2021 Pasal 12. Klausa ini batal demi hukum dan masa kerja harus dihitung sejak awal."}
 ```
 
 ## checklist:UU13-60-1
@@ -73,7 +73,7 @@ _Prompt:_
 Ketentuan hukum:
 UU 13/2003 Pasal 60 ayat (1) — PKWTT masa percobaan paling lama 3 bulan: PKWTT dapat mensyaratkan masa percobaan kerja paling lama 3 bulan. Ketentuan yang menetapkan masa percobaan lebih dari 3 bulan tidak berkekuatan hukum untuk kelebihannya, dan kelebihan waktu itu dihitung sebagai masa kerja.
 
-Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
+Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Jawab melanggar:true HANYA bila ada klausa spesifik dalam kontrak yang jelas melanggar ketentuan ini. Bila kontrak patuh, tidak menyinggung hal ini, atau ambigu, jawab melanggar:false. Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
 
 KONTRAK:
 # PERJANJIAN KERJA WAKTU TERTENTU (PKWT)
@@ -123,7 +123,7 @@ Andi Baso                             Nurul Aisyah
 _Response:_
 
 ```
-{"melanggar":false,"section":"Pasal 3","kutipan":"PIHAK KEDUA wajib menjalani masa percobaan kerja selama 3 (tiga) bulan terhitung sejak tanggal mulai bekerja.","deskripsi":"Masa percobaan ditetapkan 3 bulan, sesuai batas maksimal yang diperbolehkan Pasal 60 ayat (1) UU 13/2003."}
+{"melanggar":false,"section":"Pasal 3","kutipan":"PIHAK KEDUA wajib menjalani masa percobaan kerja selama 3 (tiga) bulan terhitung sejak tanggal mulai bekerja.","deskripsi":"Masa percobaan 3 bulan sesuai batas maksimal yang diperbolehkan Pasal 60 ayat (1) UU 13/2003."}
 ```
 
 ## checklist:UU13-60-2
@@ -136,7 +136,7 @@ _Prompt:_
 Ketentuan hukum:
 UU 13/2003 Pasal 60 ayat (2) — Upah masa percobaan tidak boleh di bawah upah minimum: Selama masa percobaan kerja, pengusaha dilarang membayar upah di bawah upah minimum yang berlaku di wilayah tempat pekerja bekerja.
 
-Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
+Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Jawab melanggar:true HANYA bila ada klausa spesifik dalam kontrak yang jelas melanggar ketentuan ini. Bila kontrak patuh, tidak menyinggung hal ini, atau ambigu, jawab melanggar:false. Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
 
 KONTRAK:
 # PERJANJIAN KERJA WAKTU TERTENTU (PKWT)
@@ -186,19 +186,12 @@ Andi Baso                             Nurul Aisyah
 _Response:_
 
 ```
-```json
-{
-  "melanggar": true,
-  "section": "Pasal 4",
-  "kutipan": "Selama masa percobaan, PIHAK KEDUA menerima upah sebesar 70 persen dari upah pokok tersebut, yaitu Rp3.150.000,00, yang berada di bawah upah minimum kota yang berlaku.",
-  "deskripsi": "Pasal 4 menetapkan upah masa percobaan hanya 70% dari upah pokok (Rp3.150.000), secara eksplisit menyatakan berada di bawah upah minimum kota. Ini melanggar Pasal 60 ayat (2) UU 13/2003 yang melarang pengusaha membayar upah di bawah upah minimum selama masa percobaan."
-}
-```
+{"melanggar":true,"section":"Pasal 4","kutipan":"Selama masa percobaan, PIHAK KEDUA menerima upah sebesar 70 persen dari upah pokok tersebut, yaitu Rp3.150.000,00, yang berada di bawah upah minimum kota yang berlaku.","deskripsi":"Klausul menetapkan upah masa percobaan 70% dari upah pokok (Rp3.150.000) dan secara eksplisit mengakui berada di bawah upah minimum kota, melanggar UU 13/2003 Pasal 60 ayat (2)."}
 ```
 
 ## checklist:PP35-4-2
 
-**Outcome:** TEMUAN: melanggar
+**Outcome:** tidak melanggar
 
 _Prompt:_
 
@@ -206,7 +199,7 @@ _Prompt:_
 Ketentuan hukum:
 PP 35/2021 Pasal 4 ayat (2) — PKWT tidak untuk pekerjaan bersifat tetap: PKWT didasarkan pada jangka waktu atau selesainya suatu pekerjaan tertentu, dan tidak dapat diadakan untuk pekerjaan yang bersifat tetap. Penilaian ini bergantung pada sifat pekerjaan, bukan semata-mata bunyi klausa.
 
-Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
+Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Jawab melanggar:true HANYA bila ada klausa spesifik dalam kontrak yang jelas melanggar ketentuan ini. Bila kontrak patuh, tidak menyinggung hal ini, atau ambigu, jawab melanggar:false. Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
 
 KONTRAK:
 # PERJANJIAN KERJA WAKTU TERTENTU (PKWT)
@@ -256,7 +249,7 @@ Andi Baso                             Nurul Aisyah
 _Response:_
 
 ```
-{"melanggar":true,"section":"Pasal 2","kutipan":"PIHAK KEDUA diterima bekerja pada jabatan Staf Penjualan dan ditempatkan di kantor PIHAK PERTAMA di Makassar.","deskripsi":"Pekerjaan sebagai Staf Penjualan di kantor perusahaan distribusi merupakan pekerjaan bersifat tetap/h continuado, sehingga tidak memenuhi syarat PKWT berdasarkan jangka waktu. Tidak ada indikator pekerjaan musiman, proyek tertentu, atau pekerjaan yang diperkirakan selesai dalam 12 bulan. Meskipun klausa menyatakan 'jangka waktu 12 bulan', sifat pekerjaan tetap tidak berubah."}
+{"melanggar":false,"section":"Pasal 1","kutipan":"Perjanjian ini merupakan PKWT berdasarkan jangka waktu, berlaku selama 12 (dua belas) bulan sejak 1 September 2026 sampai dengan 31 Agustus 2027.","deskripsi":"Kontrak PKWT dibuat berdasarkan jangka waktu 12 bulan, dan tidak ada klausa yang secara eksplisit menyatakan pekerjaan bersifat tetap, sehingga tidak melanggar Pasal 4 ayat (2) PP 35/2021."}
 ```
 
 ## checklist:PP35-8
@@ -269,7 +262,7 @@ _Prompt:_
 Ketentuan hukum:
 PP 35/2021 Pasal 8 — PKWT jangka waktu paling lama 5 tahun termasuk perpanjangan: PKWT berdasarkan jangka waktu dibuat paling lama 5 tahun, dan jangka waktu keseluruhan termasuk perpanjangan tidak boleh lebih dari 5 tahun. Batas ini hanya berlaku untuk PKWT berdasarkan jangka waktu (Pasal 5 ayat 1); PKWT berdasarkan selesainya suatu pekerjaan diatur Pasal 9 dan tidak memiliki plafon 5 tahun. Ditegaskan pula dalam Putusan MK 168/PUU-XXI/2023.
 
-Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
+Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Jawab melanggar:true HANYA bila ada klausa spesifik dalam kontrak yang jelas melanggar ketentuan ini. Bila kontrak patuh, tidak menyinggung hal ini, atau ambigu, jawab melanggar:false. Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
 
 KONTRAK:
 # PERJANJIAN KERJA WAKTU TERTENTU (PKWT)
@@ -319,12 +312,12 @@ Andi Baso                             Nurul Aisyah
 _Response:_
 
 ```
-{"melanggar":false,"section":"Pasal 1","kutipan":"berlaku selama 12 (dua belas) bulan sejak 1 September 2026 sampai dengan 31 Agustus 2027","deskripsi":"Kontrak PKWT berdasarkan jangka waktu selama 12 bulan, tidak ada klausul perpanjangan, sehingga total masa kerja 1 tahun, masih di bawah plafon 5 tahun sesuai PP 35/2021 Pasal 8."}
+{"melanggar":false,"section":"Pasal 1","kutipan":"berlaku selama 12 (dua belas) bulan sejak 1 September 2026 sampai dengan 31 Agustus 2027","deskripsi":"Kontrak PKWT berdasarkan jangka waktu selama 12 bulan, tidak ada klausa perpanjangan, sehingga total tidak melebihi batas 5 tahun sesuai PP 35/2021 Pasal 8."}
 ```
 
 ## checklist:PP35-16
 
-**Outcome:** TEMUAN: melanggar
+**Outcome:** tidak melanggar
 
 _Prompt:_
 
@@ -332,7 +325,7 @@ _Prompt:_
 Ketentuan hukum:
 PP 35/2021 Pasal 16 — Besaran uang kompensasi PKWT: Besaran uang kompensasi: PKWT selama 12 bulan terus-menerus sebesar 1 bulan upah; PKWT 1 bulan atau lebih tetapi kurang dari 12 bulan dihitung secara proporsional dengan rumus masa kerja dibagi 12 dikali 1 bulan upah; PKWT lebih dari 12 bulan juga dihitung proporsional. Pada usaha mikro dan usaha kecil, besaran uang kompensasi ditentukan berdasarkan kesepakatan pengusaha dan pekerja.
 
-Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
+Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Jawab melanggar:true HANYA bila ada klausa spesifik dalam kontrak yang jelas melanggar ketentuan ini. Bila kontrak patuh, tidak menyinggung hal ini, atau ambigu, jawab melanggar:false. Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
 
 KONTRAK:
 # PERJANJIAN KERJA WAKTU TERTENTU (PKWT)
@@ -382,9 +375,7 @@ Andi Baso                             Nurul Aisyah
 _Response:_
 
 ```
-```json
-{"melanggar":true,"section":"Pasal 7","kutipan":"PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan peraturan perundang-undangan.","deskripsi":"Klausul kompensasi tidak menyebut besaran yang diwajibkan PP 35/2021. Untuk PKWT 12 bulan, pekerja berhak atas 1 bulan upah. Pasal 7 hanya mengacu umum ke peraturan, tanpa menyatakan besaran eksplisit 1 bulan upah, sehingga tidak memenuhi kepastian hak pekerja sesuai Pasal 16 PP 35/2021."}
-```
+{"melanggar":false,"section":"Pasal 7","kutipan":"PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan peraturan perundang-undangan.","deskripsi":"Pasal 7 hanya merujuk pada ketentuan peraturan perundang-undangan tanpa mengatur besaran yang bertentangan dengan PP 35/2021, sehingga tidak melanggar."}
 ```
 
 ## checklist:PP35-17
@@ -397,7 +388,7 @@ _Prompt:_
 Ketentuan hukum:
 PP 35/2021 Pasal 17 — Kompensasi tetap wajib bila hubungan kerja diakhiri lebih awal: Apabila salah satu pihak mengakhiri hubungan kerja sebelum berakhirnya jangka waktu PKWT, pengusaha tetap wajib memberikan uang kompensasi yang besarannya dihitung berdasarkan jangka waktu PKWT yang telah dijalani oleh pekerja.
 
-Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
+Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Jawab melanggar:true HANYA bila ada klausa spesifik dalam kontrak yang jelas melanggar ketentuan ini. Bila kontrak patuh, tidak menyinggung hal ini, atau ambigu, jawab melanggar:false. Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
 
 KONTRAK:
 # PERJANJIAN KERJA WAKTU TERTENTU (PKWT)
@@ -447,7 +438,7 @@ Andi Baso                             Nurul Aisyah
 _Response:_
 
 ```
-{"melanggar":false,"section":"Pasal 7","kutipan":"Pada saat berakhirnya PKWT ini, PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan peraturan perundang-undangan.","deskripsi":"Pasal 7 kontrak hanya mengatur pemberian kompensasi pada saat berakhirnya PKWT, namun tidak secara eksplisit melanggar Pasal 17 PP 35/2021 karena merujuk pada ketentuan peraturan perundang-undangan yang berlaku. Namun perlu dicatat bahwa klausanya kurang spesifik mengatur kewajiban kompensasi bila diakhiri lebih awal."}
+{"melanggar":false,"section":"Pasal 7","kutipan":"Pada saat berakhirnya PKWT ini, PIHAK PERTAMA memberikan uang kompensasi kepada PIHAK KEDUA sesuai ketentuan peraturan perundang-undangan.","deskripsi":"Pasal 7 hanya mengatur kompensasi pada saat berakhirnya PKWT, tidak mengecualikan atau menghilangkan kewajiban kompensasi bila hubungan kerja diakhiri lebih awal. Tidak ada klausa yang secara eksplisit melanggar Pasal 17 PP 35/2021."}
 ```
 
 ## checklist:PP35-26-31
@@ -460,7 +451,7 @@ _Prompt:_
 Ketentuan hukum:
 PP 35/2021 Pasal 26 dan Pasal 31 — Batas dan upah kerja lembur: Waktu kerja lembur paling lama 4 jam dalam 1 hari dan 18 jam dalam 1 minggu. Upah kerja lembur untuk jam pertama sebesar 1,5 kali upah sejam, dan untuk setiap jam berikutnya sebesar 2 kali upah sejam. Upah sejam dihitung sebesar 1/173 dari upah sebulan.
 
-Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
+Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Jawab melanggar:true HANYA bila ada klausa spesifik dalam kontrak yang jelas melanggar ketentuan ini. Bila kontrak patuh, tidak menyinggung hal ini, atau ambigu, jawab melanggar:false. Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
 
 KONTRAK:
 # PERJANJIAN KERJA WAKTU TERTENTU (PKWT)
@@ -510,7 +501,7 @@ Andi Baso                             Nurul Aisyah
 _Response:_
 
 ```
-{"melanggar":false,"section":"","kutipan":"","deskripsi":"Klausul-klausul dalam kontrak PKWT ini tidak mengatur mengenai waktu kerja lembur maupun upah kerja lembur, sehingga tidak ada ketentuan yang secara langsung melanggar batasan 4 jam/hari dan 18 jam/minggu atau rumus perhitungan upah lembur 1,5x dan 2x sesuai PP 35/2021. Catatan: Pasal 4 memuat upah masa percobaan di bawah upah minimum, yang merupakan isu terpisah di luar ruang lingkup pertanyaan."}
+{"melanggar":false,"section":"","kutipan":"","deskripsi":"Kontrak tidak memuat klausa tentang kerja lembur, sehingga tidak ada ketentuan yang secara spesifik melanggar batas waktu lembur (4 jam/hari, 18 jam/minggu) maupun perhitungan upah lembur menurut PP 35/2021."}
 ```
 
 ## checklist:MK168-79-2b
@@ -523,7 +514,7 @@ _Prompt:_
 Ketentuan hukum:
 Putusan MK 168/PUU-XXI/2023 atas Pasal 79 ayat (2) huruf b UU 13/2003 dalam Pasal 81 angka 25 UU 6/2023 — Lima hari kerja wajib memberi 2 hari istirahat mingguan: Mahkamah Konstitusi menyatakan norma tersebut inkonstitusional sepanjang tidak dimaknai mencakup frasa istirahat mingguan 2 hari untuk 5 hari kerja dalam 1 minggu. Konsekuensinya, kontrak dengan pola 5 hari kerja dalam 1 minggu wajib memberikan 2 hari istirahat mingguan.
 
-Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
+Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Jawab melanggar:true HANYA bila ada klausa spesifik dalam kontrak yang jelas melanggar ketentuan ini. Bila kontrak patuh, tidak menyinggung hal ini, atau ambigu, jawab melanggar:false. Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
 
 KONTRAK:
 # PERJANJIAN KERJA WAKTU TERTENTU (PKWT)
@@ -573,7 +564,7 @@ Andi Baso                             Nurul Aisyah
 _Response:_
 
 ```
-{"melanggar":false,"section":"Pasal 5","kutipan":"Waktu kerja adalah 5 (lima) hari kerja dalam seminggu dengan 2 (dua) hari istirahat mingguan.","deskripsi":"Pasal 5 secara eksplisit mengatur pola 5 hari kerja dengan 2 hari istirahat mingguan, sesuai Putusan MK 168/PUU-XXI/2023."}
+{"melanggar":false,"section":"Pasal 5","kutipan":"Waktu kerja adalah 5 (lima) hari kerja dalam seminggu dengan 2 (dua) hari istirahat mingguan.","deskripsi":"Kontrak telah patuh: menetapkan 5 hari kerja dengan 2 hari istirahat mingguan, sesuai putusan MK 168/PUU-XXI/2023."}
 ```
 
 ## checklist:SE-M5-2025
@@ -586,7 +577,7 @@ _Prompt:_
 Ketentuan hukum:
 Surat Edaran Menaker M/5/HK.04.00/V/2025 tertanggal 20 Mei 2025 — Larangan menahan ijazah dan dokumen pribadi sebagai jaminan: Pemberi kerja dilarang mensyaratkan atau menahan ijazah dan dokumen pribadi pekerja sebagai jaminan untuk bekerja, mencakup antara lain sertifikat kompetensi, paspor, akta kelahiran, buku nikah, dan BPKB. Pengecualian hanya berlaku jika ijazah atau sertifikat kompetensi diperoleh melalui pendidikan dan pelatihan yang dibiayai pemberi kerja berdasarkan perjanjian kerja tertulis, dengan kewajiban pemberi kerja menjamin keamanan dokumen dan memberi ganti rugi bila dokumen rusak atau hilang. Surat Edaran bukan peraturan perundang-undangan yang mengikat dan tidak memiliki sanksi, sehingga daya paksanya terbatas; memo harus menyatakan hal ini secara eksplisit dan tidak menyebut klausa penahanan ijazah sebagai ilegal.
 
-Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
+Apakah kontrak berikut memuat klausa yang MELANGGAR ketentuan di atas? Jawab melanggar:true HANYA bila ada klausa spesifik dalam kontrak yang jelas melanggar ketentuan ini. Bila kontrak patuh, tidak menyinggung hal ini, atau ambigu, jawab melanggar:false. Balas HANYA JSON: {"melanggar":true|false,"section":"Pasal N (nomor pasal DALAM KONTRAK, bukan pasal peraturan)","kutipan":"kutipan harfiah maks 200 karakter","deskripsi":"penjelasan singkat"}.
 
 KONTRAK:
 # PERJANJIAN KERJA WAKTU TERTENTU (PKWT)
@@ -636,7 +627,7 @@ Andi Baso                             Nurul Aisyah
 _Response:_
 
 ```
-{"melanggar":false,"section":"","kutipan":"","deskripsi":"Kontrak ini tidak memuat klausa penahanan ijazah atau dokumen pribadi pekerja sebagai jaminan. Tidak ada pasal yang melanggar Surat Edaran Menaker M/5/HK.04.00/V/2025."}
+{"melanggar":false,"section":"","kutipan":"","deskripsi":"Kontrak tidak memuat klausa penahanan ijazah atau dokumen pribadi pekerja sebagai jaminan, sehingga tidak melanggar ketentuan Surat Edaran M/5/HK.04.00/V/2025."}
 ```
 
 ## absence:PP35-13
@@ -770,20 +761,17 @@ Andi Baso                             Nurul Aisyah
 _Response:_
 
 ```
-{"memenuhi":true,"section":"Pasal 15","deskripsi":"Pasal 7 PKWT menyatakan pengusaha memberikan uang kompensasi sesuai ketentuan peraturan perundang-undangan pada akhir PKWT, memenuhi kewajiban Pasal 15 PP 35/2021."}
+{"memenuhi":true,"section":"Pasal 15","deskripsi":"Pasal 7 menyatakan pengusaha memberikan uang kompensasi sesuai peraturan perundang-undangan, sehingga kewajiban kompensasi tidak dihapus atau dijadikan bersyarat."}
 ```
 
 ## absence:PP35-27-5
 
-**Outcome:** TEMUAN: ketentuan tidak dipenuhi
+**Outcome:** tidak ada pengecualian lembur / tidak ada temuan
 
 _Prompt:_
 
 ```
-Ketentuan hukum:
-PP 35/2021 Pasal 27 ayat (5) — Pengecualian lembur batal bila golongan jabatan tidak diatur: Pengecualian dari kewajiban membayar upah kerja lembur hanya berlaku bagi golongan jabatan tertentu. Apabila golongan jabatan tertentu tersebut tidak diatur dalam perjanjian kerja, peraturan perusahaan, atau perjanjian kerja bersama, pengusaha tetap wajib membayar upah kerja lembur.
-
-Apakah kontrak berikut MEMENUHI ketentuan di atas? Klausa yang membuat kewajiban menjadi bersyarat atau menghapusnya dihitung sebagai TIDAK memenuhi. Balas HANYA JSON: {"memenuhi":true|false,"section":"Pasal N atau ABSENT","deskripsi":"penjelasan singkat"}.
+Periksa ketentuan lembur dalam kontrak berikut. Apakah kontrak MEMUAT klausa yang menyatakan suatu jabatan dikecualikan atau TIDAK BERHAK atas upah lembur? Jika kontrak TIDAK memuat pernyataan pengecualian lembur seperti itu, jawab {"melanggar":false}. Jika kontrak MEMUAT pernyataan bahwa jabatan tidak berhak lembur TETAPI tidak mendefinisikan golongan jabatan tertentu (pemikir, perencana, pelaksana, atau pengendali jalannya perusahaan), jawab {"melanggar":true,"section":"Pasal N","kutipan":"kutipan harfiah"}.
 
 KONTRAK:
 # PERJANJIAN KERJA WAKTU TERTENTU (PKWT)
@@ -833,16 +821,13 @@ Andi Baso                             Nurul Aisyah
 _Response:_
 
 ```
-{"memenuhi":false,"section":"Pasal 27 ayat (5) PP 35/2021","deskripsi":"Kontrak PKWT tidak memuat ketentuan apa pun mengenai golongan jabatan tertentu yang dikecualikan dari upah lembur, sehingga pengusaha tetap wajib membayar upah kerja lembur. Ketiadaan pengaturan golongan jabatan dalam perjanjian kerja ini melanggar Pasal 27 ayat (5) PP 35/2021 karena исключение lembur menjadi tidak berlaku dan kewajiban pembayaran lembur harus tetap ada secara eksplisit."}
+{"melanggar":false}
 ```
 
-## Findings kept (5)
+## Findings kept (2)
 
 - PP35-12 @ Pasal 3
 - UU13-60-2 @ Pasal 4
-- PP35-4-2 @ Pasal 2
-- PP35-16 @ Pasal 7
-- PP35-27-5 @ ABSENT
 
 ## Findings rejected by citation gate (0)
 

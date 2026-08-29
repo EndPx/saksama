@@ -2,15 +2,17 @@
 
 | Metric | s0_baseline | s5_gated |
 |--------|------|------|
-| Recall (primary) | 15.4% | 92.3% |
-| Precision | 2.4% | 27.3% |
-| Absence detection rate | 16.7% | 83.3% |
-| Tier accuracy | 50.0% | 100.0% |
-| Cross-section recall | 0.0% | 100.0% |
-| Recall (confidence A only) | 9.1% | 90.9% |
-| Correct / reported | 2 / 82 | 12 / 44 |
-| False positives on clean | 14 | 6 |
+| Recall (primary) | 23.1% | 100.0% |
+| Precision | 3.7% | 72.2% |
+| F1 | 6.3% | 83.9% |
+| False-positive rate | 96.3% | 27.8% |
+| Absence detection rate | 33.3% | 100.0% |
+| Tier accuracy | 33.3% | 100.0% |
+| Cross-section recall | 100.0% | 100.0% |
+| Recall (confidence A only) | 27.3% | 100.0% |
+| Correct / reported | 3 / 82 | 13 / 18 |
+| False positives on clean | 0 | 0 |
 | Cost per contract (USD) | $0.0000 | $0.0000 |
-| Avg time per contract (ms) | 31850 | 38332 |
+| Avg time per contract (ms) | 29307 | 33656 |
 
 Ground-truth findings in corpus: 13.
