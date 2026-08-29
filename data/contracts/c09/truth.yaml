@@ -1,0 +1,8 @@
+contract_id: c09
+jenis: PKWT
+skala_usaha: umum
+findings: []
+# Contrast pair for c08. The certificate is held, but it was obtained through
+# employer-financed training under a written agreement, with a safety guarantee
+# and compensation undertaking — this is exactly the exception in SE-M5-2025,
+# so it is NOT a violation. A reactive baseline is expected to flag it anyway.
