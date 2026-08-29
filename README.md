@@ -76,6 +76,26 @@ cat results/audit.md          # confusion matrix + citation grounding
 cat docs/FAILURE_MODES.md     # every remaining false positive, classified
 ```
 
+### Review a single contract
+
+Keyless — a compact review summary for a few contracts, straight from the committed
+results (no API key, no network):
+
+```bash
+make demo
+```
+
+Live — review any plain-text contract with the engine (this is *generation*, so it
+needs an API key; it is not the keyless evaluation):
+
+```bash
+go run ./cmd/solution -contract examples/pkwt-problematic.txt
+```
+
+The engine is **format-agnostic — it reviews contract text.** PDF/DOCX ingestion is a
+separate input adapter (roadmap), intentionally outside the frozen evaluation engine.
+Sample contracts live in [`examples/`](examples/).
+
 ## Example (excerpt from a generated memo)
 
 From [`memos/c01.md`](memos/c01.md):
@@ -251,17 +271,15 @@ temperature 0), so freshly generated findings may differ slightly from the commi
 artifacts. The **evaluation is deterministic; generation is not** — the two are
 deliberately separated (see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)).
 
-## Security
+## Security & Safety
 
-Saksama contains **no API keys or credentials** in the working tree or git history.
-`.env` is gitignored; only `.env.example` (empty variable names) is tracked. Evaluation
-requires no API key. Full note: [`SECURITY.md`](SECURITY.md).
+- No API keys, tokens, credentials, or real contract data are committed.
+- Evaluation is keyless and network-free.
+- Runtime LLM access uses environment-provided credentials only.
+- All evaluation contracts are synthetic.
+- Saksama produces a triage aid, not legal advice; the final decision remains with the user.
 
-## Compliance
-
-Data is entirely synthetic (no real contract, no real personal data). The output is a
-triage aid designed to keep a qualified human as the final decision maker — it is not
-legal advice and makes no "compliance" or accuracy guarantee.
+See [`SECURITY.md`](SECURITY.md) for the full security model and credential-handling notes.
 
 ## Project structure
 
@@ -269,6 +287,7 @@ legal advice and makes no "compliance" or accuracy guarantee.
 cmd/            baseline, solution, eval, trajectory  (entry points)
 internal/       llm, agent, contract, statutes, scoring, memo
 data/           statutes/ (14 provisions) + contracts/ (12 synthetic + ground truth)
+examples/       synthetic plain-text contracts for the review CLI / make demo
 results/        frozen evaluation JSON, comparison.md, audit.md, failure_modes.json
 memos/          12 generated triage memos
 trajectories/   per-contract agent trajectories (S3-S5)
@@ -283,8 +302,9 @@ Agentic Workflows Hackathon; nothing existed before.
 The current submission is the backend review engine (frozen). Planned product-layer work,
 intentionally outside the evaluation engine:
 
+- PDF / DOCX ingestion — a text-extraction *input adapter* feeding the format-agnostic
+  engine (the engine already accepts contract text; ingestion is orthogonal to it)
 - Contract Coverage Map
-- PDF upload
 - Negotiation Mode
 - HR-question copy actions
 - Unknown contract-type UX
