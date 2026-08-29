@@ -145,34 +145,31 @@ func runDemo(corpus *statutes.Corpus, resultsFile, contractsDir string) {
 	for _, c := range res.Contracts {
 		byID[c.ContractID] = c
 	}
-	demos := []struct{ ID, Label string }{
-		{"c01", "PKWT — probation clause + compensation denied"},
-		{"c02", "PKWT — clean"},
-		{"c04", "PKWTT — 6-month probation"},
-		{"c11", "PKWT — cross-section forfeiture trap"},
+	demos := []struct{ ID, Label, Take string }{
+		{"c02", "Clean PKWT", "No false positives — nothing flagged, no missing protection invented"},
+		{"c01", "Problematic PKWT", "Findings carry verbatim evidence + legal basis"},
+		{"c04", "Problematic PKWTT", "Contract-type aware — PKWT-only rules skipped; caught the PKWTT probation limit"},
 	}
 	fmt.Println("==================================================")
 	fmt.Println(" SAKSAMA DEMO  (keyless, from committed S5 results)")
 	fmt.Println("==================================================")
-	for _, d := range demos {
-		cr, ok := byID[d.ID]
-		if !ok {
-			continue
-		}
+	for i, d := range demos {
+		cr := byID[d.ID]
 		b, _ := os.ReadFile(filepath.Join(contractsDir, d.ID, "contract.md"))
 		typ := "PKWT"
 		if strings.Contains(strings.ToUpper(string(b)), "PKWTT") {
 			typ = "PKWTT"
 		}
-		counts := map[statutes.Tier]int{}
+		var legal, missing int
 		for _, f := range cr.Findings {
-			counts[f.Tier]++
+			if f.Deteksi == statutes.DeteksiTidakAdaKlausa {
+				missing++
+			} else {
+				legal++
+			}
 		}
-		fmt.Printf("\n[%s] %s\n", d.ID, d.Label)
-		fmt.Printf("    Type: %s\n", typ)
-		fmt.Printf("    Findings: %d  (void=%d, admin-sanction=%d, breach=%d, policy=%d)\n",
-			len(cr.Findings), counts[statutes.TierBatalDemiHukum], counts[statutes.TierSanksiAdministratif],
-			counts[statutes.TierMelanggarTanpaSanksi], counts[statutes.TierPedomanKebijakan])
+		fmt.Printf("\n[%d/%d] %s  (type: %s)\n", i+1, len(demos), d.Label, typ)
+		fmt.Printf("    Legal findings: %d    Missing protections: %d    Total: %d\n", legal, missing, len(cr.Findings))
 		for _, f := range cr.Findings {
 			if f.Tier == statutes.TierBatalDemiHukum {
 				if p, ok := corpus.Get(f.StatuteID); ok {
@@ -181,8 +178,10 @@ func runDemo(corpus *statutes.Corpus, resultsFile, contractsDir string) {
 				break
 			}
 		}
+		fmt.Printf("    OK: %s\n", d.Take)
 	}
-	fmt.Println("\nDemo complete. To review a NEW contract live (needs SAKSAMA_* env):")
+	fmt.Println("\nThis is the keyless benchmark output. For a LIVE review of any contract")
+	fmt.Println("(needs an API key in .env):")
 	fmt.Println("  go run ./cmd/solution -contract examples/pkwt-problematic.txt")
 }
 
