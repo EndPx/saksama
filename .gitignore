@@ -15,3 +15,6 @@ Thumbs.db
 
 # NOTE: results/ and memos/ are intentionally committed so judges can
 # verify the numbers without running anything or holding an API key.
+
+# tool caches
+.omc/
