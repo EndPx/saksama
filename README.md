@@ -36,17 +36,21 @@ Measured over 12 synthetic contracts (13 ground-truth findings), model
 
 | Metric | Baseline (S0) | Solution (S5) |
 |---|---|---|
-| Recall | 15.4% | **92.3%** |
-| Absence detection | 16.7% | **83.3%** |
-| Cross-section recall | 0% | **100%** |
-| Tier accuracy | 50% | **100%** |
-| False positives on clean | 14 | 6 |
+| Recall | 23.1% | **100%** |
+| Precision | 3.7% | **72.2%** |
+| F1 | 6.3% | **83.9%** |
+| Absence detection | 33.3% | **100%** |
+| Tier accuracy | 33.3% | **100%** |
+| Cross-section recall | 100% | **100%** |
+| False positives on clean | 0 | **0** |
 
-Absence detection stays flat (~17%) through structured output, per-section reading, and a
-clause-by-clause checklist — and only rises once an explicit pass forces the agent to ask
-what is *missing* (S4/S5). The full staged progression, including one experiment (per-section
-S2) that made recall worse, is in [CHANGELOG.md](CHANGELOG.md); the specification is in
-[CLAUDE.md](CLAUDE.md); how to run and verify keyless is in [REPRODUCTION.md](REPRODUCTION.md).
+Absence detection stays low (17–50%) through structured output, per-section reading, and a
+clause-by-clause checklist (0%) — and only reaches 100% once an explicit pass forces the agent
+to ask what is *missing* (S4/S5). The full staged progression — including one experiment
+(per-section S2) that made results worse, and a precision-refinement iteration that lifted S5
+precision from 27% to 72% by classifying the contract type before applying rules — is in
+[CHANGELOG.md](CHANGELOG.md); the specification is in [CLAUDE.md](CLAUDE.md); how to run and
+verify keyless is in [REPRODUCTION.md](REPRODUCTION.md).
 
 ## Architecture (planned)
 
