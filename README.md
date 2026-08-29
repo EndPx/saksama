@@ -52,6 +52,22 @@ precision from 27% to 72% by classifying the contract type before applying rules
 [CHANGELOG.md](CHANGELOG.md); the specification is in [CLAUDE.md](CLAUDE.md); how to run and
 verify keyless is in [REPRODUCTION.md](REPRODUCTION.md).
 
+## Audit & artifacts
+
+Everything is committed so the evaluation can be inspected without running anything:
+
+- [`results/comparison.md`](results/comparison.md) — baseline vs S5 metric table.
+- [`results/audit.md`](results/audit.md) — cell-level confusion matrix and citation
+  grounding (presence + location accuracy; deterministic, syntactic — not semantic).
+- [`docs/FAILURE_MODES.md`](docs/FAILURE_MODES.md) + [`results/failure_modes.json`](results/failure_modes.json)
+  — every remaining false positive, classified, kept visible rather than hidden.
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — pipeline diagram and the boundary
+  between LLM-dependent stages and the deterministic scorer.
+- [`SECURITY.md`](SECURITY.md) — zero secrets, synthetic data, human-in-the-loop.
+
+`cmd/eval` is deterministic (two runs produce identical output hashes) and makes no
+network calls, so judges verify every number with `make eval` and no API key.
+
 ## Architecture (planned)
 
 A hand-written Go agent loop — no orchestration framework, `net/http` straight to the

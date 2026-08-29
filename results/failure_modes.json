@@ -1,0 +1,80 @@
+{
+  "corpus": { "contracts": 12, "ground_truth_findings": 13 },
+  "solution_stage": "s5_gated",
+  "model": "minimax/minimax-m3:free",
+  "finding_level": {
+    "tp": 13, "fp": 5, "fn": 0,
+    "precision": 0.722, "recall": 1.0, "f1": 0.839,
+    "false_positive_rate": 0.278, "absence_detection": 1.0,
+    "false_positives_on_clean_contracts": 0
+  },
+  "confusion_cell_level": { "tp": 10, "fp": 5, "fn": 0, "tn": 153, "cells": 168 },
+  "citation_grounding": {
+    "definition": "deterministic, syntactic + location-based, NOT semantic",
+    "presence_accuracy": 1.0,
+    "location_accuracy": 1.0
+  },
+  "false_positives": [
+    {
+      "contract": "c01", "rule_id": "PP35-17", "section": "Pasal 8",
+      "predicted": "Kompensasi wajib walau diakhiri lebih awal",
+      "ground_truth": "not a violation (c01 truth: PP35-12, PP35-15)",
+      "severity": "sanksi_administratif",
+      "contract_evidence": "Uang kompensasi ... hanya akan diberikan ... apabila Perjanjian ini diperpanjang ...",
+      "legal_basis": "PP 35/2021 Pasal 17",
+      "why_fired": "The clause conditions compensation, a genuine problem area; the model tagged the early-termination rule.",
+      "why_false_positive": "The correct provision for this clause is PP35-15/16 (which were also reported and matched). PP35-17 is an adjacent, over-applied rule.",
+      "category": "interpretation_error"
+    },
+    {
+      "contract": "c01", "rule_id": "PP35-13", "section": "ABSENT",
+      "predicted": "A mandatory Pasal 13 item is missing",
+      "ground_truth": "not a violation (c01 contains all nine items)",
+      "severity": "melanggar_tanpa_sanksi",
+      "contract_evidence": "(absence claim; c01 lists company/worker identity, position, place, wage, rights, term, place-and-date, signatures)",
+      "legal_basis": "PP 35/2021 Pasal 13",
+      "why_fired": "The nine-item sub-check judged one present item as absent.",
+      "why_false_positive": "All nine mandatory items are present in c01.",
+      "category": "extraction_error"
+    },
+    {
+      "contract": "c06", "rule_id": "PP35-26-31", "section": "Pasal 5",
+      "predicted": "Overtime limits/rates violated",
+      "ground_truth": "not a violation (c06 truth: PP35-27-5)",
+      "severity": "sanksi_administratif",
+      "contract_evidence": "jabatan PIHAK KEDUA tidak berhak atas upah kerja lembur ...",
+      "legal_basis": "PP 35/2021 Pasal 26 dan 31",
+      "why_fired": "The overtime-waiver clause is a real problem; the model also attached the overtime-cap/rate rule.",
+      "why_false_positive": "The waiver is governed by PP35-27-5 (correctly reported and matched); PP35-26-31 (the 4h/18h cap and rates) is not the applicable rule here.",
+      "category": "interpretation_error"
+    },
+    {
+      "contract": "c11", "rule_id": "PP35-16", "section": "Pasal 14",
+      "predicted": "Compensation amount rule violated",
+      "ground_truth": "not a violation (c11 truth: PP35-17 on Pasal 14)",
+      "severity": "melanggar_tanpa_sanksi",
+      "contract_evidence": "seluruh hak atas uang kompensasi sebagaimana dimaksud dalam Pasal 9 menjadi gugur ...",
+      "legal_basis": "PP 35/2021 Pasal 16",
+      "why_fired": "The forfeiture clause is genuinely problematic; the model double-tagged it.",
+      "why_false_positive": "The correct provision, PP35-17 (compensation still owed on early termination), was reported and matched. PP35-16 (amount formula) is an adjacent over-applied rule.",
+      "category": "interpretation_error"
+    },
+    {
+      "contract": "c11", "rule_id": "PP35-15", "section": "ABSENT",
+      "predicted": "Compensation obligation absent",
+      "ground_truth": "not a violation on this dimension (c11 truth: PP35-17)",
+      "severity": "sanksi_administratif",
+      "contract_evidence": "(c11 Pasal 9 grants compensation at end of term; Pasal 14 forfeits it on resignation)",
+      "legal_basis": "PP 35/2021 Pasal 15",
+      "why_fired": "The forfeiture clause nullifies compensation, so the absence pass read the protection as unsatisfied.",
+      "why_false_positive": "Debatable: the compensation clause is present (Pasal 9); the defect is the forfeiture (captured by PP35-17). Reading it as 'effectively absent' is defensible.",
+      "category": "genuinely_ambiguous"
+    }
+  ],
+  "failure_modes": [
+    { "mode": "Adjacent-rule over-application on a genuinely risky clause", "count": 3, "category": "interpretation_error", "status": "known_limitation", "examples": ["c01/PP35-17", "c06/PP35-26-31", "c11/PP35-16"] },
+    { "mode": "Absence sub-check judged a present item as missing", "count": 1, "category": "extraction_error", "status": "known_limitation", "examples": ["c01/PP35-13"] },
+    { "mode": "Forfeiture read as effectively-absent compensation", "count": 1, "category": "genuinely_ambiguous", "status": "borderline", "examples": ["c11/PP35-15"] }
+  ],
+  "observation": "Every remaining false positive lands on a clause that is itself a real problem area; the engine over-tags an adjacent rule rather than hallucinating on compliant text. Zero false positives occur on the clean contracts (c02, c09, c10)."
+}
