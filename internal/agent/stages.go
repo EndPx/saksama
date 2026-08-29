@@ -62,7 +62,7 @@ func (a *Agent) Checklist(ctx context.Context, contractText string) ([]scoring.F
 		resp, err := a.Client.Complete(ctx, llm.Request{
 			System:      "Anda pemeriksa kepatuhan kontrak kerja Indonesia. Jawab presisi, hanya JSON.",
 			Messages:    []llm.Message{{Role: "user", Content: prompt}},
-			MaxTokens:   700,
+			MaxTokens:   6000,
 			Temperature: 0,
 		})
 		addUsage(&usage, resp.Usage)
@@ -109,7 +109,7 @@ func (a *Agent) Absence(ctx context.Context, contractText string) ([]scoring.Fin
 		resp, err := a.Client.Complete(ctx, llm.Request{
 			System:      "Anda pemeriksa kepatuhan kontrak kerja Indonesia. Fokus pada apa yang HILANG. Jawab hanya JSON.",
 			Messages:    []llm.Message{{Role: "user", Content: prompt}},
-			MaxTokens:   500,
+			MaxTokens:   6000,
 			Temperature: 0,
 		})
 		addUsage(&usage, resp.Usage)
@@ -148,7 +148,7 @@ func (a *Agent) checkPasal13(ctx context.Context, contractText string) ([]scorin
 	resp, _ := a.Client.Complete(ctx, llm.Request{
 		System:      "Anda pemeriksa kelengkapan PKWT. Jawab hanya JSON.",
 		Messages:    []llm.Message{{Role: "user", Content: prompt}},
-		MaxTokens:   400,
+		MaxTokens:   6000,
 		Temperature: 0,
 	})
 	var r struct {

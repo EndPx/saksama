@@ -1,6 +1,7 @@
-// Package llm is a minimal hand-written client for the Anthropic Messages API.
-// It uses net/http directly (no SDK) so the dependency surface stays empty and
-// the build is reproducible. Model and endpoint come from the environment.
+// Package llm is a minimal hand-written client for OpenAI-compatible Chat
+// Completions APIs (OpenRouter, and any other /chat/completions endpoint). It
+// uses net/http directly (no SDK) so the dependency surface stays empty and the
+// build is reproducible. Model and endpoint come from the environment.
 package llm
 
 import (
@@ -13,6 +14,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -43,7 +45,7 @@ type Response struct {
 	Usage Usage
 }
 
-// Client talks to the Messages API. Construct it with New.
+// Client talks to an OpenAI-compatible Chat Completions API. Construct with New.
 type Client struct {
 	base       string
 	key        string
@@ -55,25 +57,25 @@ type Client struct {
 }
 
 // New builds a Client from the environment: SAKSAMA_API_BASE, SAKSAMA_API_KEY,
-// SAKSAMA_MODEL are required. SAKSAMA_PRICE_IN and SAKSAMA_PRICE_OUT (USD per
-// million tokens) are optional; without them CostUSD is reported as 0.
+// SAKSAMA_MODEL are required (base is the origin, e.g. https://openrouter.ai/api/v1).
+// SAKSAMA_PRICE_IN and SAKSAMA_PRICE_OUT (USD per million tokens) are optional;
+// without them CostUSD is reported as 0.
 func New() (*Client, error) {
-	base := os.Getenv("SAKSAMA_API_BASE")
+	base := strings.TrimRight(os.Getenv("SAKSAMA_API_BASE"), "/")
 	key := os.Getenv("SAKSAMA_API_KEY")
 	model := os.Getenv("SAKSAMA_MODEL")
 	if base == "" || key == "" || model == "" {
 		return nil, errors.New("llm: SAKSAMA_API_BASE, SAKSAMA_API_KEY, and SAKSAMA_MODEL must all be set")
 	}
-	c := &Client{
+	return &Client{
 		base:       base,
 		key:        key,
 		model:      model,
 		priceIn:    envFloat("SAKSAMA_PRICE_IN"),
 		priceOut:   envFloat("SAKSAMA_PRICE_OUT"),
-		http:       &http.Client{Timeout: 120 * time.Second},
+		http:       &http.Client{Timeout: 180 * time.Second},
 		maxRetries: 5,
-	}
-	return c, nil
+	}, nil
 }
 
 // Model returns the configured model id.
@@ -98,43 +100,49 @@ type apiRequest struct {
 	Model       string       `json:"model"`
 	MaxTokens   int          `json:"max_tokens"`
 	Temperature float64      `json:"temperature"`
-	System      string       `json:"system,omitempty"`
 	Messages    []apiMessage `json:"messages"`
 }
 
 type apiResponse struct {
-	Content []struct {
-		Type string `json:"type"`
-		Text string `json:"text"`
-	} `json:"content"`
+	Choices []struct {
+		Message struct {
+			Content string `json:"content"`
+		} `json:"message"`
+	} `json:"choices"`
 	Usage struct {
-		InputTokens  int `json:"input_tokens"`
-		OutputTokens int `json:"output_tokens"`
+		PromptTokens     int `json:"prompt_tokens"`
+		CompletionTokens int `json:"completion_tokens"`
 	} `json:"usage"`
 	Error *struct {
-		Type    string `json:"type"`
 		Message string `json:"message"`
+		Code    any    `json:"code"`
 	} `json:"error"`
 }
 
-// Complete sends one request, retrying transient failures with exponential
-// backoff. It returns the concatenated text blocks and the usage/cost.
+// Complete sends one Chat Completions request, retrying transient failures with
+// exponential backoff. It returns the assistant text and the usage/cost.
 func (c *Client) Complete(ctx context.Context, req Request) (Response, error) {
 	if req.MaxTokens == 0 {
 		req.MaxTokens = 4096
+	}
+	msgs := make([]apiMessage, 0, len(req.Messages)+1)
+	if req.System != "" {
+		msgs = append(msgs, apiMessage{Role: "system", Content: req.System})
+	}
+	for _, m := range req.Messages {
+		msgs = append(msgs, apiMessage{Role: m.Role, Content: m.Content})
 	}
 	body, err := json.Marshal(apiRequest{
 		Model:       c.model,
 		MaxTokens:   req.MaxTokens,
 		Temperature: req.Temperature,
-		System:      req.System,
-		Messages:    toAPIMessages(req.Messages),
+		Messages:    msgs,
 	})
 	if err != nil {
 		return Response{}, fmt.Errorf("llm: marshal: %w", err)
 	}
 
-	url := c.base + "/v1/messages"
+	url := c.base + "/chat/completions"
 	var lastErr error
 	for attempt := 0; attempt <= c.maxRetries; attempt++ {
 		if attempt > 0 {
@@ -151,8 +159,10 @@ func (c *Client) Complete(ctx context.Context, req Request) (Response, error) {
 			return Response{}, fmt.Errorf("llm: new request: %w", err)
 		}
 		httpReq.Header.Set("content-type", "application/json")
-		httpReq.Header.Set("x-api-key", c.key)
-		httpReq.Header.Set("anthropic-version", "2023-06-01")
+		httpReq.Header.Set("authorization", "Bearer "+c.key)
+		// Optional OpenRouter attribution headers (harmless elsewhere).
+		httpReq.Header.Set("HTTP-Referer", "https://github.com/EndPx/saksama")
+		httpReq.Header.Set("X-Title", "Saksama")
 
 		resp, err := c.http.Do(httpReq)
 		if err != nil {
@@ -172,35 +182,24 @@ func (c *Client) Complete(ctx context.Context, req Request) (Response, error) {
 
 		var ar apiResponse
 		if err := json.Unmarshal(respBody, &ar); err != nil {
-			return Response{}, fmt.Errorf("llm: decode: %w", err)
+			return Response{}, fmt.Errorf("llm: decode: %w (body: %s)", err, truncate(respBody))
 		}
 		if ar.Error != nil {
-			return Response{}, fmt.Errorf("llm: api error %s: %s", ar.Error.Type, ar.Error.Message)
+			return Response{}, fmt.Errorf("llm: api error: %s", ar.Error.Message)
 		}
-		var text string
-		for _, blk := range ar.Content {
-			if blk.Type == "text" {
-				text += blk.Text
-			}
+		if len(ar.Choices) == 0 {
+			return Response{}, fmt.Errorf("llm: no choices in response: %s", truncate(respBody))
 		}
 		return Response{
-			Text: text,
+			Text: ar.Choices[0].Message.Content,
 			Usage: Usage{
-				InputTokens:  ar.Usage.InputTokens,
-				OutputTokens: ar.Usage.OutputTokens,
-				CostUSD:      c.costUSD(ar.Usage.InputTokens, ar.Usage.OutputTokens),
+				InputTokens:  ar.Usage.PromptTokens,
+				OutputTokens: ar.Usage.CompletionTokens,
+				CostUSD:      c.costUSD(ar.Usage.PromptTokens, ar.Usage.CompletionTokens),
 			},
 		}, nil
 	}
 	return Response{}, fmt.Errorf("llm: exhausted retries: %w", lastErr)
-}
-
-func toAPIMessages(ms []Message) []apiMessage {
-	out := make([]apiMessage, len(ms))
-	for i, m := range ms {
-		out[i] = apiMessage{Role: m.Role, Content: m.Content}
-	}
-	return out
 }
 
 func truncate(b []byte) string {

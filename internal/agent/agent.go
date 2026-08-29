@@ -106,7 +106,7 @@ func (a *Agent) Baseline(ctx context.Context, contractText string) (string, llm.
 			Role:    "user",
 			Content: "Tinjau kontrak kerja berikut dan sebutkan risiko-risiko yang Anda temukan.\n\n" + contractText,
 		}},
-		MaxTokens:   2048,
+		MaxTokens:   6000,
 		Temperature: 0,
 	})
 	return resp.Text, resp.Usage, err
@@ -119,7 +119,7 @@ func (a *Agent) Normalize(ctx context.Context, freeform string) ([]scoring.Findi
 	resp, err := a.Client.Complete(ctx, llm.Request{
 		System:      sys,
 		Messages:    []llm.Message{{Role: "user", Content: freeform}},
-		MaxTokens:   2048,
+		MaxTokens:   6000,
 		Temperature: 0,
 	})
 	if err != nil {
@@ -136,7 +136,7 @@ func (a *Agent) Structured(ctx context.Context, contractText string) ([]scoring.
 	resp, err := a.Client.Complete(ctx, llm.Request{
 		System:      sys,
 		Messages:    []llm.Message{{Role: "user", Content: contractText}},
-		MaxTokens:   3072,
+		MaxTokens:   6000,
 		Temperature: 0,
 	})
 	if err != nil {
@@ -158,7 +158,7 @@ func (a *Agent) StructuredPerSection(ctx context.Context, contractText string) (
 		resp, err := a.Client.Complete(ctx, llm.Request{
 			System:      sys,
 			Messages:    []llm.Message{{Role: "user", Content: msg}},
-			MaxTokens:   1536,
+			MaxTokens:   6000,
 			Temperature: 0,
 		})
 		usage.InputTokens += resp.Usage.InputTokens
