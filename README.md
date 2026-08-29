@@ -86,12 +86,16 @@ From [`memos/c01.md`](memos/c01.md):
 **PKWT dilarang mensyaratkan masa percobaan** (Pasal 4)
 
 > PIHAK KEDUA wajib menjalani masa percobaan kerja selama 3 (tiga) bulan
-> terhitung sejak tanggal mulai bekerja.
+> terhitung sejak tanggal mulai bekerja. ...
 
-Dasar hukum: PP 35/2021 Pasal 12. Pasal 4 mensyaratkan masa percobaan selama
-3 bulan dalam PKWT, yang dilarang dan batal demi hukum sesuai PP 35/2021
-Pasal 12. Tingkat keyakinan penilaian: A.
+Dasar hukum: PP 35/2021 Pasal 12. Klausul masa percobaan 3 bulan dalam PKWT
+melanggar PP 35/2021 Pasal 12 karena PKWT dilarang mensyaratkan masa
+percobaan. Klausul ini batal demi hukum dan masa kerja dihitung sejak awal.
+Tingkat keyakinan penilaian: A.
 ```
+
+(`(Pasal 4)` refers to the article of the *contract* under review; `Pasal 12` is
+the statute. Quoted verbatim from [`memos/c01.md`](memos/c01.md).)
 
 Each finding carries a verbatim contract quote, the legal basis, what it means for the
 worker, and a confidence level.
@@ -152,8 +156,18 @@ agentic stage does not automatically improve quality — the opposite of the usu
 
 ## Evaluation & results
 
-Measured over 12 synthetic contracts (13 ground-truth findings), model
+Measured over **12 synthetic contracts (13 ground-truth findings)**, model
 `minimax/minimax-m3:free`, full run ~29 min at **\$0**.
+
+> These are **benchmark results on the committed synthetic evaluation corpus**. They
+> are not a claim of general accuracy on real Indonesian employment contracts — 100%
+> recall here means "found all 13 planted findings on these 12 contracts," not
+> "Saksama is 100% accurate." The corpus size (12) is stated openly for exactly this
+> reason.
+
+**Finding-level metrics** (each ground-truth finding counted individually; the nine
+PP35-13 sub-checks count separately). False-positive rate = false positives ÷ reported
+findings = 1 − precision.
 
 | Metric | Baseline (S0) | Final (S5) |
 |--------|--------------:|-----------:|
@@ -170,9 +184,11 @@ Measured over 12 synthetic contracts (13 ground-truth findings), model
 | False positives | 79 | **5** |
 | False positives on clean contracts | 0 | **0** |
 
-**Final confusion matrix (S5)**, cell-level over 168 (contract × statute) decisions —
-this is a coarser granularity than the finding-level headline (the nine PP35-13
-sub-checks collapse to one cell):
+**Cell-level confusion matrix (S5)** — a *different unit of evaluation* from the
+finding-level table above: one decision per (contract × statute) pair, 168 cells, with
+the nine PP35-13 sub-checks collapsed into one cell. This is why cell-level precision
+(66.7%) differs slightly from finding-level precision (72.2%): same 5 false positives,
+different denominator.
 
 | | Ground-truth Positive | Ground-truth Negative |
 |---|---:|---:|
