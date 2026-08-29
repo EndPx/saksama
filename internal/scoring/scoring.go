@@ -145,9 +145,9 @@ type Metrics struct {
 	ConfAHit    int     `json:"conf_a_hit"`
 	ConfARecall float64 `json:"conf_a_recall"`
 
-	TotalCostUSD    float64 `json:"total_cost_usd"`
-	CostPerContract float64 `json:"cost_per_contract"`
-	AvgDurationMs   float64 `json:"avg_duration_ms"`
+	TotalCostUSD     float64 `json:"total_cost_usd"`
+	CostPerContract  float64 `json:"cost_per_contract"`
+	AvgDurationMs    float64 `json:"avg_duration_ms"`
 	NormalizationUSD float64 `json:"normalization_usd,omitempty"`
 }
 
