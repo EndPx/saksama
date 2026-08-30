@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saksama Live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:ital@0;1&display=swap">
+<style>
+  :root{
+    --ground:#EFEEEA; --panel:#F7F6F3; --card:#FFFFFF;
+    --ink:#1A1D22; --ink2:#3C4048; --muted:#71757E; --faint:#9AA0A8;
+    --line:#E4E2DB; --line2:#D9D6CD;
+    --accent:#B9791B;
+    --crit:#C0392B; --crit-bg:#FBEDEB;
+    --warn:#B5651D; --warn-bg:#FBF1E7;
+    --note:#8A7320; --note-bg:#F7F2E2;
+    --policy:#4C6274; --policy-bg:#EEF2F5;
+    --ok:#2F855A; --ok-bg:#E9F4EE;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --serif:"IBM Plex Serif",Georgia,serif;
+    --shadow:0 1px 2px rgba(26,29,34,.04), 0 8px 24px rgba(26,29,34,.05);
+  }
+  :root[data-theme="dark"]{
+    --ground:#17171A; --panel:#1E1F23; --card:#212226;
+    --ink:#ECEAE4; --ink2:#C4C2BB; --muted:#94918A; --faint:#6E6B64;
+    --line:#2E2F34; --line2:#3A3B41;
+    --crit-bg:#2C1B18; --warn-bg:#2A2016; --note-bg:#26230F; --policy-bg:#182028; --ok-bg:#132720;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--ground); color:var(--ink); font-family:var(--sans); line-height:1.5; -webkit-font-smoothing:antialiased; font-size:15px}
+  .wrap{max-width:1140px; margin:0 auto; padding:0 24px}
+  header{position:sticky; top:0; z-index:20; background:color-mix(in srgb, var(--ground) 82%, transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
+  .bar{display:flex; align-items:center; gap:16px; height:60px}
+  .logo{display:flex; align-items:center; gap:9px; font-weight:700; letter-spacing:.02em}
+  .logo .dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .logo .mk{font-size:19px} .logo .sub{font-size:12px; color:var(--muted); font-weight:500}
+  .spacer{flex:1}
+  .lang{display:flex; border:1px solid var(--line2); border-radius:8px; overflow:hidden}
+  .lang button{font:inherit; font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:.05em; color:var(--muted); background:var(--card); border:none; padding:6px 11px; cursor:pointer}
+  .lang button.on{background:var(--accent); color:#fff}
+  .pill{font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; padding:5px 10px; border-radius:20px; border:1px solid var(--line2); color:var(--muted); background:var(--card)}
+  .pill.live{color:var(--ok); background:var(--ok-bg); border-color:#cfe6da}
+  .pill.run{color:var(--warn); background:var(--warn-bg); border-color:#ecd7bf}
+  .pill.err{color:var(--crit); background:var(--crit-bg); border-color:#f0cdc7}
+  main{padding:26px 0 80px}
+  .eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); margin:0 0 6px}
+  .lede{font-size:14px; color:var(--muted); margin:0 0 20px; max-width:70ch}
+  .grid{display:grid; grid-template-columns:1fr 380px; gap:20px; align-items:start}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow)}
+  .pad{padding:20px}
+  .lab{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); margin:0 0 8px}
+  .selrow{display:flex; gap:10px; align-items:end; margin-bottom:12px; flex-wrap:wrap}
+  .selrow > div{flex:1; min-width:180px}
+  select{width:100%; font:inherit; font-size:14px; color:var(--ink); background:var(--card); border:1px solid var(--line2); border-radius:9px; padding:10px 12px; cursor:pointer}
+  textarea{width:100%; height:340px; resize:vertical; font-family:var(--mono); font-size:12.5px; line-height:1.6; color:var(--ink2); background:var(--panel); border:1px solid var(--line2); border-radius:10px; padding:14px; white-space:pre; overflow:auto}
+  textarea:focus-visible, select:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+  .run{display:flex; gap:12px; align-items:center; margin-top:14px}
+  .btn{font:inherit; font-weight:600; font-size:14px; color:#fff; background:var(--accent); border:none; border-radius:10px; padding:12px 20px; cursor:pointer}
+  .btn:disabled{opacity:.5; cursor:default}
+  .btn.ghost{color:var(--ink2); background:var(--card); border:1px solid var(--line2)}
+  .hint{font-size:12px; color:var(--faint)}
+  .steps{display:grid; gap:2px}
+  .step{display:flex; align-items:center; gap:12px; padding:12px 10px; border-radius:10px}
+  .step.active{background:var(--panel)}
+  .dot2{width:22px; height:22px; border-radius:50%; border:2px solid var(--line2); display:grid; place-items:center; font-family:var(--mono); font-size:12px; font-weight:700; color:var(--faint); flex:none}
+  .step.done .dot2{border-color:var(--ok); background:var(--ok-bg); color:var(--ok)}
+  .step.run .dot2{border-color:var(--accent); border-top-color:transparent; animation:spin .8s linear infinite}
+  .step.err .dot2{border-color:var(--crit); background:var(--crit-bg); color:var(--crit)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){ .step.run .dot2{animation:none} }
+  .step .sl{font-size:14px; font-weight:500}
+  .step.pending .sl{color:var(--faint)}
+  .step .sd{font-family:var(--mono); font-size:11.5px; color:var(--muted); margin-left:auto; text-align:right}
+  .idle{color:var(--faint); font-size:13px; text-align:center; padding:20px 8px}
+  .errbox{margin-top:12px; font-size:13px; color:var(--crit); background:var(--crit-bg); border:1px solid #f0cdc7; border-radius:10px; padding:12px 14px; line-height:1.55; display:none}
+  .errbox.show{display:block}
+  .tiles{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:8px 0 4px}
+  .tile{border:1px solid var(--line); border-radius:11px; padding:14px 16px; background:var(--panel)}
+  .tile .n{font-size:30px; font-weight:700; line-height:1; font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+  .tile .t{font-size:12px; color:var(--muted); margin-top:6px}
+  .tile.crit .n{color:var(--crit)} .tile.warn .n{color:var(--warn)} .tile.ok .n{color:var(--ok)}
+  .sec{margin:30px 0 12px; display:flex; align-items:center; gap:12px}
+  .sec h3{font-size:14px; margin:0; font-family:var(--mono); text-transform:uppercase; font-weight:600; color:var(--ink2)}
+  .sec .ln{flex:1; height:1px; background:var(--line)} .sec .ct{font-family:var(--mono); font-size:12px; color:var(--faint)}
+  .finding{border:1px solid var(--line); border-left:3px solid var(--sevc); border-radius:12px; background:var(--card); box-shadow:var(--shadow); margin-bottom:14px; overflow:hidden}
+  .fhead{display:flex; align-items:flex-start; gap:12px; padding:16px 18px}
+  .sevtag{font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--sevc); background:var(--sevbg); border:1px solid var(--sevc); border-radius:5px; padding:3px 8px; white-space:nowrap; margin-top:2px}
+  .ftitle{font-size:16px; font-weight:600; line-height:1.3; margin:0}
+  .fmeta{font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:4px; display:flex; gap:14px; flex-wrap:wrap}
+  .fbody{padding:0 18px 18px; display:grid; gap:14px}
+  .kl{font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin:0 0 5px}
+  .evidence{font-family:var(--serif); font-style:italic; font-size:15px; color:var(--ink2); line-height:1.55; background:var(--panel); border:1px solid var(--line); border-left:2px solid var(--accent); border-radius:8px; padding:12px 15px}
+  .why{font-size:14px; color:var(--ink2); margin:0}
+  .conf{display:inline-flex; align-items:center; gap:7px; font-size:12.5px; color:var(--muted)}
+  .conf .b{width:22px;height:22px;border-radius:6px; display:grid; place-items:center; font-family:var(--mono); font-weight:700; font-size:12px; background:var(--ok-bg); color:var(--ok); border:1px solid #cfe6da}
+  .conf.B .b{background:var(--note-bg); color:#8a7320; border-color:#e6dcbf}
+  .missing{border:1px solid var(--line); border-radius:12px; background:var(--card); box-shadow:var(--shadow); overflow:hidden}
+  .missing .mrow{display:flex; align-items:flex-start; gap:12px; padding:14px 18px; border-top:1px solid var(--line)}
+  .missing .mrow:first-child{border-top:none}
+  .missing .mi{color:var(--crit); font-family:var(--mono); font-weight:700; margin-top:1px}
+  .missing .mt{font-weight:600; font-size:14.5px} .missing .md{color:var(--muted); font-size:13px; margin-top:3px}
+  .missing .mref{font-family:var(--mono); font-size:11.5px; color:var(--faint); margin-top:5px}
+  .clean{text-align:center; padding:44px 24px}
+  .clean .ico{width:54px;height:54px;border-radius:50%; background:var(--ok-bg); border:1px solid #cfe6da; color:var(--ok); display:grid; place-items:center; margin:0 auto 16px; font-size:26px; font-weight:700}
+  .clean h3{margin:0 0 8px; font-size:20px; font-weight:600} .clean p{margin:0 auto; max-width:440px; color:var(--muted); font-size:14px}
+  .memo{margin-top:14px; border:1px solid var(--line); border-radius:12px; background:var(--card); box-shadow:var(--shadow); overflow:hidden}
+  .memo summary{cursor:pointer; padding:14px 18px; font-family:var(--mono); font-size:12.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink2); list-style:none}
+  .memo summary::-webkit-details-marker{display:none}
+  .memo summary::before{content:"\25B8  "; color:var(--accent)}
+  .memo[open] summary::before{content:"\25BE  "}
+  .memo pre{margin:0; padding:0 20px 20px; font-family:var(--serif); font-size:14px; line-height:1.7; color:var(--ink2); white-space:pre-wrap; word-wrap:break-word}
+  .dropped{margin-top:20px; font-size:12.5px; color:var(--muted); border-top:1px dashed var(--line2); padding-top:14px}
+  .dropped b{color:var(--ink2); font-family:var(--mono); font-size:11px; letter-spacing:.04em; text-transform:uppercase}
+  .drow{margin-top:8px; padding-left:14px; border-left:2px solid var(--line2)}
+  .disclaim{margin-top:24px; font-size:12.5px; color:var(--faint); border-top:1px solid var(--line); padding-top:16px; line-height:1.6}
+  #results{display:none}
+  @media (max-width:860px){ .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <div class="logo"><span class="dot"></span><span class="mk">Saksama</span><span class="sub" data-t="tag">Live agent</span></div>
+    <span class="spacer"></span>
+    <div class="lang" id="lang"><button data-l="en" class="on">EN</button><button data-l="id">ID</button></div>
+    <span class="pill" id="pill" data-t="ready">Ready</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="eyebrow" data-t="eyebrow">Employment-contract review · runs on your machine</p>
+  <p class="lede" id="lede">Paste an Indonesian PKWT or PKWTT — or pick a sample — and watch the agent run its stages against the 14 verified provisions. Findings carry verbatim contract evidence; missing mandatory protections are reported too.</p>
+
+  <div class="grid">
+    <div class="card pad">
+      <p class="lab" data-t="input">Contract text</p>
+      <div class="selrow">
+        <div>
+          <label class="lab" for="sel" data-t="sample">Load a sample</label>
+          <select id="sel"></select>
+        </div>
+      </div>
+      <textarea id="text" spellcheck="false" placeholder="Tempel teks kontrak di sini…"></textarea>
+      <div class="run">
+        <button class="btn" id="go" data-t="run_btn">Run live review</button>
+        <button class="btn ghost" id="clear" data-t="clear_btn">Clear</button>
+        <span class="hint" id="hint"></span>
+      </div>
+      <div class="errbox" id="err"></div>
+    </div>
+
+    <div class="card pad">
+      <p class="lab" data-t="activity">Agent activity</p>
+      <div class="steps" id="steps"></div>
+      <div class="idle" id="idle" data-t="idle">The pipeline stages will light up here as the agent works.</div>
+    </div>
+  </div>
+
+  <div id="results">
+    <div class="tiles">
+      <div class="tile crit"><div class="n" id="tFind">0</div><div class="t" data-t="tile_find">Legal findings</div></div>
+      <div class="tile warn"><div class="n" id="tMiss">0</div><div class="t" data-t="tile_miss">Missing protections</div></div>
+      <div class="tile ok"><div class="n" id="tGate">0</div><div class="t" data-t="tile_gate">Evidence-gated</div></div>
+    </div>
+    <div id="body"></div>
+    <details class="memo" id="memoWrap"><summary data-t="memo">Full triage memo (Indonesian)</summary><pre id="memo"></pre></details>
+    <p class="disclaim" id="disc"></p>
+  </div>
+</main>
+
+<script>
+(function(){
+  var STAT_EN={
+    "PP35-12":"PKWT may not require a probation period",
+    "UU13-60-1":"PKWTT probation is at most 3 months",
+    "UU13-60-2":"Probation wage must not be below minimum wage",
+    "PP35-4-2":"PKWT is not for work of a permanent nature",
+    "PP35-8":"Term-based PKWT max 5 years incl. extension",
+    "PP35-13":"Nine mandatory items a PKWT must contain",
+    "PP35-14":"PKWT must be registered online within 3 working days",
+    "PP35-15":"Compensation is mandatory at the end of a PKWT",
+    "PP35-16":"PKWT compensation amount",
+    "PP35-17":"Compensation still owed if the relationship ends early",
+    "PP35-26-31":"Overtime limits and pay",
+    "PP35-27-5":"Overtime exemption is void if the job category is undefined",
+    "MK168-79-2b":"A five-day week must grant two weekly rest days",
+    "SE-M5-2025":"Holding a diploma or personal documents as security is prohibited"
+  };
+  var TIERC={batal_demi_hukum:["Batal demi hukum","Void by law","var(--crit)","var(--crit-bg)"],
+    sanksi_administratif:["Sanksi administratif","Administrative sanction","var(--warn)","var(--warn-bg)"],
+    melanggar_tanpa_sanksi:["Melanggar (tanpa sanksi)","Breach (no sanction)","var(--note)","var(--note-bg)"],
+    pedoman_kebijakan:["Pedoman kebijakan","Policy guidance","var(--policy)","var(--policy-bg)"]};
+  var STEPS=[
+    ["classify","Classify contract type","Klasifikasi jenis kontrak"],
+    ["clause","Clause checks","Cek klausa yang ada"],
+    ["absence","Absence pass — missing protections","Pass ketiadaan — proteksi hilang"],
+    ["gate","Citation gate — verbatim evidence","Gerbang sitasi — bukti verbatim"],
+    ["memo","Render triage memo","Susun memo triase"]
+  ];
+  var I18N={
+    en:{tag:"Live agent",ready:"Ready",eyebrow:"Employment-contract review · runs on your machine",input:"Contract text",sample:"Load a sample",activity:"Agent activity",idle:"The pipeline stages will light up here as the agent works.",run_btn:"Run live review",clear_btn:"Clear",tile_find:"Legal findings",tile_miss:"Missing protections",tile_gate:"Evidence-gated",memo:"Full triage memo (Indonesian)",
+      sec_find:"Findings",sec_miss:"Missing protections",ev:"Contract evidence (verbatim, Indonesian)",why:"What the agent found (Indonesian)",conf:"Confidence",kontrak:"Contract",
+      clean_h:"Nothing flagged",clean_p:"The agent found no problematic clauses and no missing mandatory protection for the applicable checks.",
+      dropped:"Dropped by the citation gate (no verbatim quote in the contract)",
+      running:"Agent is working… this calls a real model and can take a minute.",
+      disc:"Automatically generated triage aid, not legal advice. Findings and the memo are produced live by the model; the verbatim quotes are lifted from the contract you provided. The final decision rests with you.",
+      pill_run:"Working…",pill_done:"Done",pill_err:"Error"},
+    id:{tag:"Agen langsung",ready:"Siap",eyebrow:"Telaah kontrak kerja · berjalan di komputer Anda",input:"Teks kontrak",sample:"Muat contoh",activity:"Aktivitas agen",idle:"Tahapan pipeline akan menyala di sini saat agen bekerja.",run_btn:"Jalankan telaah",clear_btn:"Bersihkan",tile_find:"Temuan hukum",tile_miss:"Proteksi hilang",tile_gate:"Lolos bukti",memo:"Memo triase lengkap",
+      sec_find:"Temuan",sec_miss:"Proteksi yang hilang",ev:"Bukti dari kontrak (verbatim)",why:"Yang ditemukan agen",conf:"Keyakinan",kontrak:"Kontrak",
+      clean_h:"Tidak ada yang ditandai",clean_p:"Agen tidak menemukan klausa bermasalah dan tidak ada proteksi wajib yang hilang untuk cek yang berlaku.",
+      dropped:"Digugurkan gerbang sitasi (tidak ada kutipan verbatim di kontrak)",
+      running:"Agen sedang bekerja… ini memanggil model sungguhan dan bisa memakan waktu semenit.",
+      disc:"Alat bantu triase yang dihasilkan otomatis, bukan nasihat hukum. Temuan dan memo dibuat langsung oleh model; kutipan verbatim diambil dari kontrak yang Anda berikan. Keputusan akhir ada pada Anda.",
+      pill_run:"Bekerja…",pill_done:"Selesai",pill_err:"Galat"}
+  };
+
+  var L='en';
+  function T(k){return (I18N[L]&&I18N[L][k])||I18N.en[k]||k;}
+  var esc=function(s){return (s||"").replace(/[&<>"]/g,function(m){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m];});};
+  var $=function(id){return document.getElementById(id);};
+  function statName(id,fallback){ return L==='en' ? (STAT_EN[id]||fallback||id) : (fallback||id); }
+
+  var SAMPLES=[], busy=false;
+
+  function applyStatic(){ document.querySelectorAll('[data-t]').forEach(function(el){ el.textContent=T(el.getAttribute('data-t')); }); }
+  function setPill(kind,key){ var p=$('pill'); p.className='pill'+(kind?' '+kind:''); p.textContent=T(key); }
+
+  function renderSteps(state){
+    $('idle').style.display = state && Object.keys(state).length ? 'none':'block';
+    $('steps').innerHTML = STEPS.map(function(s,idx){
+      var st=(state&&state[s[0]])||{};
+      var cls = st.status==='done'?'done':st.status==='run'?'run active':st.status==='err'?'err active':'pending';
+      var icon = st.status==='done'?'✓':st.status==='err'?'!':(idx+1);
+      var label = L==='en'?s[1]:s[2];
+      return '<div class="step '+cls+'"><span class="dot2">'+(st.status==='run'?'':icon)+'</span><span class="sl">'+esc(label)+'</span><span class="sd">'+esc(st.detail||'')+'</span></div>';
+    }).join('');
+  }
+
+  function loadMeta(){
+    fetch('api/meta').then(function(r){return r.json();}).then(function(m){
+      SAMPLES=m.samples||[];
+      var sel=$('sel'); sel.innerHTML='<option value="">— '+(L==='en'?'paste your own':'tempel sendiri')+' —</option>'+
+        SAMPLES.map(function(s,i){return '<option value="'+i+'">'+esc(s.name)+' ('+s.type+')</option>';}).join('');
+      var pick=-1;
+      for(var i=0;i<SAMPLES.length;i++){ if(/problem/i.test(SAMPLES[i].name)){ pick=i; break; } }
+      if(pick<0 && SAMPLES.length) pick=0;
+      if(pick>=0){ sel.value=String(pick); $('text').value=SAMPLES[pick].text; }
+    }).catch(function(){ $('hint').textContent='Could not reach the server API.'; });
+  }
+
+  $('sel').onchange=function(){ var i=this.value; if(i==='') return; $('text').value=SAMPLES[+i].text; hideResults(); };
+  $('clear').onclick=function(){ $('text').value=''; $('sel').value=''; hideResults(); };
+  function hideResults(){ $('results').style.display='none'; renderSteps(null); setPill('','ready'); $('err').classList.remove('show'); }
+
+  $('go').onclick=function(){ if(busy) return; run(); };
+
+  function run(){
+    var text=$('text').value;
+    if(!text.trim()){ $('text').focus(); return; }
+    busy=true; $('go').disabled=true; $('err').classList.remove('show');
+    $('results').style.display='none';
+    setPill('run','pill_run'); $('hint').textContent=T('running');
+    var state={}; renderSteps(state);
+    var acc='';
+    fetch('api/review',{method:'POST',headers:{'Content-Type':'text/plain'},body:text}).then(function(resp){
+      if(!resp.ok){ return resp.text().then(function(t){ throw new Error(t||('HTTP '+resp.status)); }); }
+      var reader=resp.body.getReader(), dec=new TextDecoder();
+      function pump(){ return reader.read().then(function(res){
+        if(res.done){ finishRun(); return; }
+        acc+=dec.decode(res.value,{stream:true});
+        var lines=acc.split('\n'); acc=lines.pop();
+        lines.forEach(function(ln){ if(!ln.trim()) return; var ev; try{ev=JSON.parse(ln);}catch(e){return;} handle(ev,state); });
+        return pump();
+      }); }
+      return pump();
+    }).catch(function(e){ showErr(e.message||String(e)); finishRun(); });
+  }
+
+  function handle(ev,state){
+    if(ev.t==='stage'){ state[ev.key]={status:ev.status,detail:ev.detail}; renderSteps(state); }
+    else if(ev.t==='error'){ Object.keys(state).forEach(function(k){ if(state[k].status==='run') state[k].status='err'; }); renderSteps(state); showErr(ev.msg); }
+    else if(ev.t==='result'){ renderResult(ev); }
+  }
+  function finishRun(){ busy=false; $('go').disabled=false; $('hint').textContent=''; }
+  function showErr(msg){ setPill('err','pill_err'); var e=$('err'); e.textContent=msg; e.classList.add('show'); }
+
+  function sec(t,n){return '<div class="sec"><h3>'+esc(t)+'</h3><span class="ct">'+n+'</span><span class="ln"></span></div>';}
+
+  function renderResult(r){
+    setPill('','pill_done');
+    var F=r.findings||[];
+    var clause=F.filter(function(f){return f.kind!=='missing';});
+    var missing=F.filter(function(f){return f.kind==='missing';});
+    $('tFind').textContent=clause.length;
+    $('tMiss').textContent=missing.length;
+    $('tGate').textContent=clause.length;
+    var html='';
+    if(F.length===0){
+      html='<div class="card clean"><div class="ico">✓</div><h3>'+esc(T('clean_h'))+'</h3><p>'+esc(T('clean_p'))+'</p></div>';
+    } else {
+      if(clause.length){
+        html+=sec(T('sec_find'),clause.length);
+        clause.forEach(function(f){ var tc=TIERC[f.tier]||TIERC.melanggar_tanpa_sanksi;
+          html+='<div class="finding" style="--sevc:'+tc[2]+';--sevbg:'+tc[3]+'"><div class="fhead"><span class="sevtag">'+esc(L==='en'?tc[1]:tc[0])+'</span><div><p class="ftitle">'+esc(statName(f.statute_id,f.judul))+'</p><div class="fmeta"><span>'+esc(T('kontrak'))+': '+esc(f.section||'—')+'</span><span>'+esc(f.dasar)+' '+esc(f.pasal)+'</span></div></div></div><div class="fbody">'+
+            (f.kutipan?'<div><p class="kl">'+esc(T('ev'))+'</p><div class="evidence">&ldquo;'+esc(f.kutipan)+'&rdquo;</div></div>':'')+
+            (f.deskripsi?'<div><p class="kl">'+esc(T('why'))+'</p><p class="why">'+esc(f.deskripsi)+'</p></div>':'')+
+            '<div class="conf '+esc(f.conf)+'"><span class="b">'+esc(f.conf||'A')+'</span><span>'+esc(T('conf'))+' '+esc(f.conf||'A')+'</span></div></div></div>';
+        });
+      }
+      if(missing.length){
+        html+=sec(T('sec_miss'),missing.length);
+        html+='<div class="missing">'+missing.map(function(f){
+          return '<div class="mrow"><span class="mi">✕</span><div><div class="mt">'+esc(statName(f.statute_id,f.judul))+'</div>'+(f.deskripsi?'<div class="md">'+esc(f.deskripsi)+'</div>':'')+'<div class="mref">'+esc(f.dasar)+' '+esc(f.pasal)+' · '+esc(T('conf'))+' '+esc(f.conf||'A')+'</div></div></div>';
+        }).join('')+'</div>';
+      }
+    }
+    if(r.dropped&&r.dropped.length){
+      html+='<div class="dropped"><b>'+esc(T('dropped'))+'</b>'+r.dropped.map(function(f){
+        return '<div class="drow">'+esc(statName(f.statute_id,f.judul))+' — <span style="color:var(--faint)">'+esc(f.reason||'')+'</span></div>';
+      }).join('')+'</div>';
+    }
+    $('body').innerHTML=html;
+    $('memo').textContent=r.memo||'';
+    $('memoWrap').style.display=r.memo?'block':'none';
+    $('disc').textContent=T('disc');
+    $('results').style.display='block';
+  }
+
+  document.querySelectorAll('#lang button').forEach(function(btn){ btn.onclick=function(){
+    document.querySelectorAll('#lang button').forEach(function(x){x.classList.remove('on');}); btn.classList.add('on');
+    L=btn.getAttribute('data-l'); applyStatic(); $('lede').textContent=(L==='en'
+      ? 'Paste an Indonesian PKWT or PKWTT — or pick a sample — and watch the agent run its stages against the 14 verified provisions. Findings carry verbatim contract evidence; missing mandatory protections are reported too.'
+      : 'Tempel PKWT atau PKWTT — atau pilih contoh — dan lihat agen menjalankan tahapannya terhadap 14 provisi terverifikasi. Temuan disertai bukti verbatim; proteksi wajib yang hilang juga dilaporkan.');
+    renderSteps(null);
+  };});
+
+  applyStatic(); renderSteps(null); loadMeta();
+})();
+</script>
+</body>
+</html>

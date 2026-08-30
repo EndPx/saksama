@@ -18,3 +18,4 @@ Thumbs.db
 
 # tool caches
 .omc/
+*.stackdump

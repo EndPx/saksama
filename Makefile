@@ -4,7 +4,7 @@
 
 GO ?= go
 
-.PHONY: build test baseline solution eval memos trajectories demo all clean
+.PHONY: build test baseline solution eval memos trajectories demo serve all clean
 
 build:
 	$(GO) build ./...
@@ -31,6 +31,12 @@ memos:
 # Keyless demo: compact review summary for a few contracts from committed results.
 demo:
 	$(GO) run ./cmd/solution -demo
+
+# Live web app: a dashboard that shows the agent working, stage by stage, on a
+# contract you paste or pick. Open http://localhost:8765 (needs API key in .env
+# for a live review; the page and samples load with no key).
+serve:
+	$(GO) run ./cmd/server
 
 # Export Claude Code session trajectories to trajectories/.
 trajectories:

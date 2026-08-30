@@ -99,6 +99,26 @@ separate input adapter (roadmap), intentionally outside the frozen evaluation en
 Sample contracts live in [`examples/`](examples/). All contracts under `examples/` are
 synthetic and contain no real employment or personal data.
 
+### Live dashboard — watch the agent work
+
+A local web app that runs the **same frozen engine** and streams every stage as it
+happens: classify → clause checks → absence pass → citation gate → memo. Paste a
+contract or pick a sample, hit *Run live review*, and the pipeline lights up stage by
+stage; findings arrive with verbatim contract evidence, missing protections are listed,
+and the full Indonesian triage memo is included. A findings-level EN/ID toggle is built
+in (verbatim quotes stay Indonesian — they are the contract's own words).
+
+```bash
+go run ./cmd/server      # or, with Make:  make serve
+# then open http://localhost:8765
+```
+
+The page and the sample contracts load with **no API key**; a live review calls the
+model, so it needs `SAKSAMA_*` in `.env` (auto-loaded). Nothing is uploaded — the server
+runs on your machine and the contract text never leaves it except as the model call the
+engine already makes. This is a thin HTTP layer over `internal/agent`; it re-implements
+none of the review logic.
+
 ### Run with Docker
 
 The image carries **no API key** and its default entrypoint is the keyless evaluation:
@@ -322,8 +342,9 @@ See [`SECURITY.md`](SECURITY.md) for the full security model and credential-hand
 ## Project structure
 
 ```
-cmd/            baseline, solution, eval, trajectory  (entry points)
+cmd/            baseline, solution, eval, trajectory, server  (entry points)
 internal/       llm, agent, contract, statutes, scoring, memo
+web/            live.html — the local dashboard served by cmd/server
 data/           statutes/ (14 provisions) + contracts/ (12 synthetic + ground truth)
 examples/       synthetic plain-text contracts for the review CLI / make demo
 results/        frozen evaluation JSON, comparison.md, audit.md, failure_modes.json
