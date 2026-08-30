@@ -45,18 +45,30 @@ matters: on the committed evaluation, **zero false positives occur on clean cont
 ## Quick Start
 
 **Requirements:** Go 1.22+ only. **No API key** is required to reproduce the committed
-evaluation. **Make is optional** — every `make` target below is a one-line wrapper, so
-on Windows (or anywhere without Make) just use the `go run` form.
+evaluation or to open the dashboard. **Make is optional** — every `make` target below is
+a one-line wrapper, so on Windows (or anywhere without Make) just use the `go run` form.
 
 ```bash
 git clone https://github.com/EndPx/saksama.git
 cd saksama
 
+make quickstart        # or, without Make:  go build ./... && go run ./cmd/server
+```
+
+**Quick start** builds every binary and opens the **live dashboard** in your browser at
+`http://localhost:8765` — pick a sample contract, hit *Run live review*, and watch the
+agent stream its stages (classify → clause → absence → citation gate → memo). The page
+and samples load with no API key; a *live* review calls the model, so it needs
+`SAKSAMA_*` in `.env` (copy from `.env.example`). See [Live dashboard](#live-dashboard--watch-the-agent-work) below.
+
+To instead reproduce the **frozen, keyless, network-free** evaluation over the committed
+`results/*.json`:
+
+```bash
 go run ./cmd/eval      # or, if you have Make:  make eval
 ```
 
-This runs the **frozen, keyless, network-free** evaluation over the committed
-`results/*.json`. Expected output:
+Expected output:
 
 ```
 Recall (primary)    100.0%

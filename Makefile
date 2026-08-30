@@ -4,10 +4,15 @@
 
 GO ?= go
 
-.PHONY: build test baseline solution eval memos trajectories demo serve all clean
+.PHONY: build test baseline solution eval memos trajectories demo serve quickstart all clean
 
 build:
 	$(GO) build ./...
+
+# One command: build every binary, then launch the live dashboard (opens a
+# browser at http://localhost:8765). The page loads with no API key; a live
+# review needs SAKSAMA_* in .env.
+quickstart: build serve
 
 test:
 	$(GO) test ./...

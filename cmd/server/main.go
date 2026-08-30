@@ -15,11 +15,15 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"net"
 	"net/http"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"runtime"
 	"sort"
 	"strings"
+	"time"
 
 	"github.com/EndPx/saksama/internal/agent"
 	"github.com/EndPx/saksama/internal/llm"
@@ -33,6 +37,7 @@ func main() {
 	webDir := flag.String("web", "web", "directory holding live.html")
 	statutesPath := flag.String("statutes", "data/statutes/2026-08.yaml", "statute corpus")
 	examplesDir := flag.String("examples", "examples", "sample contracts directory")
+	open := flag.Bool("open", true, "open the dashboard in a browser on start")
 	flag.Parse()
 
 	_ = llm.LoadEnvFile(".env") // shell env still wins
@@ -49,11 +54,38 @@ func main() {
 	mux.HandleFunc("/api/meta", srv.handleMeta)
 	mux.HandleFunc("/api/review", srv.handleReview)
 
-	fmt.Printf("Saksama live  ->  http://localhost%s\n", portOf(*addr))
-	fmt.Println("(a live review needs SAKSAMA_API_KEY in .env; the page and samples do not)")
-	if err := http.ListenAndServe(*addr, mux); err != nil {
+	ln, err := net.Listen("tcp", *addr)
+	if err != nil {
 		fmt.Fprintln(os.Stderr, "error:", err)
 		os.Exit(1)
+	}
+	url := "http://localhost" + portOf(*addr)
+	fmt.Printf("Saksama live  ->  %s\n", url)
+	fmt.Println("(a live review needs SAKSAMA_API_KEY in .env; the page and samples do not)")
+	if *open {
+		go openBrowser(url) // fire-and-forget; the port is already bound above
+	}
+	if err := http.Serve(ln, mux); err != nil {
+		fmt.Fprintln(os.Stderr, "error:", err)
+		os.Exit(1)
+	}
+}
+
+// openBrowser tries to open url in the OS default browser. Best-effort: any
+// failure just prints a hint, since the server is already usable at the URL.
+func openBrowser(url string) {
+	time.Sleep(400 * time.Millisecond) // let Serve start accepting
+	var cmd *exec.Cmd
+	switch runtime.GOOS {
+	case "windows":
+		cmd = exec.Command("cmd", "/c", "start", "", url)
+	case "darwin":
+		cmd = exec.Command("open", url)
+	default:
+		cmd = exec.Command("xdg-open", url)
+	}
+	if err := cmd.Start(); err != nil {
+		fmt.Fprintf(os.Stderr, "(could not open a browser automatically — open %s yourself)\n", url)
 	}
 }
 
