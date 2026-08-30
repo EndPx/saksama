@@ -123,7 +123,9 @@ func renderMemos(from string, contracts []agent.Contract, outDir string, corpus 
 }
 
 // reviewOne runs the live S5 engine on a single plain-text contract and prints
-// the triage memo to stdout. This is generation, so it needs the SAKSAMA_* env.
+// the triage memo to stdout. Progress for each agentic stage is printed to
+// stderr so the pipeline is visible while it runs (the memo stays on stdout).
+// This is generation, so it needs the SAKSAMA_* env.
 func reviewOne(corpus *statutes.Corpus, path string) {
 	b, err := os.ReadFile(path)
 	must(err)
@@ -131,9 +133,32 @@ func reviewOne(corpus *statutes.Corpus, path string) {
 	client, err := llm.New()
 	must(err)
 	a := agent.New(client, corpus)
-	res, err := a.RunPipeline(context.Background(), []agent.Contract{{ID: filepath.Base(path), Text: text}}, "s5", "")
+	ctx := context.Background()
+
+	typ := "PKWT"
+	if strings.Contains(strings.ToUpper(text), "PKWTT") {
+		typ = "PKWTT"
+	}
+	fmt.Fprintf(os.Stderr, "-> Classifying contract type ... %s\n", typ)
+
+	fmt.Fprintln(os.Stderr, "-> Clause checks (present clauses vs applicable rules) ...")
+	clause, _, _, err := a.Checklist(ctx, text)
 	must(err)
-	fmt.Print(memo.Render(filepath.Base(path), text, "", res.Contracts[0].Findings, corpus))
+	fmt.Fprintf(os.Stderr, "   %d clause finding(s)\n", len(clause))
+
+	fmt.Fprintln(os.Stderr, "-> Absence pass (mandatory protections that are missing) ...")
+	absent, _, _, err := a.Absence(ctx, text)
+	must(err)
+	fmt.Fprintf(os.Stderr, "   %d missing-protection finding(s)\n", len(absent))
+
+	fmt.Fprintln(os.Stderr, "-> Citation gate (verbatim contract evidence required) ...")
+	kept, rejected := a.CitationGate(text, clause)
+	fmt.Fprintf(os.Stderr, "   %d kept, %d dropped (no valid quote)\n", len(kept), len(rejected))
+
+	findings := append(kept, absent...)
+	fmt.Fprintln(os.Stderr, "-> Rendering triage memo")
+	fmt.Fprintln(os.Stderr)
+	fmt.Print(memo.Render(filepath.Base(path), text, "", findings, corpus))
 }
 
 // runDemo prints a compact, KEYLESS summary of a few contracts from the committed
