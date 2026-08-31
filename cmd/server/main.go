@@ -188,6 +188,13 @@ func (s *server) handleReview(w http.ResponseWriter, r *http.Request) {
 	}
 	fail := func(msg string) { emit(evJSON{T: "error", Msg: msg}) }
 
+	// Guardrail: only review something that looks like an Indonesian employment
+	// contract. If it does not, stop here — no model call, no cost.
+	if !looksLikeContract(text) {
+		emit(evJSON{T: "notcontract"})
+		return
+	}
+
 	client, err := llm.New()
 	if err != nil {
 		fail("No model configured. Set SAKSAMA_API_KEY / SAKSAMA_API_BASE / SAKSAMA_MODEL in .env, then restart the server. " + err.Error())
@@ -323,6 +330,35 @@ func prettyName(id string) string {
 		}
 	}
 	return strings.Join(parts, " ")
+}
+
+// looksLikeContract is a cheap, deterministic guard (no model call) that decides
+// whether the pasted text plausibly is an Indonesian employment contract. It
+// requires a strong employment-agreement signal plus several supporting terms,
+// so obvious non-contracts (prose, code, a shopping list) are rejected before
+// the pipeline runs.
+func looksLikeContract(text string) bool {
+	t := strings.ToLower(text)
+	if len(strings.TrimSpace(t)) < 200 {
+		return false
+	}
+	strong := strings.Contains(t, "pkwt") ||
+		strings.Contains(t, "pkwtt") ||
+		strings.Contains(t, "kontrak kerja") ||
+		(strings.Contains(t, "perjanjian") && strings.Contains(t, "kerja"))
+	if !strong {
+		return false
+	}
+	signals := 0
+	for _, kw := range []string{
+		"pihak", "pasal", "pekerja", "karyawan", "pengusaha", "pemberi kerja",
+		"upah", "gaji", "masa kerja", "jangka waktu", "hubungan kerja", "jabatan",
+	} {
+		if strings.Contains(t, kw) {
+			signals++
+		}
+	}
+	return signals >= 3
 }
 
 func writeJSON(w http.ResponseWriter, v any) {

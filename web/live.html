@@ -208,6 +208,7 @@
       dropped:"Dropped by the citation gate (no verbatim quote in the contract)",
       running:"Agent is working… this calls a real model and can take a minute.",
       disc:"Automatically generated triage aid, not legal advice. Findings and the memo are produced live by the model; the verbatim quotes are lifted from the contract you provided. The final decision rests with you.",
+      notcontract:"This does not look like an Indonesian employment contract (PKWT/PKWTT). Paste an employment contract, then run the review.",
       pill_run:"Working…",pill_done:"Done",pill_err:"Error"},
     id:{tag:"Agen langsung",ready:"Siap",eyebrow:"Telaah kontrak kerja · berjalan di komputer Anda",input:"Teks kontrak",sample:"Muat contoh",activity:"Aktivitas agen",idle:"Tahapan pipeline akan menyala di sini saat agen bekerja.",run_btn:"Jalankan telaah",clear_btn:"Bersihkan",tile_find:"Temuan hukum",tile_miss:"Proteksi hilang",tile_gate:"Lolos bukti",memo:"Memo triase lengkap",
       sec_find:"Temuan",sec_miss:"Proteksi yang hilang",ev:"Bukti dari kontrak (verbatim)",why:"Yang ditemukan agen",conf:"Keyakinan",kontrak:"Kontrak",
@@ -215,6 +216,7 @@
       dropped:"Digugurkan gerbang sitasi (tidak ada kutipan verbatim di kontrak)",
       running:"Agen sedang bekerja… ini memanggil model sungguhan dan bisa memakan waktu semenit.",
       disc:"Alat bantu triase yang dihasilkan otomatis, bukan nasihat hukum. Temuan dan memo dibuat langsung oleh model; kutipan verbatim diambil dari kontrak yang Anda berikan. Keputusan akhir ada pada Anda.",
+      notcontract:"Ini sepertinya bukan kontrak kerja Indonesia (PKWT/PKWTT). Tempel kontrak kerja terlebih dahulu, lalu jalankan telaah.",
       pill_run:"Bekerja…",pill_done:"Selesai",pill_err:"Galat"}
   };
 
@@ -252,7 +254,7 @@
     }).catch(function(){ $('hint').textContent='Could not reach the server API.'; });
   }
 
-  $('sel').onchange=function(){ var i=this.value; if(i===''){ $('text').value=''; hideResults(); $('text').focus(); return; } $('text').value=SAMPLES[+i].text; hideResults(); };
+  $('sel').onchange=function(){ if(busy){ return; } var i=this.value; if(i===''){ $('text').value=''; hideResults(); $('text').focus(); return; } $('text').value=SAMPLES[+i].text; hideResults(); };
   $('clear').onclick=function(){ $('text').value=''; $('sel').value=''; hideResults(); };
   function hideResults(){ lastResult=null; lastState=null; $('results').style.display='none'; renderSteps(null); setPill('','ready'); $('err').classList.remove('show'); }
 
@@ -261,7 +263,7 @@
   function run(){
     var text=$('text').value;
     if(!text.trim()){ $('text').focus(); return; }
-    busy=true; $('go').disabled=true; $('err').classList.remove('show');
+    busy=true; $('go').disabled=true; $('sel').disabled=true; $('clear').disabled=true; $('err').classList.remove('show');
     $('results').style.display='none';
     setPill('run','pill_run'); $('hint').textContent=T('running');
     lastResult=null; var state={}; lastState=state; renderSteps(state);
@@ -283,9 +285,10 @@
   function handle(ev,state){
     if(ev.t==='stage'){ state[ev.key]={status:ev.status,detail:ev.detail}; renderSteps(state); }
     else if(ev.t==='error'){ Object.keys(state).forEach(function(k){ if(state[k].status==='run') state[k].status='err'; }); renderSteps(state); showErr(ev.msg); }
+    else if(ev.t==='notcontract'){ renderSteps(null); showErr(T('notcontract')); }
     else if(ev.t==='result'){ renderResult(ev); }
   }
-  function finishRun(){ busy=false; $('go').disabled=false; $('hint').textContent=''; }
+  function finishRun(){ busy=false; $('go').disabled=false; $('sel').disabled=false; $('clear').disabled=false; $('hint').textContent=''; }
   function showErr(msg){ setPill('err','pill_err'); var e=$('err'); e.textContent=msg; e.classList.add('show'); }
 
   function sec(t,n){return '<div class="sec"><h3>'+esc(t)+'</h3><span class="ct">'+n+'</span><span class="ln"></span></div>';}
