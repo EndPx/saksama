@@ -52,8 +52,20 @@ a one-line wrapper, so on Windows (or anywhere without Make) just use the `go ru
 git clone https://github.com/EndPx/saksama.git
 cd saksama
 
-make quickstart        # or, without Make:  go build ./... && go run ./cmd/server
+make quickstart
 ```
+
+**No `make`?** (Windows, or any machine without Make) — build every binary, then launch
+the dashboard. Run these as two separate lines; Windows PowerShell 5.1 does not support
+`&&`:
+
+```bash
+go build ./...
+go run ./cmd/server
+```
+
+`go run ./cmd/server` on its own is enough — it compiles the server and opens the
+dashboard; the `go build ./...` line just verifies every other binary compiles too.
 
 **Quick start** builds every binary and opens the **live dashboard** in your browser at
 `http://localhost:8765` — pick a sample contract, hit *Run live review*, and watch the
