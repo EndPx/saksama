@@ -224,7 +224,7 @@
   var $=function(id){return document.getElementById(id);};
   function statName(id,fallback){ return L==='en' ? (STAT_EN[id]||fallback||id) : (fallback||id); }
 
-  var SAMPLES=[], busy=false;
+  var SAMPLES=[], busy=false, lastResult=null, lastState=null;
 
   function applyStatic(){ document.querySelectorAll('[data-t]').forEach(function(el){ el.textContent=T(el.getAttribute('data-t')); }); }
   function setPill(kind,key){ var p=$('pill'); p.className='pill'+(kind?' '+kind:''); p.textContent=T(key); }
@@ -254,7 +254,7 @@
 
   $('sel').onchange=function(){ var i=this.value; if(i==='') return; $('text').value=SAMPLES[+i].text; hideResults(); };
   $('clear').onclick=function(){ $('text').value=''; $('sel').value=''; hideResults(); };
-  function hideResults(){ $('results').style.display='none'; renderSteps(null); setPill('','ready'); $('err').classList.remove('show'); }
+  function hideResults(){ lastResult=null; lastState=null; $('results').style.display='none'; renderSteps(null); setPill('','ready'); $('err').classList.remove('show'); }
 
   $('go').onclick=function(){ if(busy) return; run(); };
 
@@ -264,7 +264,7 @@
     busy=true; $('go').disabled=true; $('err').classList.remove('show');
     $('results').style.display='none';
     setPill('run','pill_run'); $('hint').textContent=T('running');
-    var state={}; renderSteps(state);
+    lastResult=null; var state={}; lastState=state; renderSteps(state);
     var acc='';
     fetch('api/review',{method:'POST',headers:{'Content-Type':'text/plain'},body:text}).then(function(resp){
       if(!resp.ok){ return resp.text().then(function(t){ throw new Error(t||('HTTP '+resp.status)); }); }
@@ -291,6 +291,7 @@
   function sec(t,n){return '<div class="sec"><h3>'+esc(t)+'</h3><span class="ct">'+n+'</span><span class="ln"></span></div>';}
 
   function renderResult(r){
+    lastResult=r;
     setPill('','pill_done');
     var F=r.findings||[];
     var clause=F.filter(function(f){return f.kind!=='missing';});
@@ -335,7 +336,8 @@
     L=btn.getAttribute('data-l'); applyStatic(); $('lede').textContent=(L==='en'
       ? 'Paste an Indonesian PKWT or PKWTT — or pick a sample — and watch the agent run its stages against the 14 verified provisions. Findings carry verbatim contract evidence; missing mandatory protections are reported too.'
       : 'Tempel PKWT atau PKWTT — atau pilih contoh — dan lihat agen menjalankan tahapannya terhadap 14 provisi terverifikasi. Temuan disertai bukti verbatim; proteksi wajib yang hilang juga dilaporkan.');
-    renderSteps(null);
+    renderSteps(lastState);
+    if(lastResult) renderResult(lastResult); // re-render findings in the new language
   };});
 
   applyStatic(); renderSteps(null); loadMeta();

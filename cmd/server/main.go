@@ -107,6 +107,9 @@ func (s *server) handleIndex(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
+	// no-store: the dashboard is served from disk and may be edited between runs;
+	// never let a browser cache a stale copy of the page/JS.
+	w.Header().Set("Cache-Control", "no-store")
 	http.ServeFile(w, r, filepath.Join(s.webDir, "live.html"))
 }
 
