@@ -252,7 +252,7 @@
     }).catch(function(){ $('hint').textContent='Could not reach the server API.'; });
   }
 
-  $('sel').onchange=function(){ var i=this.value; if(i==='') return; $('text').value=SAMPLES[+i].text; hideResults(); };
+  $('sel').onchange=function(){ var i=this.value; if(i===''){ $('text').value=''; hideResults(); $('text').focus(); return; } $('text').value=SAMPLES[+i].text; hideResults(); };
   $('clear').onclick=function(){ $('text').value=''; $('sel').value=''; hideResults(); };
   function hideResults(){ lastResult=null; lastState=null; $('results').style.display='none'; renderSteps(null); setPill('','ready'); $('err').classList.remove('show'); }
 
